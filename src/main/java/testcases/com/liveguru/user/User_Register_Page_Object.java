@@ -1,15 +1,16 @@
 package testcases.com.liveguru.user;
 
 import actions.commons.BaseTest;
-import actions.commons.LiveGuruConstants;
-import org.eclipse.jetty.util.IO;
+import actions.pageObjects.liveguru.AccountInfoPageObjects;
+import actions.pageObjects.liveguru.HomePageObjects;
+import actions.pageObjects.liveguru.PageGeneratorManager;
+import actions.pageObjects.liveguru.RegisterPageObjects;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import actions.pageObjects.liveguru.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,14 +20,14 @@ import java.util.Random;
 
 public class User_Register_Page_Object extends BaseTest {
     private WebDriver driver;
-    String emailAddress,passWord = "123456";
+    String emailAddress, passWord = "123456";
     HomePageObjects homePage;
     RegisterPageObjects registerPage;
     AccountInfoPageObjects accountInfoPage;
 
     @Parameters("browser")
     @BeforeClass
-    public void beforeClass(String browserName){
+    public void beforeClass(String browserName) {
         driver = getBrowser(browserName);
         homePage = PageGeneratorManager.getHomePage(driver);
         registerPage = PageGeneratorManager.getRegisterPage(driver);
@@ -35,22 +36,22 @@ public class User_Register_Page_Object extends BaseTest {
         homePage.clickToMyAccountLink();
         registerPage = homePage.clickToRegisterLink();
 
-        emailAddress = "test"+ generateFakeNumber()+"@yopmail.com";
+        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
     }
 
     @Test
-    public void Register_01_Empty_Data(){
+    public void Register_01_Empty_Data() {
         registerPage.clickToRegisterButton();
-        Assert.assertEquals(registerPage.getRequiredFirstNameErrorMessage(),"This is a required field.");
-        Assert.assertEquals(registerPage.getRequiredLastNameErrorMessage(),"This is a required field.");
-        Assert.assertEquals(registerPage.getRequiredEmailErrorMessage(),"This is a required field.");
-        Assert.assertEquals(registerPage.getRequiredPasswordErrorMessage(),"This is a required field.");
-        Assert.assertEquals(registerPage.getRequiredConfirmPasswordErrorMessage(),"This is a required field.");
+        Assert.assertEquals(registerPage.getRequiredFirstNameErrorMessage(), "This is a required field.");
+        Assert.assertEquals(registerPage.getRequiredLastNameErrorMessage(), "This is a required field.");
+        Assert.assertEquals(registerPage.getRequiredEmailErrorMessage(), "This is a required field.");
+        Assert.assertEquals(registerPage.getRequiredPasswordErrorMessage(), "This is a required field.");
+        Assert.assertEquals(registerPage.getRequiredConfirmPasswordErrorMessage(), "This is a required field.");
     }
 
-//    @Test
+    //    @Test
     //Fail
-    public void Register_02_Invalid_Email(){
+    public void Register_02_Invalid_Email() {
         homePage.clickToMyAccountLink();
         registerPage = homePage.clickToRegisterLink();
         registerPage.inputToFirstNameTextbox("testFirstName");
@@ -59,29 +60,29 @@ public class User_Register_Page_Object extends BaseTest {
         registerPage.inputToPasswordTextbox(passWord);
         registerPage.inputToConfirmPasswordTextbox(passWord);
         registerPage.clickToRegisterButton();
-        Assert.assertEquals(registerPage.getRequiredEmailErrorMessage(),"");
+        Assert.assertEquals(registerPage.getRequiredEmailErrorMessage(), "");
     }
 
     @Test
-    public void Register_03_Invalid_Password(){
+    public void Register_03_Invalid_Password() {
         registerPage.inputToFirstNameTextbox("testFirstName");
         registerPage.inputToLastNameTextbox("testLastName");
         registerPage.inputToEmailTextbox(emailAddress);
         registerPage.inputToPasswordTextbox("12345");
         registerPage.inputToConfirmPasswordTextbox("12345");
         registerPage.clickToRegisterButton();
-        Assert.assertEquals(registerPage.getInvalidEmailErrorMessage(),"Please enter 6 or more characters without leading or trailing spaces.");
+        Assert.assertEquals(registerPage.getInvalidEmailErrorMessage(), "Please enter 6 or more characters without leading or trailing spaces.");
     }
 
     @Test
-    public void Register_04_Invalid_Confirm_Password(){
+    public void Register_04_Invalid_Confirm_Password() {
         registerPage.inputToFirstNameTextbox("testFirstName");
         registerPage.inputToLastNameTextbox("testLastName");
         registerPage.inputToEmailTextbox(emailAddress);
         registerPage.inputToPasswordTextbox(passWord);
-        registerPage.inputToConfirmPasswordTextbox("diff"+ passWord);
+        registerPage.inputToConfirmPasswordTextbox("diff" + passWord);
         registerPage.clickToRegisterButton();
-        Assert.assertEquals(registerPage.getInvalidConfirmEmailErrorMessage(),"Please make sure your passwords match.");
+        Assert.assertEquals(registerPage.getInvalidConfirmEmailErrorMessage(), "Please make sure your passwords match.");
     }
 
     @Test
@@ -92,8 +93,8 @@ public class User_Register_Page_Object extends BaseTest {
         registerPage.inputToPasswordTextbox(passWord);
         registerPage.inputToConfirmPasswordTextbox(passWord);
         accountInfoPage = registerPage.clickToRegisterButton();
-        Assert.assertEquals(registerPage.getRegisterSuccessMessage(),"Thank you for registering with Main Website Store.");
-        writeFile(emailAddress,passWord);
+        Assert.assertEquals(registerPage.getRegisterSuccessMessage(), "Thank you for registering with Main Website Store.");
+        writeFile(emailAddress, passWord);
     }
 
     @AfterTest

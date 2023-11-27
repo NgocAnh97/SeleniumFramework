@@ -8,7 +8,10 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -153,9 +156,10 @@ public class Level_02_Apply_BasePage_III extends BasePage {
     }
 
     @AfterTest
-    public void afterClass(){
+    public void afterClass() {
         driver.quit();
     }
+
     public int generateFakeNumber() {
         Random random = new Random();
         return random.nextInt(500);

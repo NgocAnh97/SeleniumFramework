@@ -2,16 +2,16 @@ package testcases.com.nopcommerce.user;
 
 import actions.commons.BaseTest;
 import actions.commons.PageGeneratorManager;
+import actions.pageObjects.nopcommerce.user.UserAccountPageObjects;
+import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
+import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
+import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import actions.pageObjects.nopcommerce.user.UserAccountPageObjects;
-import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
-import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
-import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
 
 import java.io.*;
 import java.util.Random;

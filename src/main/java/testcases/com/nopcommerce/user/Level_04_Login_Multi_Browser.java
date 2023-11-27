@@ -1,14 +1,14 @@
 package testcases.com.nopcommerce.user;
 
 import actions.commons.BaseTest;
+import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
+import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
-import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,7 +18,7 @@ import java.util.Random;
 public class Level_04_Login_Multi_Browser extends BaseTest {
     private WebDriver driver;
     String emailAddress, registerEmail, passWord;
-    private String projectPath = System.getProperty("user.dir");
+    private final String projectPath = System.getProperty("user.dir");
     private UserHomePageObjects homePage;
     private UserLoginPageObjects loginPage;
 
@@ -72,7 +72,7 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
         Assert.assertEquals(loginPage.getFieldValidationErrorMessage(), "Wrong email");
     }
 
-//    @Test
+    //    @Test
     public void Login_03_Login_Unregister_Email() {
         System.out.println("Login_03 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
@@ -89,7 +89,7 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
                 "No customer account found");
     }
 
-//    @Test
+    //    @Test
     public void Login_04_Login_Registered_Email_Empty_Password() {
         System.out.println("Login_04 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
@@ -105,7 +105,7 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
                 "The credentials provided are incorrect");
     }
 
-//    @Test
+    //    @Test
     public void Login_05_Login_Registered_Email_Wrong_Password() {
         System.out.println("Login_05 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
@@ -122,7 +122,7 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
                 "The credentials provided are incorrect");
     }
 
-//    @Test
+    //    @Test
     public void Login_06_Login_Registered_Email_Password() {
         System.out.println("Login_06 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
