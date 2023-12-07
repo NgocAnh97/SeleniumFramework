@@ -2,6 +2,8 @@ package actions.commons;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.OperatingSystem;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -58,7 +60,6 @@ public class BaseTest {
 
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.get(GlobalConstants.PORTAL_PAGE_URL);
-//        driver.get("https://live.techpanda.org/");
         return driver;
     }
 
@@ -112,5 +113,11 @@ public class BaseTest {
                 break;
         }
         return url;
+    }
+
+    protected final Log log;
+
+    protected BaseTest() {
+        log = LogFactory.getLog(getClass());
     }
 }
