@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class Level_02_Apply_BasePage {
+public class Level_02_Apply_BasePage extends BasePage {
     BasePage basePage;
     WebDriver driver;
     String emailAddress;
@@ -21,7 +21,7 @@ public class Level_02_Apply_BasePage {
         System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
         driver = new FirefoxDriver();
 
-        basePage = new BasePage();
+//        basePage = new BasePage();
 
         emailAddress = "test" + generateFakeNumber()+ "@yopmail.com";
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);

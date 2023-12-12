@@ -3,15 +3,10 @@ package actions.pageObjects.hrm;
 import actions.commons.BasePage;
 import org.openqa.selenium.WebDriver;
 
-public class LoginPO extends BasePage {
+public class PersonalDetailPO extends BasePage {
     private WebDriver driver;
 
-    public LoginPO(WebDriver driver) {
+    public PersonalDetailPO(WebDriver driver) {
         this.driver = driver;
     }
-
-
-//    loginByUser(){
-//        verify
-//    }
 }

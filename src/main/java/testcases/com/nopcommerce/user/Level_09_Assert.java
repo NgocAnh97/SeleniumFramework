@@ -11,7 +11,7 @@ import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
 import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -19,11 +19,23 @@ import org.testng.annotations.Test;
 
 import java.io.*;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-public class Level_08_Switch_Role extends BaseTest {
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+public class Level_09_Assert extends BaseTest {
+    String projectPath = System.getProperty("user.dir");
+
     @Parameters({"browser", "environment"})
     @BeforeClass
     public void beforeClass(String browserName, String environmentName) {
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.get("");
+
         driver = getBrowserDriver(browserName, environmentName);
         userHomePage = PageGeneratorManager.getUserHomePage(driver);
         userAccountPage = PageGeneratorManager.getUserMyAccountPage(driver);
@@ -46,14 +58,14 @@ public class Level_08_Switch_Role extends BaseTest {
         registerPage.clickToRegisterButton();
 
         System.out.println(userEmailAddress);
-        Assert.assertEquals(registerPage.getRegisterCompletedResultMessage(), "Your registration completed");
+        assertEquals(registerPage.getRegisterCompletedResultMessage(), "Your registration completed");
 
         writeFile(userEmailAddress, passWord);
 
         readFile();
         userLoginPage = userHomePage.openLoginPage();
         userHomePage = userLoginPage.loginAsUser(userEmailAddress, passWord);
-        Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());
+        assertTrue(userHomePage.isMyAccountLinkDisplayed());
         userHomePage = userAccountPage.clickToLogout();
     }
 
@@ -62,7 +74,7 @@ public class Level_08_Switch_Role extends BaseTest {
         adminLoginPage = userHomePage.openAdminLoginPage();
 
         adminDashboardPage = adminLoginPage.loginAsAdmin(adminEmailAddress, adminPassWord);
-        Assert.assertTrue(adminDashboardPage.isDashboardLinkDisplayed());
+        assertTrue(adminDashboardPage.isDashboardLinkDisplayed());
         adminDashboardPage.clickToElementByJS(driver, GlobalConstants.LOGOUT_LINK);
     }
 

@@ -4,6 +4,8 @@ import actions.pageObjects.nopcommerce.user.UserAddressPageObjects;
 import actions.pageObjects.nopcommerce.user.UserMyProductReviewObjects;
 import actions.pageObjects.nopcommerce.user.UserRewardPointObjects;
 import interfaces.pageUIs.nopcommerce.BasePageUI;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
@@ -379,5 +381,10 @@ public class BasePage {
                 GlobalConstants.AccountPageUI.HEADER_TITLE + "[contains(text(),'" + pageHeader + "')]");
     }
 
+    protected final Log log;
+
+    protected BasePage() {
+        log = LogFactory.getLog(getClass());
+    }
     private long longTimeout = 30;
 }

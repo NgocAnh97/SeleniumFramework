@@ -136,6 +136,4 @@ public class Level_02_Apply_BasePage_II {
         Random random = new Random();
         return random.nextInt(500);
     }
-
-
 }
