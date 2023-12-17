@@ -2,8 +2,8 @@ package actions.commons;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.OperatingSystem;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -27,20 +27,16 @@ public class BaseTest {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         } else if (browserName.equals("h_firefox")) {
-//            System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
             WebDriverManager.firefoxdriver().setup();
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             firefoxOptions.addArguments("--headless");
             firefoxOptions.addArguments("window-size=1920x1080");
             driver = new FirefoxDriver(firefoxOptions);
         } else if (browserName.equals("chrome")) {
-            // System.setProperty("webdriver.chrome.driver", projectPath +
-            // "/browserDrivers/chromedriver");
+//            System.setProperty("webdriver.chrome.driver", projectPath + "/browserDrivers/chromedriver");
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         } else if (browserName.equals("h_chrome")) {
-            // System.setProperty("webdriver.chrome.driver", projectPath +
-            // "/browserDrivers/chromedriver");
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");
@@ -51,7 +47,6 @@ public class BaseTest {
             WebDriverManager.edgedriver();
             driver = new EdgeDriver();
         } else if (browserName.equals("h_edge")) {
-//            System.setProperty("webdriver.edge.driver", projectPath + "/browserDrivers/edgedriver_mac64/msedgedriver");
             WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
             EdgeOptions edgeOptions = new EdgeOptions();
             edgeOptions.setPageLoadStrategy("--headless");
@@ -117,10 +112,10 @@ public class BaseTest {
         return url;
     }
 
-    protected final Log log;
+    protected final Logger log;
 
     protected BaseTest() {
-        log = LogFactory.getLog(getClass());
+        log = LogManager.getLogger(getClass());
     }
 
     protected boolean verifyTrue(boolean condition) {

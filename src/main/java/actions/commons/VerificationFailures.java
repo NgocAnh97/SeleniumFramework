@@ -23,7 +23,8 @@ public class VerificationFailures extends HashMap<ITestResult, List<Throwable>> 
         return exceptions == null ? new ArrayList<Throwable>() : exceptions;
     }
 
-    public void addFailureForTest(ITestResult result, Throwable throwable) {
+    public void addFailureForTest(
+            ITestResult result, Throwable throwable) {
         List<Throwable> exceptions = getFailuresForTest(result);
         exceptions.add(throwable);
         put(result, exceptions);

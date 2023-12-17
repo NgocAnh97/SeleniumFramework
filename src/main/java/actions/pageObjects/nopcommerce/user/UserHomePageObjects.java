@@ -15,7 +15,6 @@ public class UserHomePageObjects extends BasePage {
     }
 
     public UserLoginPageObjects openLoginPage() {
-//        waitForElementClickable(driver, GlobalConstants.HomePageUI.LOGIN_LINK);
         waitForElementClickable(driver, GlobalConstants.HomePageUI.LOGIN_LINK);
         clickToElement(driver, GlobalConstants.HomePageUI.LOGIN_LINK);
         return PageGeneratorManager.getUserLoginPage(driver);
@@ -29,9 +28,6 @@ public class UserHomePageObjects extends BasePage {
     public UserRegisterPageObjects openRegisterPage() {
         waitForElementClickable(driver, GlobalConstants.HomePageUI.REGISTER_LINK);
         clickToElement(driver, GlobalConstants.HomePageUI.REGISTER_LINK);
-        //2
-//        return new UserRegisterPageObjects(driver);
-        //3
         return PageGeneratorManager.getUserRegisterPage(driver);
     }
 

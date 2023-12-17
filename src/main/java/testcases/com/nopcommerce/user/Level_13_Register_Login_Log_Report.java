@@ -12,22 +12,23 @@ import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import java.io.*;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-//@Listeners(actions.commons.MethodListener.class)
-public class Level_09_Assert extends BaseTest {
+public class Level_13_Register_Login_Log_Report extends BaseTest {
     String projectPath = System.getProperty("user.dir");
 
     @Parameters({"browser", "environment"})
     @BeforeClass
     public void beforeClass(String browserName, String environmentName) {
+        log.info("Pre-condition info: Open browser '" + browserName + "'");
+
         driver = getBrowserDriver(browserName, environmentName);
         userHomePage = PageGeneratorManager.getUserHomePage(driver);
         userAccountPage = PageGeneratorManager.getUserMyAccountPage(driver);
@@ -40,6 +41,7 @@ public class Level_09_Assert extends BaseTest {
 
     @Test
     public void Role_01_User() throws IOException {
+        log.info("User_01_Register - Step 01: Open register page and input values to textbox");
         registerPage = userHomePage.openRegisterPage();
         registerPage.inputToFirstnameTextbox("testFirstName");
         registerPage.inputToLastnameTextbox("testLastName");
@@ -47,31 +49,46 @@ public class Level_09_Assert extends BaseTest {
         registerPage.inputToPasswordTextbox(passWord);
         registerPage.inputToConfirmPasswordTextbox(passWord);
 
+        log.info("User_01_Register - Step 02: Click to register button");
         registerPage.clickToRegisterButton();
 
-        System.out.println(userEmailAddress);
+        log.info("User_01_Register - Step 03: Verify register completed message");
         verifyEquals(registerPage.getRegisterCompletedResultMessage(), "Your registration completed");
 
+        log.info("User_01_Register - Step 04: Write registered email to file");
         writeFile(userEmailAddress, passWord);
 
+        log.info("User_01_Register - Step 05: Read email from file and login with this email "
+                + userEmailAddress + " and password " + passWord);
         readFile();
         userLoginPage = userHomePage.openLoginPage();
         userHomePage = userLoginPage.loginAsUser(userEmailAddress, passWord);
+
+        log.info("User_01_Register - Step 06: Verify my account link is displayed");
         verifyTrue(userHomePage.isMyAccountLinkDisplayed());
+
+        log.info("User_01_Register - Step 07: Click to logout button");
         userHomePage = userAccountPage.clickToLogout();
     }
 
     @Test
     public void Role_02_Admin() {
+        log.info("Admin_02_Login - Step 01: Open admin login page");
         adminLoginPage = userHomePage.openAdminLoginPage();
 
+        log.info("Admin_02_Login - Step 02: Login with email: " + adminEmailAddress + "password: " + adminPassWord);
         adminDashboardPage = adminLoginPage.loginAsAdmin(adminEmailAddress, adminPassWord);
+
+        log.info("Admin_02_Login - Step 03: Verify dashboard link is displayed");
         verifyTrue(adminDashboardPage.isDashboardLinkDisplayed());
+
+        log.info("Admin_02_Login - Step 04: Click to logout link");
         adminDashboardPage.clickToElementByJS(driver, GlobalConstants.LOGOUT_LINK);
     }
 
     @AfterClass
     public void afterClass() {
+        log.info("Post-condition: Close driver");
         driver.quit();
     }
 
