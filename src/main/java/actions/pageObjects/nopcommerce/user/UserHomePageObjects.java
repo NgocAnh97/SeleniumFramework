@@ -3,9 +3,8 @@ package actions.pageObjects.nopcommerce.user;
 import actions.commons.BasePage;
 import actions.commons.GlobalConstants;
 import actions.commons.PageGeneratorManager;
-import org.openqa.selenium.WebDriver;
 import actions.pageObjects.nopcommerce.admin.AdminLoginPageObjects;
-import interfaces.pageUIs.nopcommerce.HomePageUI;
+import org.openqa.selenium.WebDriver;
 
 public class UserHomePageObjects extends BasePage {
     private WebDriver driver;
@@ -20,7 +19,7 @@ public class UserHomePageObjects extends BasePage {
         return PageGeneratorManager.getUserLoginPage(driver);
     }
 
-    public AdminLoginPageObjects openAdminLoginPage(){
+    public AdminLoginPageObjects openAdminLoginPage() {
         openPageURL(driver, GlobalConstants.ADMIN_PAGE_URL);
         return new AdminLoginPageObjects(driver);
     }
@@ -33,6 +32,6 @@ public class UserHomePageObjects extends BasePage {
 
     public boolean isMyAccountLinkDisplayed() {
         waitForElementVisible(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
-        return isElementDisplayed(driver,GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
+        return isElementDisplayed(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
     }
 }

@@ -1,7 +1,5 @@
 package actions.commons;
 
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.IInvokedMethod;
@@ -9,6 +7,8 @@ import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.internal.Utils;
+
+import java.util.List;
 
 public class MethodListener implements IInvokedMethodListener {
     @Override

@@ -48,8 +48,7 @@ public class User_Login_Page_Object extends BaseTest {
         Assert.assertEquals(loginPage.getRequiredPasswordErrorMessage(), "This is a required field.");
     }
 
-    //    @Test
-    //Fail to verify
+    @Test
     public void Login_02_Invalid_Email() {
         loginPage.inputToEmail("invalidEmail");
         loginPage.inputToPassword(passWord);
@@ -62,7 +61,8 @@ public class User_Login_Page_Object extends BaseTest {
         loginPage.inputToEmail(emailAddress);
         loginPage.inputToPassword("123");
         loginPage.clickToLoginButton();
-        Assert.assertEquals(loginPage.getInvalidPasswordErrorMessage(), "Please enter 6 or more characters without leading or trailing spaces.");
+        Assert.assertEquals(loginPage.getInvalidPasswordErrorMessage(),
+                "Please enter 6 or more characters without leading or trailing spaces.");
     }
 
     @Test

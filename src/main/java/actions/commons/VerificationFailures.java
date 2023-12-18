@@ -1,10 +1,10 @@
 package actions.commons;
 
+import org.testng.ITestResult;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.testng.ITestResult;
 
 public class VerificationFailures extends HashMap<ITestResult, List<Throwable>> {
     private VerificationFailures() {

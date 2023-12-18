@@ -23,8 +23,6 @@ import static org.testng.Assert.assertTrue;
 
 //@Listeners(actions.commons.MethodListener.class)
 public class Level_09_Assert extends BaseTest {
-    String projectPath = System.getProperty("user.dir");
-
     @Parameters({"browser", "environment"})
     @BeforeClass
     public void beforeClass(String browserName, String environmentName) {

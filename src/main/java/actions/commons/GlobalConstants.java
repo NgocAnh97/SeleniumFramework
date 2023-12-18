@@ -3,7 +3,8 @@ package actions.commons;
 public class GlobalConstants {
     public static final String ADMIN_PAGE_URL = "https://admin-demo.nopcommerce.com/";
     public static final String DASHBOARD_LINK = "//img[@class='brand-image-xl logo-xl']";
-    public static final String PORTAL_PAGE_URL = "https://demo.nopcommerce.com/";
+//    public static final String PORTAL_PAGE_URL = "https://demo.nopcommerce.com/";
+    public static final String PORTAL_PAGE_URL = "https://demo.guru99.com/v4/index.php";
     public static final String PORTAL_DEV_URL = "https://google.com";
     public static final String LOGOUT_LINK = "//a[text()='Logout']";
 

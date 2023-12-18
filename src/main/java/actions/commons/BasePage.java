@@ -386,5 +386,6 @@ public class BasePage {
     protected BasePage() {
         log = LogFactory.getLog(getClass());
     }
+
     private long longTimeout = 30;
 }

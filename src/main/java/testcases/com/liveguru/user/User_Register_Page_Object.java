@@ -49,8 +49,7 @@ public class User_Register_Page_Object extends BaseTest {
         Assert.assertEquals(registerPage.getRequiredConfirmPasswordErrorMessage(), "This is a required field.");
     }
 
-    //    @Test
-    //Fail
+        @Test
     public void Register_02_Invalid_Email() {
         homePage.clickToMyAccountLink();
         registerPage = homePage.clickToRegisterLink();
@@ -82,7 +81,8 @@ public class User_Register_Page_Object extends BaseTest {
         registerPage.inputToPasswordTextbox(passWord);
         registerPage.inputToConfirmPasswordTextbox("diff" + passWord);
         registerPage.clickToRegisterButton();
-        Assert.assertEquals(registerPage.getInvalidConfirmEmailErrorMessage(), "Please make sure your passwords match.");
+        Assert.assertEquals(registerPage.getInvalidConfirmEmailErrorMessage(),
+                "Please make sure your passwords match.");
     }
 
     @Test
@@ -93,7 +93,8 @@ public class User_Register_Page_Object extends BaseTest {
         registerPage.inputToPasswordTextbox(passWord);
         registerPage.inputToConfirmPasswordTextbox(passWord);
         accountInfoPage = registerPage.clickToRegisterButton();
-        Assert.assertEquals(registerPage.getRegisterSuccessMessage(), "Thank you for registering with Main Website Store.");
+        Assert.assertEquals(registerPage.getRegisterSuccessMessage(),
+                "Thank you for registering with Main Website Store.");
         writeFile(emailAddress, passWord);
     }
 
@@ -103,7 +104,7 @@ public class User_Register_Page_Object extends BaseTest {
     }
 
     public void writeFile(String emailAddress, String passWord) throws IOException {
-        String TestFile = "/Users/mastery/Desktop/Automation_Framework/hybrid-framework-nopcommerce/resources/dataTestLiveGuru.txt";
+        String TestFile = System.getProperty("user.dir") + "/resources/dataTestLiveGuru.txt";
         File testFile = new File(TestFile);
         testFile.createNewFile();
 
