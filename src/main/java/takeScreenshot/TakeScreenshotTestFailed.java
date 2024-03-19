@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-@Listeners(TestListener.class)
+//@Listeners(TestListener.class)
 public class TakeScreenshotTestFailed extends BasePage {
     private WebDriver driver;
     String emailAddress, registerEmail, passWord;
@@ -49,7 +49,7 @@ public class TakeScreenshotTestFailed extends BasePage {
         }
     }
 
-    @Test
+    @Test(priority = 2)
     public void Login_01_Login_Empty_Data() {
         System.out.println("Login_01 - Step 01: Click to Login link");
         homePage.openLoginPage();
@@ -61,7 +61,7 @@ public class TakeScreenshotTestFailed extends BasePage {
         Assert.assertEquals(loginPage.getFieldValidationErrorMessage(), "? Please enter your email");
     }
 
-    @Test
+    @Test(priority = 1)
     public void Login_02_Login_Invalid_Data() {
         System.out.println("Login_02 - Step 01: Click to Login link");
         homePage.openLoginPage();
@@ -103,7 +103,7 @@ public class TakeScreenshotTestFailed extends BasePage {
         return random.nextInt(500);
     }
 
-    public WebDriver getWeDriver() {
+    public WebDriver getWedDriver() {
         return this.driver;
     }
 }

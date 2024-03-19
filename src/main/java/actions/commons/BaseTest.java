@@ -24,20 +24,19 @@ public class BaseTest {
         log.info("Run on " + browserName);
         if (browserName.equals("firefox")) {
 //            System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
-            WebDriverManager.firefoxdriver().setup();
+            WebDriverManager.firefoxdriver().clearDriverCache().setup();
             driver = new FirefoxDriver();
         } else if (browserName.equals("h_firefox")) {
-            WebDriverManager.firefoxdriver().setup();
+            WebDriverManager.firefoxdriver().clearDriverCache().setup();
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             firefoxOptions.addArguments("--headless");
             firefoxOptions.addArguments("window-size=1920x1080");
             driver = new FirefoxDriver(firefoxOptions);
         } else if (browserName.equals("chrome")) {
-//            System.setProperty("webdriver.chrome.driver", projectPath + "/browserDrivers/chromedriver");
-            WebDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().clearDriverCache().setup();
             driver = new ChromeDriver();
         } else if (browserName.equals("h_chrome")) {
-            WebDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().clearDriverCache().setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");
             options.addArguments("window-size=1920x1080");
@@ -49,7 +48,7 @@ public class BaseTest {
         } else if (browserName.equals("h_edge")) {
             WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
             EdgeOptions edgeOptions = new EdgeOptions();
-            edgeOptions.setPageLoadStrategy("--headless");
+//            edgeOptions.setPageLoadStrategy("--headless");
             driver = new EdgeDriver(edgeOptions);
         } else {
             throw new RuntimeException("Browser name is invalid.");
@@ -63,19 +62,19 @@ public class BaseTest {
     protected WebDriver getBrowserDriver(String browserName, String environmentName) {
         log.info("Run on " + browserName);
         if (browserName.equals("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
+            WebDriverManager.firefoxdriver().clearDriverCache().setup();
             driver = new FirefoxDriver();
         } else if (browserName.equals("h_firefox")) {
-            WebDriverManager.firefoxdriver().setup();
+            WebDriverManager.firefoxdriver().clearDriverCache().setup();
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             firefoxOptions.addArguments("--headless");
             firefoxOptions.addArguments("window-size=1920x1080");
             driver = new FirefoxDriver(firefoxOptions);
         } else if (browserName.equals("chrome")) {
-            WebDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().clearDriverCache().setup();
             driver = new ChromeDriver();
         } else if (browserName.equals("h_chrome")) {
-            WebDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().clearDriverCache().setup();
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("window-size=1920x1080");
@@ -86,7 +85,7 @@ public class BaseTest {
         } else if (browserName.equals("h_edge")) {
             WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
             EdgeOptions edgeOptions = new EdgeOptions();
-            edgeOptions.setPageLoadStrategy("--headless");
+//            edgeOptions.setPageLoadStrategy("--headless");
             driver = new EdgeDriver(edgeOptions);
         } else {
             throw new RuntimeException("Browser name is invalid.");
@@ -95,6 +94,23 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.get(getEnvironmentUrl(environmentName));
         return driver;
+    }
+
+//    protected WebDriver getBrowserDriver2(String browserName){
+//        BrowserName browser = BrowserName.valueOf(browserName.toUpperCase());
+//        switch (browser){
+//            case FIREFOX:
+//                driver = WebDriverManager.firefoxdriver().create();
+//                break;
+//            default:
+//                throw new RuntimeException("Please enter the correct Browser name!");
+//        }
+//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        return driver;
+//    }
+
+    public WebDriver getWedDriver() {
+        return this.driver;
     }
 
     private String getEnvironmentUrl(String environmentName) {
@@ -122,12 +138,12 @@ public class BaseTest {
         boolean status = true;
         try {
             Assert.assertTrue(condition);
-            log.info("---------------------- Passed -----------------------");
+            log.info("---------------------- PASSED -----------------------");
         } catch (Throwable e) {
             status = false;
+            log.info("---------------------- FAILED -----------------------");
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
-            log.info("---------------------- Failed -----------------------");
         }
         return status;
     }
@@ -136,12 +152,12 @@ public class BaseTest {
         boolean status = true;
         try {
             Assert.assertFalse(condition);
-            log.info("---------------------- Passed -----------------------");
+            log.info("---------------------- PASSED -----------------------");
         } catch (Throwable e) {
             status = false;
+            log.info("---------------------- FAILED -----------------------");
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
-            log.info("---------------------- Failed -----------------------");
         }
         return status;
     }
@@ -150,12 +166,12 @@ public class BaseTest {
         boolean status = true;
         try {
             Assert.assertEquals(actual, expected);
-            log.info("---------------------- Passed -----------------------");
+            log.info("---------------------- PASSED -----------------------");
         } catch (Throwable e) {
             status = false;
+            log.info("---------------------- FAILED -----------------------");
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
-            log.info("---------------------- Failed -----------------------");
         }
         return status;
     }

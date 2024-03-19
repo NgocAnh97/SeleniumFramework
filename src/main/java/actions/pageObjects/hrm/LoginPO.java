@@ -10,7 +10,6 @@ public class LoginPO extends BasePage {
         this.driver = driver;
     }
 
-
 //    loginByUser(){
 //        verify
 //    }

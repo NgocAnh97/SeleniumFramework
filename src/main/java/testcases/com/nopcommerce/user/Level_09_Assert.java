@@ -23,7 +23,7 @@ import static org.testng.Assert.assertTrue;
 
 //@Listeners(actions.commons.MethodListener.class)
 public class Level_09_Assert extends BaseTest {
-    @Parameters({"browser", "environment"})
+    @Parameters({"browsser", "environment"})
     @BeforeClass
     public void beforeClass(String browserName, String environmentName) {
         driver = getBrowserDriver(browserName, environmentName);
