@@ -12,8 +12,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Level_02_Apply_BasePage_III extends BasePage {
     WebDriver driver;
@@ -27,7 +27,7 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         driver = new FirefoxDriver();
 
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
     }
 

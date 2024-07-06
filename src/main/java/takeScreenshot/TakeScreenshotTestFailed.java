@@ -9,14 +9,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 //@Listeners(TestListener.class)
 public class TakeScreenshotTestFailed extends BasePage {
@@ -33,7 +32,7 @@ public class TakeScreenshotTestFailed extends BasePage {
         homePage = new UserHomePageObjects(driver);
         loginPage = new UserLoginPageObjects(driver);
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
 
     public void readFile() throws IOException {

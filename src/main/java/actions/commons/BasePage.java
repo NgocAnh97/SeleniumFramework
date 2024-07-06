@@ -4,8 +4,7 @@ import actions.pageObjects.nopcommerce.user.UserAddressPageObjects;
 import actions.pageObjects.nopcommerce.user.UserMyProductReviewObjects;
 import actions.pageObjects.nopcommerce.user.UserRewardPointObjects;
 import interfaces.pageUIs.nopcommerce.BasePageUI;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
@@ -19,6 +18,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
+@Log4j2
 public class BasePage {
     public static BasePage getBasePageObject() {
         return new BasePage();
@@ -109,6 +109,10 @@ public class BasePage {
         return By.xpath(xpathLocator);
     }
 
+    private By getByXpath(String xpathLocator, String... params) {
+        return By.xpath(String.format(xpathLocator, (Object[]) params));
+    }
+
     private WebElement getWebElement(WebDriver driver, String xpathLocator) {
         return driver.findElement(getByXpath(xpathLocator));
     }
@@ -122,8 +126,19 @@ public class BasePage {
         element.click();
     }
 
+    public void clickToElement(WebDriver driver, String xpathLocator, String... params) {
+        WebElement element = getWebElement(driver, getDynamicLocator(xpathLocator, params));
+        element.click();
+    }
+
     public void senKeysToElement(WebDriver driver, String xpathLocator, String textValue) {
         WebElement element = getWebElement(driver, xpathLocator);
+        element.clear();
+        element.sendKeys(textValue);
+    }
+
+    public void senKeysToElement(WebDriver driver, String xpathLocator, String textValue, String... params) {
+        WebElement element = getWebElement(driver, getDynamicLocator(xpathLocator, params));
         element.clear();
         element.sendKeys(textValue);
     }
@@ -174,6 +189,10 @@ public class BasePage {
         return getWebElement(driver, xpathLocator).getAttribute(attributeName);
     }
 
+    public String getElementAttributeValue(WebDriver driver, String xpathLocator, String attributeName, String... params) {
+        return getWebElement(driver, getDynamicLocator(xpathLocator, params)).getAttribute(attributeName);
+    }
+
     public String getElementText(WebDriver driver, String xpathLocator) {
         return getWebElement(driver, xpathLocator).getText();
     }
@@ -192,6 +211,10 @@ public class BasePage {
 
     public int getElementSize(WebDriver driver, String xpathLocator) {
         return getListWebElement(driver, xpathLocator).size();
+    }
+
+    public int getElementSize(WebDriver driver, String xpathLocator, String... params) {
+        return getListWebElement(driver, getDynamicLocator(xpathLocator, params)).size();
     }
 
     public void checkToDefaultCheckboxRadio(WebDriver driver, String xpathLocator) {
@@ -333,6 +356,11 @@ public class BasePage {
         explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByXpath(xpathLocator)));
     }
 
+    public void waitForElementVisible(WebDriver driver, String xpathLocator, String... params) {
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByXpath(xpathLocator, params)));
+    }
+
     public void waitForAllElementVisible(WebDriver driver, String xpathLocator) {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
         explicitWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByXpath(xpathLocator)));
@@ -351,6 +379,15 @@ public class BasePage {
     public void waitForElementClickable(WebDriver driver, String xpathLocator) {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
         explicitWait.until(ExpectedConditions.elementToBeClickable(getWebElement(driver, xpathLocator)));
+    }
+
+    public void waitForElementClickable(WebDriver driver, String xpathLocator, String... params) {
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        explicitWait.until(ExpectedConditions.elementToBeClickable(getWebElement(driver, getDynamicLocator(xpathLocator, params))));
+    }
+
+    private String getDynamicLocator(String xpathLocator, String... params) {
+        return String.format(xpathLocator, (Object[]) params);
     }
 
     public UserAddressPageObjects openAddressPage(WebDriver driver) {
@@ -383,10 +420,52 @@ public class BasePage {
                 GlobalConstants.AccountPageUI.HEADER_TITLE + "[contains(text(),'" + pageHeader + "')]");
     }
 
-    protected final Log log;
+    // HRM - Menu
+    public void openMenuPage(WebDriver driver, String menuPageName) {
+        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+    }
+
+    // Sub Menu
+    public void openSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName) {
+        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+
+        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+    }
+
+    // Child Menu
+    public void openChildSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName, String childSubMenuPageName) {
+        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
+        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
+
+        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+
+        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, childSubMenuPageName);
+        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, childSubMenuPageName);
+    }
+
+    // Button
+    public void clickToButonByType(WebDriver driver, String buttonTypeName) {
+        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
+        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
+    }
+
+    // Enter Textbox
+    public void enterToTextboxByName(WebDriver driver, String value, String textBoxName) {
+        waitForElementVisible(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, textBoxName);
+        senKeysToElement(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, value, textBoxName);
+    }
+
+    // Enter Textbox
+    public String getTextboxValueByID(WebDriver driver, String value, String textBoxName) {
+        waitForElementVisible(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, textBoxName);
+        return getElementAttributeValue(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, "value", textBoxName);
+    }
 
     protected BasePage() {
-        log = LogFactory.getLog(getClass());
     }
 
     private long longTimeout = 30;

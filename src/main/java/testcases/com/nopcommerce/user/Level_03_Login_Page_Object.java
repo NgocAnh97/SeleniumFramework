@@ -14,6 +14,7 @@ import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +33,7 @@ public class Level_03_Login_Page_Object extends BasePage {
         loginPage = new UserLoginPageObjects(driver);
         readFile();
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
     }
 

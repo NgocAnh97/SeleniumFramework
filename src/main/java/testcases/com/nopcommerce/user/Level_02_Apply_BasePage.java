@@ -7,8 +7,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Level_02_Apply_BasePage extends BasePage {
     BasePage basePage;
@@ -23,8 +23,8 @@ public class Level_02_Apply_BasePage extends BasePage {
 
 //        basePage = new BasePage();
 
-        emailAddress = "test" + generateFakeNumber()+ "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
     }
 
@@ -47,11 +47,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         basePage.waitForElementClickable(driver, "//a[@class='ico-register']");
         basePage.clickToElement(driver, "//a[@class='ico-register']");
 
-        basePage.senKeysToElement(driver, "//input[@id='FirstName']","testFirstName");
-        basePage.senKeysToElement(driver, "//input[@id='LastName']","testLastName");
+        basePage.senKeysToElement(driver, "//input[@id='FirstName']", "testFirstName");
+        basePage.senKeysToElement(driver, "//input[@id='LastName']", "testLastName");
         basePage.senKeysToElement(driver, "//input[@id='Email']", "123456aA@@");
-        basePage.senKeysToElement(driver, "//input[@id='Password']","123456aA@@");
-        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']","123456aA@@");
+        basePage.senKeysToElement(driver, "//input[@id='Password']", "123456aA@@");
+        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']", "123456aA@@");
 
         basePage.waitForElementClickable(driver, "//button[@id='register-button']");
         basePage.clickToElement(driver, "//button[@id='register-button']");
@@ -64,11 +64,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         basePage.waitForElementClickable(driver, "//a[@class='ico-register']");
         basePage.clickToElement(driver, "//a[@class='ico-register']");
 
-        basePage.senKeysToElement(driver, "//input[@id='FirstName']","testFirstName");
-        basePage.senKeysToElement(driver, "//input[@id='LastName']","testLastName");
+        basePage.senKeysToElement(driver, "//input[@id='FirstName']", "testFirstName");
+        basePage.senKeysToElement(driver, "//input[@id='LastName']", "testLastName");
         basePage.senKeysToElement(driver, "//input[@id='Email']", emailAddress);
-        basePage.senKeysToElement(driver, "//input[@id='Password']","123456aA@@");
-        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']","123456aA@@");
+        basePage.senKeysToElement(driver, "//input[@id='Password']", "123456aA@@");
+        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']", "123456aA@@");
 
         basePage.waitForElementClickable(driver, "//button[@id='register-button']");
         basePage.clickToElement(driver, "//button[@id='register-button']");
@@ -76,7 +76,7 @@ public class Level_02_Apply_BasePage extends BasePage {
         Assert.assertEquals(basePage.getElementText(driver, "//div[@class='result']"), "Your registration completed");
 
         basePage.waitForElementClickable(driver, "//a[@class='ico-logout']");
-        basePage.clickToElement(driver,"//a[@class='ico-logout']");
+        basePage.clickToElement(driver, "//a[@class='ico-logout']");
     }
 
     @Test
@@ -84,11 +84,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         basePage.waitForElementClickable(driver, "//a[@class='ico-register']");
         basePage.clickToElement(driver, "//a[@class='ico-register']");
 
-        basePage.senKeysToElement(driver, "//input[@id='FirstName']","testFirstName");
-        basePage.senKeysToElement(driver, "//input[@id='LastName']","testLastName");
+        basePage.senKeysToElement(driver, "//input[@id='FirstName']", "testFirstName");
+        basePage.senKeysToElement(driver, "//input[@id='LastName']", "testLastName");
         basePage.senKeysToElement(driver, "//input[@id='Email']", emailAddress);
-        basePage.senKeysToElement(driver, "//input[@id='Password']","123456aA@@");
-        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']","123456aA@@");
+        basePage.senKeysToElement(driver, "//input[@id='Password']", "123456aA@@");
+        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']", "123456aA@@");
 
         basePage.waitForElementClickable(driver, "//button[@id='register-button']");
         basePage.clickToElement(driver, "//button[@id='register-button']");
@@ -101,11 +101,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         basePage.waitForElementClickable(driver, "//a[@class='ico-register']");
         basePage.clickToElement(driver, "//a[@class='ico-register']");
 
-        basePage.senKeysToElement(driver, "//input[@id='FirstName']","testFirstName");
-        basePage.senKeysToElement(driver, "//input[@id='LastName']","testLastName");
+        basePage.senKeysToElement(driver, "//input[@id='FirstName']", "testFirstName");
+        basePage.senKeysToElement(driver, "//input[@id='LastName']", "testLastName");
         basePage.senKeysToElement(driver, "//input[@id='Email']", emailAddress);
-        basePage.senKeysToElement(driver, "//input[@id='Password']","12345");
-        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']","12345");
+        basePage.senKeysToElement(driver, "//input[@id='Password']", "12345");
+        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']", "12345");
 
         basePage.waitForElementClickable(driver, "//button[@id='register-button']");
         basePage.clickToElement(driver, "//button[@id='register-button']");
@@ -119,11 +119,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         basePage.waitForElementClickable(driver, "//a[@class='ico-register']");
         basePage.clickToElement(driver, "//a[@class='ico-register']");
 
-        basePage.senKeysToElement(driver, "//input[@id='FirstName']","testFirstName");
-        basePage.senKeysToElement(driver, "//input[@id='LastName']","testLastName");
+        basePage.senKeysToElement(driver, "//input[@id='FirstName']", "testFirstName");
+        basePage.senKeysToElement(driver, "//input[@id='LastName']", "testLastName");
         basePage.senKeysToElement(driver, "//input[@id='Email']", "test@yopmail.com");
-        basePage.senKeysToElement(driver, "//input[@id='Password']","123456@@");
-        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']","123456@");
+        basePage.senKeysToElement(driver, "//input[@id='Password']", "123456@@");
+        basePage.senKeysToElement(driver, "//input[@id='ConfirmPassword']", "123456@");
 
         basePage.waitForElementClickable(driver, "//button[@id='register-button']");
         basePage.clickToElement(driver, "//button[@id='register-button']");
@@ -131,7 +131,7 @@ public class Level_02_Apply_BasePage extends BasePage {
         Assert.assertEquals(basePage.getElementText(driver, "//span[@id='ConfirmPassword-error']"), "The password and confirmation password do not match.");
     }
 
-    public int generateFakeNumber(){
+    public int generateFakeNumber() {
         Random random = new Random();
         return random.nextInt(500);
     }

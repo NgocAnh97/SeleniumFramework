@@ -11,8 +11,8 @@ import org.testng.annotations.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Admin_01_Login extends BasePage {
 //    public User_01_Login(String emailAddress, WebDriver driver) {
@@ -31,13 +31,13 @@ public class Admin_01_Login extends BasePage {
 
         readFile();
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
     }
 
     public void readFile() throws IOException {
         String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-        FileReader fileReader= new FileReader(TestFile);
+        FileReader fileReader = new FileReader(TestFile);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         String Content = "";
@@ -133,7 +133,7 @@ public class Admin_01_Login extends BasePage {
     }
 
     @AfterTest
-    public void afterClass(){
+    public void afterClass() {
         driver.quit();
     }
 

@@ -9,4 +9,8 @@ public class PersonalDetailPO extends BasePage {
     public PersonalDetailPO(WebDriver driver) {
         this.driver = driver;
     }
+
+    public EmployeeListPO openEmployeeListPage() {
+        return new EmployeeListPO(driver);
+    }
 }

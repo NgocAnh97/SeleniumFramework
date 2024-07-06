@@ -14,7 +14,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.Reporter;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class BaseTest {
     private WebDriver driver;
@@ -54,8 +54,44 @@ public class BaseTest {
             throw new RuntimeException("Browser name is invalid.");
         }
 
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get(GlobalConstants.PORTAL_PAGE_URL);
+        return driver;
+    }
+
+    protected WebDriver getBrowserUrl(String browserName, String url) {
+        if (browserName.equals("firefox")) {
+            WebDriverManager.firefoxdriver().clearDriverCache().setup();
+            driver = new FirefoxDriver();
+        } else if (browserName.equals("h_firefox")) {
+            WebDriverManager.firefoxdriver().clearDriverCache().setup();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.addArguments("--headless");
+            firefoxOptions.addArguments("window-size=1920x1080");
+            driver = new FirefoxDriver(firefoxOptions);
+        } else if (browserName.equals("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if (browserName.equals("h_chrome")) {
+            WebDriverManager.chromedriver().clearDriverCache().setup();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            options.addArguments("window-size=1920x1080");
+            driver = new ChromeDriver(options);
+        } else if (browserName.equals("edge")) {
+            WebDriverManager.edgedriver();
+            driver = new EdgeDriver();
+        } else if (browserName.equals("h_edge")) {
+            WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
+            EdgeOptions edgeOptions = new EdgeOptions();
+//            edgeOptions.setPageLoadStrategy("--headless");
+            driver = new EdgeDriver(edgeOptions);
+        } else {
+            throw new RuntimeException("Browser name is invalid.");
+        }
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.get(url);
         return driver;
     }
 
@@ -71,7 +107,7 @@ public class BaseTest {
             firefoxOptions.addArguments("window-size=1920x1080");
             driver = new FirefoxDriver(firefoxOptions);
         } else if (browserName.equals("chrome")) {
-            WebDriverManager.chromedriver().clearDriverCache().setup();
+            WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         } else if (browserName.equals("h_chrome")) {
             WebDriverManager.chromedriver().clearDriverCache().setup();
@@ -91,7 +127,7 @@ public class BaseTest {
             throw new RuntimeException("Browser name is invalid.");
         }
 
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get(getEnvironmentUrl(environmentName));
         return driver;
     }
@@ -105,7 +141,7 @@ public class BaseTest {
 //            default:
 //                throw new RuntimeException("Please enter the correct Browser name!");
 //        }
-//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 //        return driver;
 //    }
 

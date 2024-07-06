@@ -1,7 +1,6 @@
 package actions.pageObjects.nopcommerce.user;
 
 import actions.commons.BasePage;
-import actions.commons.GlobalConstants;
 import org.openqa.selenium.WebDriver;
 
 public class UserAddressPageObjects extends BasePage {
@@ -10,5 +9,4 @@ public class UserAddressPageObjects extends BasePage {
     public UserAddressPageObjects(WebDriver driver) {
         this.driver = driver;
     }
-
 }

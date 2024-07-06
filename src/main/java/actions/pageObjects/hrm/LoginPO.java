@@ -9,8 +9,4 @@ public class LoginPO extends BasePage {
     public LoginPO(WebDriver driver) {
         this.driver = driver;
     }
-
-//    loginByUser(){
-//        verify
-//    }
 }

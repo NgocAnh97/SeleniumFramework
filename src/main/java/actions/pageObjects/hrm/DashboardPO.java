@@ -9,4 +9,9 @@ public class DashboardPO extends BasePage {
     public DashboardPO(WebDriver driver) {
         this.driver = driver;
     }
+
+
+    public EmployeeListPO openEmployeeListPage() {
+        return new EmployeeListPO(driver);
+    }
 }

@@ -7,8 +7,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Level_02_Apply_BasePage_II {
     BasePage basePage;
@@ -25,7 +25,7 @@ public class Level_02_Apply_BasePage_II {
         basePage = BasePage.getBasePageObject();
 
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
     }
 

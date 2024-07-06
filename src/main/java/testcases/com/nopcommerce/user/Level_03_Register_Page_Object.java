@@ -1,21 +1,21 @@
 package testcases.com.nopcommerce.user;
 
 import actions.commons.BasePage;
+import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
+import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
-import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Level_03_Register_Page_Object extends BasePage {
     private WebDriver driver;
@@ -32,7 +32,7 @@ public class Level_03_Register_Page_Object extends BasePage {
         homePage = new UserHomePageObjects(driver);
 
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
         homePage = new UserHomePageObjects(driver);
         registerPage = new UserRegisterPageObjects(driver);

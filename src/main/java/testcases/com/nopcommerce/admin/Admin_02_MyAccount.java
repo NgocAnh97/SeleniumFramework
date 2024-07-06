@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.*;
+import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Admin_02_MyAccount extends BasePage {
     WebDriver driver;
@@ -33,7 +33,7 @@ public class Admin_02_MyAccount extends BasePage {
         driver = new FirefoxDriver();
 
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
         Register_Valid_Data();
         readFile();
@@ -122,15 +122,15 @@ public class Admin_02_MyAccount extends BasePage {
         clickToElement(driver, submitButtonFieldLocator);
 
 //        Assert.assertTrue(isElementSelected(driver, genderFemaleInputFieldLocator));
-        Assert.assertEquals(getValue(driver,firstNameInputFieldLocator),"Automation");
-        Assert.assertEquals(getElementCssValue(driver,lastNameInputFieldLocator,"value"),"FC");
+        Assert.assertEquals(getValue(driver, firstNameInputFieldLocator), "Automation");
+        Assert.assertEquals(getElementCssValue(driver, lastNameInputFieldLocator, "value"), "FC");
 //        Assert.assertEquals(getElementText(driver, firstNameInputFieldLocator), "Automation");
 //        Assert.assertEquals(getElementText(driver, lastNameInputFieldLocator), "FC");
         Assert.assertEquals(getSelectedItemDefaultDropdown(driver, dateSelectFieldLocator), "1");
         Assert.assertEquals(getSelectedItemDefaultDropdown(driver, monthSelectFieldLocator), "3");
         Assert.assertEquals(getSelectedItemDefaultDropdown(driver, yearSelectFieldLocator), "1997");
-        Assert.assertEquals(getElementCssValue(driver,emailInputFieldLocator,"value"),"automationfc.vn@gmail.com");
-        Assert.assertEquals(getElementCssValue(driver,companyInputFieldLocator,"value"),"Automation FC");
+        Assert.assertEquals(getElementCssValue(driver, emailInputFieldLocator, "value"), "automationfc.vn@gmail.com");
+        Assert.assertEquals(getElementCssValue(driver, companyInputFieldLocator, "value"), "Automation FC");
 //        Assert.assertEquals(getElementText(driver, emailInputFieldLocator), "automationfc.vn@gmail.com");
 //        Assert.assertEquals(getElementText(driver, companyInputFieldLocator), "Automation FC");
     }

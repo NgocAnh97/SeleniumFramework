@@ -6,7 +6,6 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import takeScreenshot.TakeScreenshotTestFailed;
 
 import java.sql.DriverManager;
 import java.util.HashMap;
