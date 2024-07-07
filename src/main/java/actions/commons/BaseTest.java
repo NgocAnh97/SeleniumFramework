@@ -55,7 +55,7 @@ public class BaseTest {
         }
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        driver.get(GlobalConstants.PORTAL_PAGE_URL);
+//        driver.get(GlobalConstants.PORTAL_PAGE_URL);
         return driver;
     }
 

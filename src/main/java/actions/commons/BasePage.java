@@ -114,11 +114,51 @@ public class BasePage {
     }
 
     private WebElement getWebElement(WebDriver driver, String xpathLocator) {
-        return driver.findElement(getByXpath(xpathLocator));
+        return driver.findElement(getByLocator(xpathLocator));
     }
 
     private List<WebElement> getListWebElement(WebDriver driver, String xpathLocator) {
-        return driver.findElements(getByXpath(xpathLocator));
+        return driver.findElements(getByLocator(xpathLocator));
+    }
+
+    public By getByLocator(String prefixLocator) {
+        By by = null;
+        if (prefixLocator.toLowerCase().startsWith("id")) {
+            by = By.id(prefixLocator.substring(3));
+        } else if (prefixLocator.toLowerCase().startsWith("css")) {
+            by = By.cssSelector(prefixLocator.substring(5));
+        } else if (prefixLocator.toLowerCase().startsWith("class")) {
+            by = By.className(prefixLocator.substring(6));
+        } else if (prefixLocator.toLowerCase().startsWith("tagname")) {
+            by = By.tagName(prefixLocator.substring(8));
+        } else if (prefixLocator.toLowerCase().startsWith("name")) {
+            by = By.name(prefixLocator.substring(5));
+        } else if (prefixLocator.toLowerCase().startsWith("xpath")) {
+            by = By.xpath(prefixLocator.substring(6));
+        } else {
+            throw new RuntimeException("Locator type is not supported!!");
+        }
+        return by;
+    }
+
+    public By getByLocator(String prefixLocator, String... params) {
+        By by = null;
+        if (prefixLocator.toLowerCase().startsWith("id")) {
+            by = By.id(getDynamicLocator(prefixLocator.substring(3), params));
+        } else if (prefixLocator.toLowerCase().startsWith("css")) {
+            by = By.cssSelector(getDynamicLocator(prefixLocator.substring(5), params));
+        } else if (prefixLocator.toLowerCase().startsWith("class")) {
+            by = By.className(getDynamicLocator(prefixLocator.substring(6), params));
+        } else if (prefixLocator.toLowerCase().startsWith("tagname")) {
+            by = By.tagName(getDynamicLocator(prefixLocator.substring(8), params));
+        } else if (prefixLocator.toLowerCase().startsWith("name")) {
+            by = By.name(getDynamicLocator(prefixLocator.substring(5), params));
+        } else if (prefixLocator.toLowerCase().startsWith("xpath")) {
+            by = By.xpath(getDynamicLocator(prefixLocator.substring(6), params));
+        } else {
+            throw new RuntimeException("Locator type is not supported!!");
+        }
+        return by;
     }
 
     public void clickToElement(WebDriver driver, String xpathLocator) {
@@ -165,7 +205,7 @@ public class BasePage {
         sleepInSecond(1);
 
         List<WebElement> allItems = explicitWait
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByXpath(childXpath)));
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childXpath)));
         for (WebElement item : allItems) {
             if (item.getText().trim().equals(expectItemText)) {
                 JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -353,22 +393,22 @@ public class BasePage {
 
     public void waitForElementVisible(WebDriver driver, String xpathLocator) {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByXpath(xpathLocator)));
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(xpathLocator)));
     }
 
     public void waitForElementVisible(WebDriver driver, String xpathLocator, String... params) {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByXpath(xpathLocator, params)));
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(xpathLocator, params)));
     }
 
     public void waitForAllElementVisible(WebDriver driver, String xpathLocator) {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByXpath(xpathLocator)));
+        explicitWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByLocator(xpathLocator)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String xpathLocator) {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(getByXpath(xpathLocator)));
+        explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(xpathLocator)));
     }
 
     public void waitForAllElementInvisible(WebDriver driver, String xpathLocator) {
