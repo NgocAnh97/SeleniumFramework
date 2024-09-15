@@ -19,12 +19,12 @@ public class LoginPageObjects extends BasePage {
 
     public void inputToEmail(String invalidEmail) {
         waitForElementVisible(driver, LiveGuruConstants.LoginPageUI.EMAIL_TEXTBOX);
-        senKeysToElement(driver, LiveGuruConstants.LoginPageUI.EMAIL_TEXTBOX, invalidEmail);
+        sendKeysToElement(driver, LiveGuruConstants.LoginPageUI.EMAIL_TEXTBOX, invalidEmail);
     }
 
     public void inputToPassword(String passWord) {
         waitForElementVisible(driver, LiveGuruConstants.LoginPageUI.PASSWORD_TEXTBOX);
-        senKeysToElement(driver, LiveGuruConstants.LoginPageUI.PASSWORD_TEXTBOX, passWord);
+        sendKeysToElement(driver, LiveGuruConstants.LoginPageUI.PASSWORD_TEXTBOX, passWord);
     }
 
     public String getRequiredEmailErrorMessage() {

@@ -1,6 +1,17 @@
 package actions.commons;
 
 public class GlobalConstants {
+    public static final String DEV_USER_URL = "http://demo.nopcommerce.com/";
+    public static final String STAGING_USER_URL = "http://staging.nopcommerce.com/";
+    public static final String LIVE_USER_URL = "http://live.nopcommerce.com/";
+
+    public static final String DEV_ADMIN_URL = "http://admin-demo.nopcommerce.com/";
+    public static final String STAGING_ADMIN_URL = "http://admin-staging.nopcommerce.com/";
+    public static final String LIVE_ADMIN_URL = "http://admin-live.nopcommerce.com/";
+
+    public static final String ADMIN_USER = "admin@yourstore.com";
+    public static final String ADMIN_PASSWORD = "admin";
+
     public static final String ADMIN_PAGE_URL = "https://admin-demo.nopcommerce.com/";
     public static final String DASHBOARD_LINK = "Xpath=//img[@class='brand-image-xl logo-xl']";
     //    public static final String PORTAL_PAGE_URL = "https://demo.nopcommerce.com/";

@@ -19,27 +19,27 @@ public class RegisterPageObjects extends BasePage {
 
     public void inputToFirstNameTextbox(String testFirstName) {
         waitForElementVisible(driver, LiveGuruConstants.RegisterPageUI.FIRST_NAME_TEXTBOX);
-        senKeysToElement(driver, LiveGuruConstants.RegisterPageUI.FIRST_NAME_TEXTBOX, testFirstName);
+        sendKeysToElement(driver, LiveGuruConstants.RegisterPageUI.FIRST_NAME_TEXTBOX, testFirstName);
     }
 
     public void inputToLastNameTextbox(String testLastName) {
         waitForElementVisible(driver, LiveGuruConstants.RegisterPageUI.LAST_NAME_TEXTBOX);
-        senKeysToElement(driver, LiveGuruConstants.RegisterPageUI.LAST_NAME_TEXTBOX, testLastName);
+        sendKeysToElement(driver, LiveGuruConstants.RegisterPageUI.LAST_NAME_TEXTBOX, testLastName);
     }
 
     public void inputToEmailTextbox(String invalidEmail) {
         waitForElementVisible(driver, LiveGuruConstants.RegisterPageUI.EMAIL_TEXTBOX);
-        senKeysToElement(driver, LiveGuruConstants.RegisterPageUI.EMAIL_TEXTBOX, invalidEmail);
+        sendKeysToElement(driver, LiveGuruConstants.RegisterPageUI.EMAIL_TEXTBOX, invalidEmail);
     }
 
     public void inputToPasswordTextbox(String passWord) {
         waitForElementVisible(driver, LiveGuruConstants.RegisterPageUI.PASSWORD_TEXTBOX);
-        senKeysToElement(driver, LiveGuruConstants.RegisterPageUI.PASSWORD_TEXTBOX, passWord);
+        sendKeysToElement(driver, LiveGuruConstants.RegisterPageUI.PASSWORD_TEXTBOX, passWord);
     }
 
     public void inputToConfirmPasswordTextbox(String passWord) {
         waitForElementVisible(driver, LiveGuruConstants.RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX);
-        senKeysToElement(driver, LiveGuruConstants.RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX, passWord);
+        sendKeysToElement(driver, LiveGuruConstants.RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX, passWord);
     }
 
     public String getRequiredFirstNameErrorMessage() {

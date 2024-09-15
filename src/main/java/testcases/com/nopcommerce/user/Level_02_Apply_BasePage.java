@@ -42,15 +42,15 @@ public class Level_02_Apply_BasePage extends BasePage {
         waitForElementClickable(driver, "class=ico-register");
         clickToElement(driver, "class=ico-register");
 
-        senKeysToElement(driver, "id=FirstName", "testFirstName");
-        senKeysToElement(driver, "id=LastName", "testLastName");
-        senKeysToElement(driver, "id=Email", "wrongEmail");
-        senKeysToElement(driver, "id=Password", "123456aA@@");
-        senKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
+        sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        sendKeysToElement(driver, "id=LastName", "testLastName");
+        sendKeysToElement(driver, "id=Email", "wrongEmail");
+        sendKeysToElement(driver, "id=Password", "123456aA@@");
+        sendKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
 
         waitForElementClickable(driver, "id=register-button");
         clickToElement(driver, "id=register-button");
-        sleepInSecond(2);
+        sleepInSeconds(2);
         Assert.assertEquals(getElementText(driver, "xpath=//span[@data-valmsg-for='Email']"), "Please enter a valid email address.");
     }
 
@@ -59,11 +59,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         waitForElementClickable(driver, "class=ico-register");
         clickToElement(driver, "class=ico-register");
 
-        senKeysToElement(driver, "id=FirstName", "testFirstName");
-        senKeysToElement(driver, "id=LastName", "testLastName");
-        senKeysToElement(driver, "id=Email", emailAddress);
-        senKeysToElement(driver, "id=Password", "123456aA@@");
-        senKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
+        sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        sendKeysToElement(driver, "id=LastName", "testLastName");
+        sendKeysToElement(driver, "id=Email", emailAddress);
+        sendKeysToElement(driver, "id=Password", "123456aA@@");
+        sendKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
 
         waitForElementClickable(driver, "id=register-button");
         clickToElement(driver, "id=register-button");
@@ -79,11 +79,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         waitForElementClickable(driver, "class=ico-register");
         clickToElement(driver, "class=ico-register");
 
-        senKeysToElement(driver, "id=FirstName", "testFirstName");
-        senKeysToElement(driver, "id=LastName", "testLastName");
-        senKeysToElement(driver, "id=Email", emailAddress);
-        senKeysToElement(driver, "id=Password", "123456aA@@");
-        senKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
+        sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        sendKeysToElement(driver, "id=LastName", "testLastName");
+        sendKeysToElement(driver, "id=Email", emailAddress);
+        sendKeysToElement(driver, "id=Password", "123456aA@@");
+        sendKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
 
         waitForElementClickable(driver, "id=register-button");
         clickToElement(driver, "id=register-button");
@@ -96,11 +96,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         waitForElementClickable(driver, "class=ico-register");
         clickToElement(driver, "class=ico-register");
 
-        senKeysToElement(driver, "id=FirstName", "testFirstName");
-        senKeysToElement(driver, "id=LastName", "testLastName");
-        senKeysToElement(driver, "id=Email", emailAddress);
-        senKeysToElement(driver, "id=Password", "12345");
-        senKeysToElement(driver, "id=ConfirmPassword", "12345");
+        sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        sendKeysToElement(driver, "id=LastName", "testLastName");
+        sendKeysToElement(driver, "id=Email", emailAddress);
+        sendKeysToElement(driver, "id=Password", "12345");
+        sendKeysToElement(driver, "id=ConfirmPassword", "12345");
 
         waitForElementClickable(driver, "id=register-button");
         clickToElement(driver, "id=register-button");
@@ -114,11 +114,11 @@ public class Level_02_Apply_BasePage extends BasePage {
         waitForElementClickable(driver, "class=ico-register");
         clickToElement(driver, "class=ico-register");
 
-        senKeysToElement(driver, "id=FirstName", "testFirstName");
-        senKeysToElement(driver, "id=LastName", "testLastName");
-        senKeysToElement(driver, "id=Email", "test@yopmail.com");
-        senKeysToElement(driver, "id=Password", "123456@@");
-        senKeysToElement(driver, "id=ConfirmPassword", "123456@");
+        sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        sendKeysToElement(driver, "id=LastName", "testLastName");
+        sendKeysToElement(driver, "id=Email", "test@yopmail.com");
+        sendKeysToElement(driver, "id=Password", "123456@@");
+        sendKeysToElement(driver, "id=ConfirmPassword", "123456@");
 
         waitForElementClickable(driver, "id=register-button");
         clickToElement(driver, "id=register-button");

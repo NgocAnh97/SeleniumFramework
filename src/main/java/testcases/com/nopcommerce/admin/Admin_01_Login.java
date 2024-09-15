@@ -58,7 +58,7 @@ public class Admin_01_Login extends BasePage {
         waitForElementClickable(driver, "class=ico-login");
         clickToElement(driver, "class=ico-login");
 
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", "invalidemail");
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", "invalidemail");
         waitForElementClickable(driver, "xpath=//button[contains(@class,'login-button')]");
         clickToElement(driver, "xpath=//button[contains(@class,'login-button')]");
         Assert.assertEquals(getElementText(driver, "class=field-validation-error"), "Please enter a valid email address.");
@@ -69,8 +69,8 @@ public class Admin_01_Login extends BasePage {
         waitForElementClickable(driver, "class=ico-login");
         clickToElement(driver, "class=ico-login");
 
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", emailAddress);
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", passWord);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", emailAddress);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", passWord);
 
         waitForElementClickable(driver, "xpath=//button[contains(@class,'login-button')]");
         clickToElement(driver, "xpath=//button[contains(@class,'login-button')]");
@@ -82,7 +82,7 @@ public class Admin_01_Login extends BasePage {
         waitForElementClickable(driver, "class=ico-login");
         clickToElement(driver, "class=ico-login");
 
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", registerEmail);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", registerEmail);
 //        senKeysToElement(driver, "//input[contains(@id,'Password')]", "");
 
         waitForElementClickable(driver, "xpath=//button[contains(@class,'login-button')]");
@@ -95,8 +95,8 @@ public class Admin_01_Login extends BasePage {
         waitForElementClickable(driver, "class=ico-login");
         clickToElement(driver, "class=ico-login");
 
-        senKeysToElement(driver, "Xpath=//input[contains(@id,'Email')]", registerEmail);
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", "123456");
+        sendKeysToElement(driver, "Xpath=//input[contains(@id,'Email')]", registerEmail);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", "123456");
 
         waitForElementClickable(driver, "xpath=//button[contains(@class,'login-button')]");
         clickToElement(driver, "xpath=//button[contains(@class,'login-button')]");
@@ -108,13 +108,13 @@ public class Admin_01_Login extends BasePage {
         waitForElementClickable(driver, "class=ico-login");
         clickToElement(driver, "class=ico-login");
 
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", registerEmail);
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", passWord);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", registerEmail);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", passWord);
 
         waitForElementClickable(driver, "xpath=//button[contains(@class,'login-button')]");
         clickToElement(driver, "xpath=//button[contains(@class,'login-button')]");
 
-        sleepInSecond(3);
+        sleepInSeconds(3);
         waitForElementClickable(driver, "xpath=//a[contains(@class,'ico-account')]");
         clickToElement(driver, "xpath=//a[contains(@class,'ico-account')]");
 

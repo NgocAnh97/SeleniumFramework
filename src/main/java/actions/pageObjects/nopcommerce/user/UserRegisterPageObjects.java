@@ -52,27 +52,27 @@ public class UserRegisterPageObjects extends BasePage {
 
     public void inputToFirstnameTextbox(String testFirstName) {
         waitForElementVisible(driver, GlobalConstants.RegisterPageUI.FIRST_NAME_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.RegisterPageUI.FIRST_NAME_TEXTBOX, testFirstName);
+        sendKeysToElement(driver, GlobalConstants.RegisterPageUI.FIRST_NAME_TEXTBOX, testFirstName);
     }
 
     public void inputToLastnameTextbox(String testLastName) {
         waitForElementVisible(driver, GlobalConstants.RegisterPageUI.LAST_NAME_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.RegisterPageUI.LAST_NAME_TEXTBOX, testLastName);
+        sendKeysToElement(driver, GlobalConstants.RegisterPageUI.LAST_NAME_TEXTBOX, testLastName);
     }
 
     public void inputToEmailTextbox(String email) {
         waitForElementVisible(driver, GlobalConstants.RegisterPageUI.EMAIL_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.RegisterPageUI.EMAIL_TEXTBOX, email);
+        sendKeysToElement(driver, GlobalConstants.RegisterPageUI.EMAIL_TEXTBOX, email);
     }
 
     public void inputToPasswordTextbox(String passWord) {
         waitForElementVisible(driver, GlobalConstants.RegisterPageUI.PASSWORD_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.RegisterPageUI.PASSWORD_TEXTBOX, passWord);
+        sendKeysToElement(driver, GlobalConstants.RegisterPageUI.PASSWORD_TEXTBOX, passWord);
     }
 
     public void inputToConfirmPasswordTextbox(String confirmPassWord) {
         waitForElementVisible(driver, GlobalConstants.RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX, confirmPassWord);
+        sendKeysToElement(driver, GlobalConstants.RegisterPageUI.CONFIRM_PASSWORD_TEXTBOX, confirmPassWord);
     }
 
     public String getRegisterCompletedResultMessage() {

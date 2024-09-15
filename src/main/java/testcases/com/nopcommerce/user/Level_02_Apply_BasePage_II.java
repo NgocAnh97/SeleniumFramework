@@ -45,15 +45,15 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "class=ico-register");
         basePage.clickToElement(driver, "class=ico-register");
 
-        basePage.senKeysToElement(driver, "id=FirstName", "testFirstName");
-        basePage.senKeysToElement(driver, "id=LastName", "testLastName");
-        basePage.senKeysToElement(driver, "id=Email", "123456aA@@");
-        basePage.senKeysToElement(driver, "id=Password", "123456aA@@");
-        basePage.senKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
+        basePage.sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        basePage.sendKeysToElement(driver, "id=LastName", "testLastName");
+        basePage.sendKeysToElement(driver, "id=Email", "123456aA@@");
+        basePage.sendKeysToElement(driver, "id=Password", "123456aA@@");
+        basePage.sendKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
 
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");
-        basePage.sleepInSecond(2);
+        basePage.sleepInSeconds(2);
         Assert.assertEquals(basePage.getElementText(driver, "xpath=//span[@data-valmsg-for='Email']"), "Please enter a valid email address.");
     }
 
@@ -62,11 +62,11 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "class=ico-register");
         basePage.clickToElement(driver, "class=ico-register");
 
-        basePage.senKeysToElement(driver, "id=FirstName", "testFirstName");
-        basePage.senKeysToElement(driver, "id=LastName", "testLastName");
-        basePage.senKeysToElement(driver, "id=Email", emailAddress);
-        basePage.senKeysToElement(driver, "id=Password", "123456aA@@");
-        basePage.senKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
+        basePage.sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        basePage.sendKeysToElement(driver, "id=LastName", "testLastName");
+        basePage.sendKeysToElement(driver, "id=Email", emailAddress);
+        basePage.sendKeysToElement(driver, "id=Password", "123456aA@@");
+        basePage.sendKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
 
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");
@@ -82,11 +82,11 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "class=ico-register");
         basePage.clickToElement(driver, "class=ico-register");
 
-        basePage.senKeysToElement(driver, "id=FirstName", "testFirstName");
-        basePage.senKeysToElement(driver, "id=LastName", "testLastName");
-        basePage.senKeysToElement(driver, "id=Email", emailAddress);
-        basePage.senKeysToElement(driver, "id=Password", "123456aA@@");
-        basePage.senKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
+        basePage.sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        basePage.sendKeysToElement(driver, "id=LastName", "testLastName");
+        basePage.sendKeysToElement(driver, "id=Email", emailAddress);
+        basePage.sendKeysToElement(driver, "id=Password", "123456aA@@");
+        basePage.sendKeysToElement(driver, "id=ConfirmPassword", "123456aA@@");
 
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");
@@ -99,11 +99,11 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "class=ico-register");
         basePage.clickToElement(driver, "class=ico-register");
 
-        basePage.senKeysToElement(driver, "id=FirstName", "testFirstName");
-        basePage.senKeysToElement(driver, "id=LastName", "testLastName");
-        basePage.senKeysToElement(driver, "id=Email", emailAddress);
-        basePage.senKeysToElement(driver, "id=Password", "12345");
-        basePage.senKeysToElement(driver, "id=ConfirmPassword", "12345");
+        basePage.sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        basePage.sendKeysToElement(driver, "id=LastName", "testLastName");
+        basePage.sendKeysToElement(driver, "id=Email", emailAddress);
+        basePage.sendKeysToElement(driver, "id=Password", "12345");
+        basePage.sendKeysToElement(driver, "id=ConfirmPassword", "12345");
 
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");
@@ -117,11 +117,11 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "class=ico-register");
         basePage.clickToElement(driver, "class=ico-register");
 
-        basePage.senKeysToElement(driver, "id=FirstName", "testFirstName");
-        basePage.senKeysToElement(driver, "id=LastName", "testLastName");
-        basePage.senKeysToElement(driver, "id=Email", "test@yopmail.com");
-        basePage.senKeysToElement(driver, "id=Password", "123456@@");
-        basePage.senKeysToElement(driver, "id=ConfirmPassword", "123456@");
+        basePage.sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        basePage.sendKeysToElement(driver, "id=LastName", "testLastName");
+        basePage.sendKeysToElement(driver, "id=Email", "test@yopmail.com");
+        basePage.sendKeysToElement(driver, "id=Password", "123456@@");
+        basePage.sendKeysToElement(driver, "id=ConfirmPassword", "123456@");
 
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");

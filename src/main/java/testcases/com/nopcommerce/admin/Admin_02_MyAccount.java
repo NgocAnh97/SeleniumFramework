@@ -43,15 +43,15 @@ public class Admin_02_MyAccount extends BasePage {
         waitForElementClickable(driver, genderFemaleInputFieldLocator);
         clickToElement(driver, genderFemaleInputFieldLocator);
 
-        senKeysToElement(driver, firstNameInputFieldLocator, "Automation");
-        senKeysToElement(driver, lastNameInputFieldLocator, "FC");
+        sendKeysToElement(driver, firstNameInputFieldLocator, "Automation");
+        sendKeysToElement(driver, lastNameInputFieldLocator, "FC");
 
-        selectItemInDefaultDropdown(driver, dateSelectFieldLocator, "1");
-        selectItemInDefaultDropdown(driver, monthSelectFieldLocator, "3");
-        selectItemInDefaultDropdown(driver, yearSelectFieldLocator, "1997");
+        selectItemInDropdown(driver, dateSelectFieldLocator, "1");
+        selectItemInDropdown(driver, monthSelectFieldLocator, "3");
+        selectItemInDropdown(driver, yearSelectFieldLocator, "1997");
 
-        senKeysToElement(driver, emailInputFieldLocator, "test.vn@gmail.com");
-        senKeysToElement(driver, companyInputFieldLocator, "Automation FC");
+        sendKeysToElement(driver, emailInputFieldLocator, "test.vn@gmail.com");
+        sendKeysToElement(driver, companyInputFieldLocator, "Automation FC");
 
         clickToElement(driver, submitButtonFieldLocator);
 
@@ -73,11 +73,11 @@ public class Admin_02_MyAccount extends BasePage {
         waitForElementClickable(driver, "class=ico-register");
         clickToElement(driver, "class=ico-register");
 
-        senKeysToElement(driver, "id=FirstName", "testFirstName");
-        senKeysToElement(driver, "id=LastName", "testLastName");
-        senKeysToElement(driver, "id=Email", emailAddress);
-        senKeysToElement(driver, "id=Password", passWord);
-        senKeysToElement(driver, "id=ConfirmPassword", passWord);
+        sendKeysToElement(driver, "id=FirstName", "testFirstName");
+        sendKeysToElement(driver, "id=LastName", "testLastName");
+        sendKeysToElement(driver, "id=Email", emailAddress);
+        sendKeysToElement(driver, "id=Password", passWord);
+        sendKeysToElement(driver, "id=ConfirmPassword", passWord);
 
         waitForElementClickable(driver, "id=register-button");
         clickToElement(driver, "id=register-button");
@@ -94,8 +94,8 @@ public class Admin_02_MyAccount extends BasePage {
         waitForElementClickable(driver, "class=ico-login");
         clickToElement(driver, "class=ico-login");
 
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", registerEmail);
-        senKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", passWord);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", registerEmail);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", passWord);
 
         waitForElementClickable(driver, "xpath=//button[contains(@class,'login-button')]");
         clickToElement(driver, "xpath=//button[contains(@class,'login-button')]");

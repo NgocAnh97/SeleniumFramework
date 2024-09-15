@@ -14,12 +14,12 @@ public class AdminLoginPageObjects extends BasePage {
 
     public void inputToEmailTextbox(String email) {
         waitForElementVisible(driver, GlobalConstants.LoginPageUI.EMAIL_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.LoginPageUI.EMAIL_TEXTBOX, email);
+        sendKeysToElement(driver, GlobalConstants.LoginPageUI.EMAIL_TEXTBOX, email);
     }
 
     public void inputToPasswordTextbox(String passWord) {
         waitForElementVisible(driver, GlobalConstants.LoginPageUI.PASSWORD_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.LoginPageUI.PASSWORD_TEXTBOX, passWord);
+        sendKeysToElement(driver, GlobalConstants.LoginPageUI.PASSWORD_TEXTBOX, passWord);
     }
 
     public AdminDashboardPageObjects openLoginPage() {

@@ -20,7 +20,7 @@ public class Level_16_Live_Coding extends BaseTest {
         log.info("Pre-condition - Step 02: Login with Admin role");
         loginPage.enterToTextboxByName(driver, "Admin", "username");
         loginPage.enterToTextboxByName(driver, "admin123", "password");
-        loginPage.clickToButonByType(driver, "submit");
+        loginPage.clickToButtonByType(driver, "submit");
 
         dashboardPage = PageGenerator.getDashboardPage(driver);
     }
@@ -32,7 +32,7 @@ public class Level_16_Live_Coding extends BaseTest {
         employeeListPage = PageGenerator.getEmployeeListPage(driver);
 
         log.info("Add_New_01 - Step 02: Click to 'Add' button");
-        employeeListPage.clickToButonByType(driver, "button");
+        employeeListPage.clickToButtonByType(driver, "button");
         addEmployeePage = PageGenerator.getAddEmployeePage(driver);
 
         log.info("Add_New_01 - Step 03: Enter valid info to 'First name' textbox");
@@ -60,7 +60,7 @@ public class Level_16_Live_Coding extends BaseTest {
         addEmployeePage.selectValueInStatusDropdown(statusValue);
 
         log.info("Add_New_01 - Step 11: Click to 'Save' button");
-        employeeListPage.clickToButonByType(driver, "submit");
+        employeeListPage.clickToButtonByType(driver, "submit");
         personalDetailPage = PageGenerator.getPersonalDetailPage(driver);
 
         log.info("Add_New_01 - Step 12: Open 'Employee List' page");
@@ -70,7 +70,7 @@ public class Level_16_Live_Coding extends BaseTest {
         employeeListPage.enterToEmployeeNameTextbox("");
 
         log.info("Add_New_01 - Step 14: Click to 'Search' button");
-        employeeListPage.clickToButonByType(driver, "submit");
+        employeeListPage.clickToButtonByType(driver, "submit");
 
         log.info("Add_New_01 - Step 15: Verify Employee Information displayed at 'Result Table'");
         verifyTrue(employeeListPage.isEmployeeInfoDisplayedAtTable("", "", ""));

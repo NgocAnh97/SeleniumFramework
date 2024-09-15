@@ -37,7 +37,7 @@ public class Level_02_Apply_BasePage_III extends BasePage {
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");
-        sleepInSecond(1);
+        sleepInSeconds(1);
         Assert.assertEquals(getElementText(driver, "xpath=//span[@id='FirstName-error']"), "First name is required.");
         Assert.assertEquals(getElementText(driver, "xpath=//span[@id='LastName-error']"), "Last name is required.");
         Assert.assertEquals(getElementText(driver, "xpath=//span[@id='Email-error']"), "Email is required.");
@@ -49,11 +49,11 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
         clickToElement(driver, "xpath=//a[@class='ico-register']");
 
-        senKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        senKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        senKeysToElement(driver, "xpath=//input[@id='Email']", passWord);
-        senKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
-        senKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");
@@ -65,11 +65,11 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
         clickToElement(driver, "xpath=//a[@class='ico-register']");
 
-        senKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        senKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        senKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
-        senKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
-        senKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");
@@ -106,11 +106,11 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
         clickToElement(driver, "xpath=//a[@class='ico-register']");
 
-        senKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        senKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        senKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
-        senKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
-        senKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");
@@ -123,11 +123,11 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
         clickToElement(driver, "xpath=//a[@class='ico-register']");
 
-        senKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        senKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        senKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
-        senKeysToElement(driver, "xpath=//input[@id='Password']", "12345");
-        senKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "12345");
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", "12345");
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "12345");
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");
@@ -141,11 +141,11 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
         clickToElement(driver, "xpath=//a[@class='ico-register']");
 
-        senKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        senKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        senKeysToElement(driver, "xpath=//input[@id='Email']", "test@yopmail.com");
-        senKeysToElement(driver, "xpath=//input[@id='Password']", "123456@@");
-        senKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "123456@");
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", "test@yopmail.com");
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", "123456@@");
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "123456@");
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");

@@ -26,17 +26,17 @@ public class UserAccountPageObjects extends BasePage {
 
     public void inputToEmail(String emailUpdate) {
         waitForElementVisible(driver, GlobalConstants.AccountPageUI.EMAIL_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.AccountPageUI.EMAIL_TEXTBOX, emailUpdate);
+        sendKeysToElement(driver, GlobalConstants.AccountPageUI.EMAIL_TEXTBOX, emailUpdate);
     }
 
     public void inputToFirstName(String firstNameUpdate) {
         waitForElementVisible(driver, GlobalConstants.AccountPageUI.FIRST_NAME_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.AccountPageUI.FIRST_NAME_TEXTBOX, firstNameUpdate);
+        sendKeysToElement(driver, GlobalConstants.AccountPageUI.FIRST_NAME_TEXTBOX, firstNameUpdate);
     }
 
     public void inputToLastName(String lastNameUpdate) {
         waitForElementVisible(driver, GlobalConstants.AccountPageUI.LAST_NAME_TEXTBOX);
-        senKeysToElement(driver, GlobalConstants.AccountPageUI.LAST_NAME_TEXTBOX, lastNameUpdate);
+        sendKeysToElement(driver, GlobalConstants.AccountPageUI.LAST_NAME_TEXTBOX, lastNameUpdate);
     }
 
     public void clickToFemaleGender() {
