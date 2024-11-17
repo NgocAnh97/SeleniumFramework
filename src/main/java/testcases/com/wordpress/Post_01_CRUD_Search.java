@@ -1,4 +1,4 @@
-package testcases.com.wordpress.admin;
+package testcases.com.wordpress;
 
 import actions.commons.BaseTest;
 import actions.pageObjects.wordpress.*;

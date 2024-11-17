@@ -1,4 +1,4 @@
-package testcases.com.wordpress.admin;
+package testcases.com;
 
 import actions.commons.BaseTest;
 import org.openqa.selenium.By;
@@ -23,8 +23,8 @@ public class Search_GG extends BaseTest {
     }
 
     @Test
-    public void Search_Yoona() throws InterruptedException {
-        for (int i = 0; i < 50; i++) {
+    public void Search_GG() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
             driver.get("https://google.com");
             driver.findElement(By.name("q")).sendKeys("Im Yoona", Keys.ENTER);
 
@@ -43,19 +43,6 @@ public class Search_GG extends BaseTest {
         for (String handle : driver.getWindowHandles()) {
             driver.switchTo().window(handle);
         }
-    }
-
-    //    @Test
-    public void Post_01_Create_New_Post() {
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(1));
-        Actions action = new Actions(driver);
-        action.moveToElement(driver.findElement(By.name("na"))).build().perform();
-        log.info("Register - Step 01: Navigate to 'Register' page");
-    }
-
-    //    @Test
-    public void Post_02_Search_Post() {
-        log.info("Register - Step 01: Navigate to 'Register' page");
     }
 
     @AfterTest
