@@ -123,17 +123,17 @@ public class BasePage {
 
     public By getByLocator(String prefixLocator) {
         By by = null;
-        if (prefixLocator.toLowerCase().startsWith("id")) {
+        if (prefixLocator.toLowerCase().startsWith("id=")) {
             by = By.id(prefixLocator.substring(3));
-        } else if (prefixLocator.toLowerCase().startsWith("css")) {
-            by = By.cssSelector(prefixLocator.substring(5));
-        } else if (prefixLocator.toLowerCase().startsWith("class")) {
+        } else if (prefixLocator.toLowerCase().startsWith("css=")) {
+            by = By.cssSelector(prefixLocator.substring(4));
+        } else if (prefixLocator.toLowerCase().startsWith("class=")) {
             by = By.className(prefixLocator.substring(6));
-        } else if (prefixLocator.toLowerCase().startsWith("tagname")) {
+        } else if (prefixLocator.toLowerCase().startsWith("tagname=")) {
             by = By.tagName(prefixLocator.substring(8));
-        } else if (prefixLocator.toLowerCase().startsWith("name")) {
+        } else if (prefixLocator.toLowerCase().startsWith("name=")) {
             by = By.name(prefixLocator.substring(5));
-        } else if (prefixLocator.toLowerCase().startsWith("xpath")) {
+        } else if (prefixLocator.toLowerCase().startsWith("xpath=")) {
             by = By.xpath(prefixLocator.substring(6));
         } else {
             throw new RuntimeException("Locator type is not supported!!");
@@ -330,8 +330,8 @@ public class BasePage {
         return getWebElement(driver, xpathLocator).isEnabled();
     }
 
-    public void switchToFrameIframe(WebDriver driver, String locatorXpath) {
-        driver.switchTo().frame(getWebElement(driver, locatorXpath));
+    public void switchToFrameIframe(WebDriver driver, String xpathLocator) {
+        driver.switchTo().frame(getWebElement(driver, xpathLocator));
     }
 
     public void switchToDefaultContent(WebDriver driver) {

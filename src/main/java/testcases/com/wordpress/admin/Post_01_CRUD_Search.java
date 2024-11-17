@@ -1,65 +1,121 @@
 package testcases.com.wordpress.admin;
 
 import actions.commons.BaseTest;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import actions.pageObjects.wordpress.admin.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WindowType;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
+import java.util.Random;
 
 public class Post_01_CRUD_Search extends BaseTest {
     WebDriver driver;
+    int randomNumber = generateFakeNumber();
+    private String adminEmail = "automationfc.vn@gmail.com";
+    private String adminPassword = "d*4YKn68TWGhquZA7sUmcTUx";
+    private String postTitleValue = "WordPress admin title " + randomNumber;
+    private String postBodyValue = "WordPress admin body " + randomNumber;
 
     @Parameters({"browser", "urlAdmin"})
     @BeforeClass
     public void beforeClass(String browserName, String urlAdmin) {
         driver = getBrowserUrl(browserName, urlAdmin);
+        adminLoginPage = PageGeneratorManager.getAdminLoginPage(driver);
+        log.info("Pre-condition - Step 1: Click 'Log in' button");
+        adminLoginPage.clickToLoginButtonInHeader();
+
+        log.info("Pre-condition - Step 2: Enter to 'Email Address' textbox with the value: " + adminEmail);
+        adminLoginPage.enterToEmailTextbox(adminEmail);
+        log.info("Pre-condition - Step 3: Click 'Continue' button");
+        adminLoginPage.clickToContinueButton();
+        log.info("Pre-condition - Step 4: Enter to 'Password' textbox with the value: " + adminPassword);
+        adminLoginPage.enterToPasswordTextbox(adminPassword);
+        log.info("Pre-condition - Step 5: Click 'Log in' button");
+        adminDashboardPage = adminLoginPage.clickToLoginButton();
     }
 
     @Test
-    public void Search_Yoona() throws InterruptedException {
-        for (int i = 0; i < 50; i++) {
-            driver.get("https://google.com");
-            driver.findElement(By.name("q")).sendKeys("Im Yoona", Keys.ENTER);
-
-            Thread.sleep(1000);
-            driver.switchTo().newWindow(WindowType.TAB);
-
-            driver.get("https://www.youtube.com/");
-
-            Thread.sleep(1000);
-            driver.findElement(By.xpath("//div[@id='search-input']/input")).click();
-            driver.findElement(By.name("search_query")).sendKeys("Yoona", Keys.ENTER);
-
-            Thread.sleep(2000);
-        }
-
-        for (String handle : driver.getWindowHandles()) {
-            driver.switchTo().window(handle);
-        }
-    }
-
-    //    @Test
     public void Post_01_Create_New_Post() {
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(1));
-        Actions action = new Actions(driver);
-        action.moveToElement(driver.findElement(By.name("na"))).build().perform();
-        log.info("Register - Step 01: Navigate to 'Register' page");
+        log.info("Create_Post - Step 1: Click 'My Home' in sidebar");
+        adminDashboardPage.clickToHomeLink();
+
+        log.info("Create_Post - Step 2: Click 'Posts' in sidebar");
+        adminPostSearchPage = adminDashboardPage.clickToPostsLink();
+
+        log.info("Create_Post - Step 3: Click 'Add new post' button");
+        adminPostAddNewPage = adminPostSearchPage.clickToAddNewPostButton();
+
+        log.info("Create_Post - Step 4: Enter to post title: " + postTitleValue);
+        adminPostAddNewPage.enterToPostTitle(postTitleValue);
+
+        log.info("Create_Post - Step 5: Enter to post body: " + postBodyValue);
+        adminPostAddNewPage.enterToPostBody(postBodyValue);
+
+        log.info("Create_Post - Step 6: Click 'Publish' button");
+        adminPostAddNewPage.clickToPublishButton();
+
+        log.info("Create_Post - Step 7: Verify 'Post published!' popup is displayed");
+        adminPostAddNewPage.verifyPostPublishedPopup();
+
+        log.info("Create_Post - Step 7b: Verify success message is displayed");
+        verifyTrue(adminPostAddNewPage.isPostPublishMessageDisplayed("Post published."));
     }
 
-    //    @Test
-    public void Post_02_Search_Post() {
-        log.info("Register - Step 01: Navigate to 'Register' page");
+    @Test
+    public void Post_02_Search_And_View_Post() {
+        log.info("Search_Post - Step 1: Click 'My Home' in sidebar");
+        adminPostSearchPage = adminPostAddNewPage.clickToHomeLink();
+
+//        log.info("Search_Post - Step 2: Click 'Posts' in sidebar");
+//        adminPostSearchPage = adminDashboardPage.clickToPostsLink();
+
+        log.info("Search_Post - Step 1: Click 'Search' button");
+        adminPostSearchPage.clickToSearchButton();
+
+        log.info("Search_Post - Step 2: Enter to search textbox: " + postTitleValue);
+        adminPostSearchPage.enterToSearchTextbox(postTitleValue);
+
+        log.info("Search_Post - Step 3: Verify the Post information is displayed in Home page");
+        adminPostSearchPage.verifySearchResult(postTitleValue);
+
+        log.info("Search_Post - Step 4: Click to Post title");
+        adminPostDetailPage = adminPostSearchPage.clickToPostTitle(postTitleValue);
+
+        log.info("Search_Post - Step 5: Verify the Post information is displayed in Post detail page");
+//        adminPostDetailPage.verifyPostDetail(postTitleValue);
     }
 
-    @AfterTest
+    @Test
+    public void Post_03_View_Post() {
+
+    }
+
+    @Test
+    public void Post_04_Edit_Post() {
+
+    }
+
+    @Test
+    public void Post_05_Delete_Post() {
+
+    }
+
+
+//    @AfterTest
     public void afterTest() {
         driver.quit();
     }
+
+    public int generateFakeNumber() {
+        Random random = new Random();
+        return random.nextInt(500);
+    }
+
+    AdminLoginPO adminLoginPage;
+    AdminPostAddNewPO adminPostAddNewPage;
+    AdminPostSearchPO adminPostSearchPage;
+    AdminDashboardPO adminDashboardPage;
+    AdminPostDetailPO adminPostDetailPage;
 }
