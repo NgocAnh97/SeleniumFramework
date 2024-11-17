@@ -1,4 +1,4 @@
-package interfaces.pageUIs.wordpress.admin;
+package interfaces.pageUIs.wordpress;
 
 public class AdminPostSearchPageUI {
     public static final String ADD_NEW_POST_BUTTON = "css=a[class*='add-post']";

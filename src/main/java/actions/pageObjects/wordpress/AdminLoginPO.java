@@ -1,7 +1,7 @@
-package actions.pageObjects.wordpress.admin;
+package actions.pageObjects.wordpress;
 
 import actions.commons.BasePage;
-import interfaces.pageUIs.wordpress.admin.AdminLoginPageUI;
+import interfaces.pageUIs.wordpress.AdminLoginPageUI;
 import org.openqa.selenium.WebDriver;
 
 public class AdminLoginPO extends BasePage {

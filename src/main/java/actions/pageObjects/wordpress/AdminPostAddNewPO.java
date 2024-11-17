@@ -1,8 +1,7 @@
-package actions.pageObjects.wordpress.admin;
+package actions.pageObjects.wordpress;
 
 import actions.commons.BasePage;
-import interfaces.pageUIs.wordpress.admin.AdminAddNewPostPageUI;
-import interfaces.pageUIs.wordpress.admin.AdminDashboardPageUI;
+import interfaces.pageUIs.wordpress.AdminAddNewPostPageUI;
 import org.openqa.selenium.WebDriver;
 
 public class AdminPostAddNewPO extends BasePage {

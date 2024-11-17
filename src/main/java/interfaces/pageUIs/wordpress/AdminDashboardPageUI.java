@@ -1,4 +1,4 @@
-package interfaces.pageUIs.wordpress.admin;
+package interfaces.pageUIs.wordpress;
 
 public class AdminDashboardPageUI {
     public static final String HOME_MENU_LINK = "css=div.my-home-button a";

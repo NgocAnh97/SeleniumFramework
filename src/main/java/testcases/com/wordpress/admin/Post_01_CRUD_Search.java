@@ -1,7 +1,7 @@
 package testcases.com.wordpress.admin;
 
 import actions.commons.BaseTest;
-import actions.pageObjects.wordpress.admin.*;
+import actions.pageObjects.wordpress.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
@@ -68,9 +68,6 @@ public class Post_01_CRUD_Search extends BaseTest {
         log.info("Search_Post - Step 1: Click 'My Home' in sidebar");
         adminPostSearchPage = adminPostAddNewPage.clickToHomeLink();
 
-//        log.info("Search_Post - Step 2: Click 'Posts' in sidebar");
-//        adminPostSearchPage = adminDashboardPage.clickToPostsLink();
-
         log.info("Search_Post - Step 1: Click 'Search' button");
         adminPostSearchPage.clickToSearchButton();
 
@@ -84,26 +81,10 @@ public class Post_01_CRUD_Search extends BaseTest {
         adminPostDetailPage = adminPostSearchPage.clickToPostTitle(postTitleValue);
 
         log.info("Search_Post - Step 5: Verify the Post information is displayed in Post detail page");
-//        adminPostDetailPage.verifyPostDetail(postTitleValue);
+        adminPostDetailPage.verifyPostDetail(postTitleValue, postBodyValue);
     }
 
-    @Test
-    public void Post_03_View_Post() {
-
-    }
-
-    @Test
-    public void Post_04_Edit_Post() {
-
-    }
-
-    @Test
-    public void Post_05_Delete_Post() {
-
-    }
-
-
-//    @AfterTest
+    @AfterTest
     public void afterTest() {
         driver.quit();
     }

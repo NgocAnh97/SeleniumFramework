@@ -1,4 +1,4 @@
-package interfaces.pageUIs.wordpress.admin;
+package interfaces.pageUIs.wordpress;
 
 public class AdminAddNewPostPageUI {
     public static final String HOME_BUTTON = "css=div.my-home-button";
@@ -13,6 +13,5 @@ public class AdminAddNewPostPageUI {
     public static final String POST_PUBLISH_POPUP = "css=div.components-snackbar-list__notice-container";
     public static final String POST_PUBLISH_MESSAGE = "xpath=//div[text()='%s']";
     public static final String VIEW_POST_BUTTON = "css=div.components-snackbar a.components-button";
-    public static final String CLOSE_POPUP_BUTTON = "css=button[aria-label='Close']";
     public static final String HOME_ICON = "css=a[aria-label='View Posts']";
 }

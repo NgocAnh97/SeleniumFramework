@@ -1,4 +1,4 @@
-package actions.pageObjects.wordpress.admin;
+package actions.pageObjects.wordpress;
 
 import org.openqa.selenium.WebDriver;
 
@@ -14,10 +14,6 @@ public class PageGeneratorManager {
 
     public static AdminPostSearchPO getAdminPostSearchPage(WebDriver driver) {
         return new AdminPostSearchPO(driver);
-    }
-
-    public static AdminPostCategoriesPO getAdminPosCategoriesPage(WebDriver driver) {
-        return new AdminPostCategoriesPO(driver);
     }
 
     public static AdminDashboardPO getAdminDashboardPage(WebDriver driver) {

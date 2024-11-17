@@ -1,4 +1,4 @@
-package interfaces.pageUIs.wordpress.admin;
+package interfaces.pageUIs.wordpress;
 
 public class AdminLoginPageUI {
     public static final String LOGIN_BUTTON = "css=a.button.button-secondary";
