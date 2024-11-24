@@ -18,12 +18,6 @@ public class UserLoginPageObjects extends BasePage {
         return PageGeneratorManager.getUserHomePage(driver);
     }
 
-    public UserAccountPageObjects openAccountPage() {
-        waitForElementClickable(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
-        clickToElement(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
-        return PageGeneratorManager.getUserMyAccountPage(driver);
-    }
-
     public String getFieldValidationErrorMessage() {
         waitForElementVisible(driver, GlobalConstants.LoginPageUI.FIELD_VALIDATION_ERROR_MESSAGE);
         return getElementText(driver, GlobalConstants.LoginPageUI.FIELD_VALIDATION_ERROR_MESSAGE);
@@ -44,13 +38,19 @@ public class UserLoginPageObjects extends BasePage {
         sendKeysToElement(driver, GlobalConstants.LoginPageUI.PASSWORD_TEXTBOX, passWord);
     }
 
-    public String getTitleAccountPage() {
-        return getTitle(driver);
-    }
-
     public UserHomePageObjects loginAsUser(String emailAddress, String passWord) {
         inputToEmailTextbox(emailAddress);
         inputToPasswordTextbox(passWord);
         return openLoginPage();
+    }
+
+    public UserAccountPageObjects openAccountPage() {
+        waitForElementClickable(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
+        clickToElement(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
+        return PageGeneratorManager.getUserMyAccountPage(driver);
+    }
+
+    public String getAccountTitlePage() {
+        return getTitle(driver);
     }
 }

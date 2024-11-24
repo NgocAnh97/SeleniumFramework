@@ -1,7 +1,6 @@
-package actions.pageObjects.hrm;
+package actions.pageObjects.hrm.pim;
 
 import actions.commons.BasePage;
-import interfaces.pageUIs.hrm.BasePageUI;
 import org.openqa.selenium.WebDriver;
 
 public class AddEmployeePO extends BasePage {
@@ -10,11 +9,6 @@ public class AddEmployeePO extends BasePage {
     public AddEmployeePO(WebDriver driver) {
         this.driver = driver;
     }
-
-//    public void enterToTextboxByID(WebDriver driver, String value, String info) {
-//        waitForElementVisible(driver, BasePageUI.TEXTBOX_BY_NAME, info);
-//        senKeysToElement(driver, BasePageUI.TEXTBOX_BY_NAME, value,info);
-//    }
 
     public String getEmployeeID() {
 

@@ -14,7 +14,7 @@ import java.util.Random;
 public class Admin_02_MyAccount extends BasePage {
     WebDriver driver;
     String projectPath = System.getProperty("user.dir");
-    String emailAddress, registerEmail, passWord = "123456aA@@";
+    String emailAddress, registerEmail, password = "123456aA@@";
 
     String genderFemaleInputFieldLocator = "class=female";
     String firstNameInputFieldLocator = "id=FirstName";
@@ -30,9 +30,11 @@ public class Admin_02_MyAccount extends BasePage {
     public void beforeClass() throws IOException {
         driver = new FirefoxDriver();
 
-        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
+        emailAddress = "test" + generateFakeNumber() + "@mail.com";
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
+
         Register_Valid_Data();
         readFile();
         Login_With_Registered_Email_True_Password();
@@ -58,15 +60,11 @@ public class Admin_02_MyAccount extends BasePage {
 //        Assert.assertTrue(isElementSelected(driver, genderFemaleInputFieldLocator));
         Assert.assertEquals(getValue(driver, firstNameInputFieldLocator), "Automation");
         Assert.assertEquals(getValue(driver, lastNameInputFieldLocator), "FC");
-//        Assert.assertEquals(getElementText(driver, firstNameInputFieldLocator), "Automation");
-//        Assert.assertEquals(getElementText(driver, lastNameInputFieldLocator), "FC");
         Assert.assertEquals(getSelectedItemDefaultDropdown(driver, dateSelectFieldLocator), "1");
         Assert.assertEquals(getSelectedItemDefaultDropdown(driver, monthSelectFieldLocator), "March");
         Assert.assertEquals(getSelectedItemDefaultDropdown(driver, yearSelectFieldLocator), "1997");
         Assert.assertEquals(getValue(driver, emailInputFieldLocator), "test.vn@gmail.com");
         Assert.assertEquals(getValue(driver, companyInputFieldLocator), "Automation FC");
-//        Assert.assertEquals(getElementText(driver, emailInputFieldLocator), "automationfc.vn@gmail.com");
-//        Assert.assertEquals(getElementText(driver, companyInputFieldLocator), "Automation FC");
     }
 
     public void Register_Valid_Data() throws IOException {
@@ -76,8 +74,8 @@ public class Admin_02_MyAccount extends BasePage {
         sendKeysToElement(driver, "id=FirstName", "testFirstName");
         sendKeysToElement(driver, "id=LastName", "testLastName");
         sendKeysToElement(driver, "id=Email", emailAddress);
-        sendKeysToElement(driver, "id=Password", passWord);
-        sendKeysToElement(driver, "id=ConfirmPassword", passWord);
+        sendKeysToElement(driver, "id=Password", password);
+        sendKeysToElement(driver, "id=ConfirmPassword", password);
 
         waitForElementClickable(driver, "id=register-button");
         clickToElement(driver, "id=register-button");
@@ -87,7 +85,7 @@ public class Admin_02_MyAccount extends BasePage {
         waitForElementClickable(driver, "class=ico-logout");
         clickToElement(driver, "class=ico-logout");
 
-        writeFile(emailAddress, passWord);
+        writeFile(emailAddress, password);
     }
 
     public void Login_With_Registered_Email_True_Password() throws IOException {
@@ -95,7 +93,7 @@ public class Admin_02_MyAccount extends BasePage {
         clickToElement(driver, "class=ico-login");
 
         sendKeysToElement(driver, "xpath=//input[contains(@id,'Email')]", registerEmail);
-        sendKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", passWord);
+        sendKeysToElement(driver, "xpath=//input[contains(@id,'Password')]", password);
 
         waitForElementClickable(driver, "xpath=//button[contains(@class,'login-button')]");
         clickToElement(driver, "xpath=//button[contains(@class,'login-button')]");
@@ -104,7 +102,7 @@ public class Admin_02_MyAccount extends BasePage {
         clickToElement(driver, "xpath=//a[contains(@class,'ico-account')]");
 
         Assert.assertEquals(getTitle(driver), "nopCommerce demo store. Account");
-        writeFile(emailAddress, passWord);
+        writeFile(emailAddress, password);
     }
 
     public int generateFakeNumber() {
@@ -135,7 +133,7 @@ public class Admin_02_MyAccount extends BasePage {
         while ((Content = bufferedReader.readLine()) != null) {
             String[] index = Content.split(";");
             registerEmail = index[0];
-            passWord = index[1];
+            password = index[1];
         }
     }
 }

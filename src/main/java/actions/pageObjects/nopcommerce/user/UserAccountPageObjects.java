@@ -69,4 +69,8 @@ public class UserAccountPageObjects extends BasePage {
         waitForElementClickable(driver,GlobalConstants.AccountPageUI.CLOSE_SUCCESS_BUTTON);
         clickToElement(driver,GlobalConstants.AccountPageUI.CLOSE_SUCCESS_BUTTON);
     }
+
+    public String getAccountTitlePage() {
+        return getTitle(driver);
+    }
 }

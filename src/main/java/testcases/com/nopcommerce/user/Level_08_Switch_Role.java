@@ -9,7 +9,6 @@ import actions.pageObjects.nopcommerce.user.UserAccountPageObjects;
 import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
 import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
 import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -30,7 +29,7 @@ public class Level_08_Switch_Role extends BaseTest {
 
         adminEmailAddress = "admin@yourstore.com";
         adminPassWord = "admin";
-        passWord = "123456aA@@";
+        password = "123456aA@@";
         userEmailAddress = "test" + generateFakeNumber() + "@yopmail.com";
     }
 
@@ -40,19 +39,19 @@ public class Level_08_Switch_Role extends BaseTest {
         registerPage.inputToFirstnameTextbox("testFirstName");
         registerPage.inputToLastnameTextbox("testLastName");
         registerPage.inputToEmailTextbox(userEmailAddress);
-        registerPage.inputToPasswordTextbox(passWord);
-        registerPage.inputToConfirmPasswordTextbox(passWord);
+        registerPage.inputToPasswordTextbox(password);
+        registerPage.inputToConfirmPasswordTextbox(password);
 
         registerPage.clickToRegisterButton();
 
         System.out.println(userEmailAddress);
         Assert.assertEquals(registerPage.getRegisterCompletedResultMessage(), "Your registration completed");
 
-        writeFile(userEmailAddress, passWord);
+        writeFile(userEmailAddress, password);
 
         readFile();
         userLoginPage = userHomePage.openLoginPage();
-        userHomePage = userLoginPage.loginAsUser(userEmailAddress, passWord);
+        userHomePage = userLoginPage.loginAsUser(userEmailAddress, password);
         Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());
         userHomePage = userAccountPage.clickToLogout();
     }
@@ -72,11 +71,10 @@ public class Level_08_Switch_Role extends BaseTest {
     }
 
     public void writeFile(String emailAddress, String passWord) throws IOException {
-        String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-        File testFile = new File(TestFile);
+        File testFile = new File(TestDir);
         testFile.createNewFile();
 
-        FileWriter fileWriter = new FileWriter(TestFile);
+        FileWriter fileWriter = new FileWriter(TestDir);
         BufferedWriter bufferReader = new BufferedWriter(fileWriter);
         bufferReader.write(emailAddress);
         bufferReader.write(";");
@@ -85,15 +83,14 @@ public class Level_08_Switch_Role extends BaseTest {
     }
 
     public void readFile() throws IOException {
-        String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-        FileReader fileReader = new FileReader(TestFile);
+        FileReader fileReader = new FileReader(TestDir);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         String Content = "";
         while ((Content = bufferedReader.readLine()) != null) {
             String[] index = Content.split(";");
             registerEmail = index[0];
-            passWord = index[1];
+            password = index[1];
         }
     }
 
@@ -102,9 +99,10 @@ public class Level_08_Switch_Role extends BaseTest {
         return random.nextInt(500);
     }
 
+    String TestDir = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
     private WebDriver driver;
     String userEmailAddress, adminEmailAddress,
-            adminPassWord, registerEmail, passWord;
+            adminPassWord, registerEmail, password;
     private UserLoginPageObjects userLoginPage;
     private UserRegisterPageObjects registerPage;
     private UserHomePageObjects userHomePage;

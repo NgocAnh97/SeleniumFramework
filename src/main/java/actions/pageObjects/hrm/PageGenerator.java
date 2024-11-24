@@ -1,5 +1,8 @@
 package actions.pageObjects.hrm;
 
+import actions.pageObjects.hrm.pim.AddEmployeePO;
+import actions.pageObjects.hrm.pim.EmployeePO;
+import actions.pageObjects.hrm.pim.PersonalDetailPO;
 import org.openqa.selenium.WebDriver;
 
 public class PageGenerator {
@@ -7,8 +10,8 @@ public class PageGenerator {
         return new LoginPO(driver);
     }
 
-    public static EmployeeListPO getEmployeeListPage(WebDriver driver) {
-        return new EmployeeListPO(driver);
+    public static EmployeePO getEmployeeListPage(WebDriver driver) {
+        return new EmployeePO(driver);
     }
 
     public static PersonalDetailPO getPersonalDetailPage(WebDriver driver) {

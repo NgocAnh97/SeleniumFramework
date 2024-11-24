@@ -1,12 +1,12 @@
-package actions.pageObjects.hrm;
+package actions.pageObjects.hrm.pim;
 
 import actions.commons.BasePage;
 import org.openqa.selenium.WebDriver;
 
-public class EmployeeListPO extends BasePage {
+public class EmployeePO extends BasePage {
     private WebDriver driver;
 
-    public EmployeeListPO(WebDriver driver) {
+    public EmployeePO(WebDriver driver) {
         this.driver = driver;
     }
 

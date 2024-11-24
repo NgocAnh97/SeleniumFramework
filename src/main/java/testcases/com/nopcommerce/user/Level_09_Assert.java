@@ -9,17 +9,14 @@ import actions.pageObjects.nopcommerce.user.UserAccountPageObjects;
 import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
 import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
 import actions.pageObjects.nopcommerce.user.UserRegisterPageObjects;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import java.io.*;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 //@Listeners(actions.commons.MethodListener.class)
 public class Level_09_Assert extends BaseTest {
@@ -31,9 +28,9 @@ public class Level_09_Assert extends BaseTest {
         userAccountPage = PageGeneratorManager.getUserMyAccountPage(driver);
 
         adminEmailAddress = "admin@yourstore.com";
-        adminPassWord = "admin";
-        passWord = "123456aA@@";
-        userEmailAddress = "test" + generateFakeNumber() + "@yopmail.com";
+        adminPassword = "admin";
+        password = "123456aA@@";
+        userEmailAddress = "test" + generateFakeNumber() + "@mail.com";
     }
 
     @Test
@@ -42,19 +39,19 @@ public class Level_09_Assert extends BaseTest {
         registerPage.inputToFirstnameTextbox("testFirstName");
         registerPage.inputToLastnameTextbox("testLastName");
         registerPage.inputToEmailTextbox(userEmailAddress);
-        registerPage.inputToPasswordTextbox(passWord);
-        registerPage.inputToConfirmPasswordTextbox(passWord);
+        registerPage.inputToPasswordTextbox(password);
+        registerPage.inputToConfirmPasswordTextbox(password);
 
         registerPage.clickToRegisterButton();
 
         System.out.println(userEmailAddress);
         verifyEquals(registerPage.getRegisterCompletedResultMessage(), "Your registration completed");
 
-        writeFile(userEmailAddress, passWord);
+        writeFile(userEmailAddress, password);
 
         readFile();
         userLoginPage = userHomePage.openLoginPage();
-        userHomePage = userLoginPage.loginAsUser(userEmailAddress, passWord);
+        userHomePage = userLoginPage.loginAsUser(userEmailAddress, password);
         verifyTrue(userHomePage.isMyAccountLinkDisplayed());
         userHomePage = userAccountPage.clickToLogout();
     }
@@ -63,7 +60,7 @@ public class Level_09_Assert extends BaseTest {
     public void Role_02_Admin() {
         adminLoginPage = userHomePage.openAdminLoginPage();
 
-        adminDashboardPage = adminLoginPage.loginAsAdmin(adminEmailAddress, adminPassWord);
+        adminDashboardPage = adminLoginPage.loginAsAdmin(adminEmailAddress, adminPassword);
         verifyTrue(adminDashboardPage.isDashboardLinkDisplayed());
         adminDashboardPage.clickToElementByJS(driver, GlobalConstants.LOGOUT_LINK);
     }
@@ -74,11 +71,10 @@ public class Level_09_Assert extends BaseTest {
     }
 
     public void writeFile(String emailAddress, String passWord) throws IOException {
-        String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-        File testFile = new File(TestFile);
+        File testFile = new File("/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt");
         testFile.createNewFile();
 
-        FileWriter fileWriter = new FileWriter(TestFile);
+        FileWriter fileWriter = new FileWriter(testFile);
         BufferedWriter bufferReader = new BufferedWriter(fileWriter);
         bufferReader.write(emailAddress);
         bufferReader.write(";");
@@ -95,7 +91,7 @@ public class Level_09_Assert extends BaseTest {
         while ((Content = bufferedReader.readLine()) != null) {
             String[] index = Content.split(";");
             registerEmail = index[0];
-            passWord = index[1];
+            password = index[1];
         }
     }
 
@@ -105,8 +101,7 @@ public class Level_09_Assert extends BaseTest {
     }
 
     private WebDriver driver;
-    String userEmailAddress, adminEmailAddress,
-            adminPassWord, registerEmail, passWord;
+    String userEmailAddress, adminEmailAddress, adminPassword, registerEmail, password;
     private UserLoginPageObjects userLoginPage;
     private UserRegisterPageObjects registerPage;
     private UserHomePageObjects userHomePage;

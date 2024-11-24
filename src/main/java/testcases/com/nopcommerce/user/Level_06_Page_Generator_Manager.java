@@ -16,9 +16,11 @@ import org.testng.annotations.Test;
 import java.io.*;
 import java.util.Random;
 
-public class Level_06_Page_Generator_Manager_III extends BaseTest {
+public class Level_06_Page_Generator_Manager extends BaseTest {
     private WebDriver driver;
-    String emailAddress, registerEmail, passWord = "123456aA@@";
+    String emailAddress, registerEmail, password = "123456aA@@";
+    String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
+
     private UserHomePageObjects homePage;
     private UserRegisterPageObjects registerPage;
     private UserLoginPageObjects loginPage;
@@ -28,12 +30,9 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
     @BeforeClass
     public void beforeClass(String browserName) throws IOException {
         driver = getBrowser(browserName);
-        homePage = PageGeneratorManager.getUserHomePage(driver);
-        loginPage = PageGeneratorManager.getUserLoginPage(driver);
-        registerPage = PageGeneratorManager.getUserRegisterPage(driver);
-        myAccountPage = PageGeneratorManager.getUserMyAccountPage(driver);
 
-        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
+        homePage = PageGeneratorManager.getUserHomePage(driver);
+        emailAddress = "test" + generateFakeNumber() + "@mail.com";
 
         System.out.println("Pre-Condition Register - Step 01: Click to Register link");
         registerPage = homePage.openRegisterPage();
@@ -41,48 +40,21 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
         registerPage.inputToFirstnameTextbox("testFirstName");
         registerPage.inputToLastnameTextbox("testLastName");
         registerPage.inputToEmailTextbox(emailAddress);
-        registerPage.inputToPasswordTextbox(passWord);
-        registerPage.inputToConfirmPasswordTextbox(passWord);
+        registerPage.inputToPasswordTextbox(password);
+        registerPage.inputToConfirmPasswordTextbox(password);
 
         System.out.println("Pre-Condition Register - Step 03: Click to Register button");
         registerPage.clickToRegisterButton();
 
-        System.out.println(emailAddress);
         System.out.println("Pre-Condition Register - Step 04: Verify register completed message displayed");
         Assert.assertEquals(registerPage.getRegisterCompletedResultMessage(), "Your registration completed");
 
         System.out.println("Pre-Condition Register - Step 03: Click to Logout button");
         homePage = registerPage.clickToLogoutButton();
 
-        writeFile(emailAddress, passWord);
+        writeFile(emailAddress, password);
 
         readFile();
-    }
-
-    public void writeFile(String emailAddress, String passWord) throws IOException {
-        String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-        File testFile = new File(TestFile);
-        testFile.createNewFile();
-
-        FileWriter fileWriter = new FileWriter(TestFile);
-        BufferedWriter bufferReader = new BufferedWriter(fileWriter);
-        bufferReader.write(emailAddress);
-        bufferReader.write(";");
-        bufferReader.write(passWord);
-        bufferReader.close();
-    }
-
-    public void readFile() throws IOException {
-        String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-        FileReader fileReader = new FileReader(TestFile);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-        String Content = "";
-        while ((Content = bufferedReader.readLine()) != null) {
-            String[] index = Content.split(";");
-            registerEmail = index[0];
-            passWord = index[1];
-        }
     }
 
     @Test
@@ -119,14 +91,15 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
 
         System.out.println("Login_03 - Step 02: Input to required fields");
         loginPage.inputToEmailTextbox("unregisterEmail@yopmail.com");
-        loginPage.inputToPasswordTextbox(passWord);
+        loginPage.inputToPasswordTextbox(password);
 
         System.out.println("Login_03 - Step 03: Click to Login button");
         loginPage.openLoginPage();
 
         System.out.println("Login_03 - Step 04: Verify error message displayed");
-        Assert.assertEquals(loginPage.getLoginErrorMessage(), "Login was unsuccessful. Please correct the errors and try again.\n" +
-                "No customer account found");
+        Assert.assertEquals(loginPage.getLoginErrorMessage(),
+                "Login was unsuccessful. Please correct the errors and try again.\n" +
+                        "No customer account found");
     }
 
     @Test
@@ -141,8 +114,9 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
         loginPage.openLoginPage();
 
         System.out.println("Login_04 - Step 04: Verify error message displayed");
-        Assert.assertEquals(loginPage.getLoginErrorMessage(), "Login was unsuccessful. Please correct the errors and try again.\n" +
-                "The credentials provided are incorrect");
+        Assert.assertEquals(loginPage.getLoginErrorMessage(),
+                "Login was unsuccessful. Please correct the errors and try again.\n" +
+                        "The credentials provided are incorrect");
     }
 
     @Test
@@ -158,8 +132,9 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
         loginPage.openLoginPage();
 
         System.out.println("Login_05 - Step 04: Verify error message displayed");
-        Assert.assertEquals(loginPage.getLoginErrorMessage(), "Login was unsuccessful. Please correct the errors and try again.\n" +
-                "The credentials provided are incorrect");
+        Assert.assertEquals(loginPage.getLoginErrorMessage(),
+                "Login was unsuccessful. Please correct the errors and try again.\n" +
+                        "The credentials provided are incorrect");
     }
 
     @Test
@@ -169,7 +144,7 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
 
         System.out.println("Login_06 - Step 02: Input to required fields");
         loginPage.inputToEmailTextbox(registerEmail);
-        loginPage.inputToPasswordTextbox(passWord);
+        loginPage.inputToPasswordTextbox(password);
 
         System.out.println("Login_06 - Step 03: Click to Login button");
         homePage = loginPage.openLoginPage();
@@ -177,10 +152,8 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
         System.out.println("Login_06 - Step 04: Verify account link displayed");
         Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
 
-//        myAccountPage = loginPage.clickToAccountLink();
-//        Assert.assertEquals(loginPage.getTitleAccountPage(), "nopCommerce demo store. Account");
-//
-//        myAccountPage.clickToMyAccountLink();
+        myAccountPage = homePage.openAccountPage();
+        Assert.assertEquals(myAccountPage.getAccountTitlePage(), "nopCommerce demo store. Account");
     }
 
     @AfterTest
@@ -191,5 +164,29 @@ public class Level_06_Page_Generator_Manager_III extends BaseTest {
     public int generateFakeNumber() {
         Random random = new Random();
         return random.nextInt(500);
+    }
+
+    public void writeFile(String emailAddress, String passWord) throws IOException {
+        File testFile = new File(TestFile);
+        testFile.createNewFile();
+
+        FileWriter fileWriter = new FileWriter(TestFile);
+        BufferedWriter bufferReader = new BufferedWriter(fileWriter);
+        bufferReader.write(emailAddress);
+        bufferReader.write(";");
+        bufferReader.write(passWord);
+        bufferReader.close();
+    }
+
+    public void readFile() throws IOException {
+        FileReader fileReader = new FileReader(TestFile);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String Content = "";
+        while ((Content = bufferedReader.readLine()) != null) {
+            String[] index = Content.split(";");
+            registerEmail = index[0];
+            password = index[1];
+        }
     }
 }

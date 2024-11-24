@@ -1,19 +1,27 @@
-package testcases.com.hrm.employee;
+package testcases.com.hrm.employee.PIM;
 
 import actions.commons.BaseTest;
 import actions.pageObjects.hrm.*;
+import actions.pageObjects.hrm.pim.AddEmployeePO;
+import actions.pageObjects.hrm.pim.EmployeePO;
+import actions.pageObjects.hrm.pim.PersonalDetailPO;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
-public class Level_16_Live_Coding extends BaseTest {
+import static java.lang.Thread.sleep;
+
+public class PIM_01_Employee extends BaseTest {
     String employeeID, statusValue;
 
-    @Parameters({"browser"})
+    @Parameters({"browser", "url"})
     @BeforeClass
-    public void beforeClass(@Optional("firefox") String browserName) {
-        log.info("Pre-condition - Step 01: Open browser '" + browserName + "' and navigate to '" + "\"https://opensource-demo.orangehrmlive.com/\"" + "'");
-        driver = getBrowser(browserName);
-        driver.get("https://opensource-demo.orangehrmlive.com/");
+    public void beforeClass(String browserName, String url) {
+        driver = getBrowserUrl(browserName, url);
+        log.info("Pre-condition - Step 01: Open browser '" + browserName + "' and navigate to '" + url + "'");
+
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
 
@@ -26,7 +34,7 @@ public class Level_16_Live_Coding extends BaseTest {
     }
 
     @Test
-    public void Employee_01_Add_New_Employee() {
+    public void Employee_01_Add_New_Employee() throws InterruptedException {
         log.info("Add_New_01 - Step 01: Open 'Employee list' page");
         dashboardPage.openSubMenuPage(driver, "PIM", "Employee List");
         employeeListPage = PageGenerator.getEmployeeListPage(driver);
@@ -60,6 +68,7 @@ public class Level_16_Live_Coding extends BaseTest {
         addEmployeePage.selectValueInStatusDropdown(statusValue);
 
         log.info("Add_New_01 - Step 11: Click to 'Save' button");
+        sleep(2000);
         employeeListPage.clickToButtonByType(driver, "submit");
         personalDetailPage = PageGenerator.getPersonalDetailPage(driver);
 
@@ -99,43 +108,19 @@ public class Level_16_Live_Coding extends BaseTest {
 //    @Test
 //    public void Employee_06_Assigned_Dependents() {
 //
-//    }
-//
-//    @Test
-//    public void Employee_07_Edit_View_Job() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_08_Edit_View_Salary() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_09_Edit_View_Tax() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_10_Qualifications() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_11_Search_Employee() {
-//
-//    }
+//     }
 
     @Parameters({"browser"})
-    @AfterClass(alwaysRun = true)
+    @AfterClass()
     public void afterClass(String browserName) {
         log.info("Post-condition: Close browser '" + browserName + "'");
+        driver.quit();
     }
 
-    WebDriver driver;
-    LoginPO loginPage;
-    AddEmployeePO addEmployeePage;
-    DashboardPO dashboardPage;
-    EmployeeListPO employeeListPage;
-    PersonalDetailPO personalDetailPage;
+    private WebDriver driver;
+    private LoginPO loginPage;
+    private AddEmployeePO addEmployeePage;
+    private DashboardPO dashboardPage;
+    private EmployeePO employeeListPage;
+    private PersonalDetailPO personalDetailPage;
 }

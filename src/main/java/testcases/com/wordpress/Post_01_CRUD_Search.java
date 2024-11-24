@@ -18,10 +18,10 @@ public class Post_01_CRUD_Search extends BaseTest {
     private String postTitleValue = "WordPress admin title " + randomNumber;
     private String postBodyValue = "WordPress admin body " + randomNumber;
 
-    @Parameters({"browser", "urlAdmin"})
+    @Parameters({"browser", "adminUrl"})
     @BeforeClass
-    public void beforeClass(String browserName, String urlAdmin) {
-        driver = getBrowserUrl(browserName, urlAdmin);
+    public void beforeClass(String browserName, String url) {
+        driver = getBrowserUrl(browserName, url);
         adminLoginPage = PageGeneratorManager.getAdminLoginPage(driver);
         log.info("Pre-condition - Step 1: Click 'Log in' button");
         adminLoginPage.clickToLoginButtonInHeader();

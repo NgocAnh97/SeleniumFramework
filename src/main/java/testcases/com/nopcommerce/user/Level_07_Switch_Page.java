@@ -18,57 +18,14 @@ import java.io.*;
 import java.util.Random;
 
 public class Level_07_Switch_Page extends BaseTest {
-    private WebDriver driver;
-    String emailAddress, registerEmail, passWord = "123456aA@@";
-    String firstNameUpdate = "firstNameUpdate";
-    String lastNameUpdate = "lastNameUpdate";
-    String emailUpdate;
-    String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-    private UserHomePageObjects homePage;
-    private UserRegisterPageObjects registerPage;
-    private UserLoginPageObjects loginPage;
-    private UserAccountPageObjects myAccountPage;
-    private BasePage addressesPage;
-    private BasePage rewardPointPage;
-    private BasePage myProductReviewPage;
 
     @Parameters({"browser"})
     @BeforeClass
     public void beforeClass(String browserName) throws IOException {
         driver = getBrowser(browserName);
         homePage = PageGeneratorManager.getUserHomePage(driver);
-        loginPage = PageGeneratorManager.getUserLoginPage(driver);
-        registerPage = PageGeneratorManager.getUserRegisterPage(driver);
-        myAccountPage = PageGeneratorManager.getUserMyAccountPage(driver);
-        addressesPage = PageGeneratorManager.getUserAddressPage(driver);
-        rewardPointPage = PageGeneratorManager.getUserRewardPointPage(driver);
-        myProductReviewPage = PageGeneratorManager.getUserMyProductReviewPage(driver);
 
-        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-    }
-
-    public void writeFile(String emailAddress, String passWord) throws IOException {
-        File testFile = new File(TestFile);
-        testFile.createNewFile();
-
-        FileWriter fileWriter = new FileWriter(TestFile);
-        BufferedWriter bufferReader = new BufferedWriter(fileWriter);
-        bufferReader.write(emailAddress);
-        bufferReader.write(";");
-        bufferReader.write(passWord);
-        bufferReader.close();
-    }
-
-    public void readFile() throws IOException {
-        FileReader fileReader = new FileReader(TestFile);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-        String Content = "";
-        while ((Content = bufferedReader.readLine()) != null) {
-            String[] index = Content.split(";");
-            registerEmail = index[0];
-            passWord = index[1];
-        }
+        emailAddress = "test" + generateFakeNumber() + "@mail.com";
     }
 
     @Test
@@ -77,15 +34,15 @@ public class Level_07_Switch_Page extends BaseTest {
         registerPage.inputToFirstnameTextbox("testFirstName");
         registerPage.inputToLastnameTextbox("testLastName");
         registerPage.inputToEmailTextbox(emailAddress);
-        registerPage.inputToPasswordTextbox(passWord);
-        registerPage.inputToConfirmPasswordTextbox(passWord);
+        registerPage.inputToPasswordTextbox(password);
+        registerPage.inputToConfirmPasswordTextbox(password);
 
         registerPage.clickToRegisterButton();
 
         System.out.println(emailAddress);
         Assert.assertEquals(registerPage.getRegisterCompletedResultMessage(), "Your registration completed");
 
-        writeFile(emailAddress, passWord);
+        writeFile(emailAddress, password);
     }
 
     @Test
@@ -93,14 +50,14 @@ public class Level_07_Switch_Page extends BaseTest {
         readFile();
         loginPage = homePage.openLoginPage();
 
-        loginPage.loginAsUser(registerEmail, passWord);
+        loginPage.loginAsUser(registerEmail, password);
         Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
     }
 
     @Test
     public void User_03_My_Account() throws IOException {
         myAccountPage = loginPage.openAccountPage();
-        Assert.assertEquals(loginPage.getTitleAccountPage(), "nopCommerce demo store. Account");
+        Assert.assertEquals(loginPage.getAccountTitlePage(), "nopCommerce demo store. Account");
         emailUpdate = "emailUpdate_" + registerEmail;
 
         myAccountPage.clickToFemaleGender();
@@ -113,7 +70,7 @@ public class Level_07_Switch_Page extends BaseTest {
         Assert.assertEquals(myAccountPage.getLastNameUpdate(), lastNameUpdate);
         Assert.assertEquals(myAccountPage.getEmailUpdate(), emailUpdate);
 
-        writeFile(emailUpdate, passWord);
+        writeFile(emailUpdate, password);
         myAccountPage.closeSuccessMessage();
         homePage = myAccountPage.clickToLogout();
     }
@@ -123,7 +80,7 @@ public class Level_07_Switch_Page extends BaseTest {
 //		try {
         loginPage = homePage.openLoginPage();
 
-        homePage = loginPage.loginAsUser(emailUpdate, passWord);
+        homePage = loginPage.loginAsUser(emailUpdate, password);
 
         Assert.assertTrue(homePage.isMyAccountLinkDisplayed());
 
@@ -155,4 +112,43 @@ public class Level_07_Switch_Page extends BaseTest {
         Random random = new Random();
         return random.nextInt(500);
     }
+
+    public void writeFile(String emailAddress, String passWord) throws IOException {
+        File testFile = new File(TestFile);
+        testFile.createNewFile();
+
+        FileWriter fileWriter = new FileWriter(TestFile);
+        BufferedWriter bufferReader = new BufferedWriter(fileWriter);
+        bufferReader.write(emailAddress);
+        bufferReader.write(";");
+        bufferReader.write(passWord);
+        bufferReader.close();
+    }
+
+    public void readFile() throws IOException {
+        FileReader fileReader = new FileReader(TestFile);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String Content = "";
+        while ((Content = bufferedReader.readLine()) != null) {
+            String[] index = Content.split(";");
+            registerEmail = index[0];
+            password = index[1];
+        }
+    }
+
+    private WebDriver driver;
+    String emailAddress, registerEmail, password = "123456aA@@";
+    String firstNameUpdate = "firstNameUpdate";
+    String lastNameUpdate = "lastNameUpdate";
+    String emailUpdate;
+    String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
+
+    private UserHomePageObjects homePage;
+    private UserRegisterPageObjects registerPage;
+    private UserLoginPageObjects loginPage;
+    private UserAccountPageObjects myAccountPage;
+    private BasePage addressesPage;
+    private BasePage rewardPointPage;
+    private BasePage myProductReviewPage;
 }

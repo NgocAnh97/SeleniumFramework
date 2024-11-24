@@ -1,4 +1,4 @@
-package actions.pageObjects.hrm;
+package actions.pageObjects.hrm.pim;
 
 import actions.commons.BasePage;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +10,7 @@ public class PersonalDetailPO extends BasePage {
         this.driver = driver;
     }
 
-    public EmployeeListPO openEmployeeListPage() {
-        return new EmployeeListPO(driver);
+    public EmployeePO openEmployeeListPage() {
+        return new EmployeePO(driver);
     }
 }

@@ -30,6 +30,12 @@ public class UserHomePageObjects extends BasePage {
         return PageGeneratorManager.getUserRegisterPage(driver);
     }
 
+    public UserAccountPageObjects openAccountPage() {
+        waitForElementClickable(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
+        clickToElement(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
+        return PageGeneratorManager.getUserMyAccountPage(driver);
+    }
+
     public boolean isMyAccountLinkDisplayed() {
         waitForElementVisible(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);
         return isElementDisplayed(driver, GlobalConstants.HomePageUI.MY_ACCOUNT_LINK);

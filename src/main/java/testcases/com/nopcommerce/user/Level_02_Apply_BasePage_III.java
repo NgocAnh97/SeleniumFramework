@@ -19,13 +19,13 @@ public class Level_02_Apply_BasePage_III extends BasePage {
     WebDriver driver;
     String projectPath = System.getProperty("user.dir");
     String emailAddress;
-    String passWord = "123456aA@@";
+    String password = "123456aA@@";
 
     @BeforeClass
     public void beforeClass() {
         driver = new FirefoxDriver();
 
-        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
+        emailAddress = "test" + generateFakeNumber() + "@mail.com";
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
     }
@@ -51,13 +51,14 @@ public class Level_02_Apply_BasePage_III extends BasePage {
 
         sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
         sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        sendKeysToElement(driver, "xpath=//input[@id='Email']", passWord);
-        sendKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
-        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", password);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", password);
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", password);
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");
-        Assert.assertEquals(getElementText(driver, "xpath=//span[@id='Email-error']"), "Please enter a valid email address.");
+        Assert.assertEquals(getElementText(driver, "xpath=//span[@id='Email-error']"),
+                "Please enter a valid email address.");
     }
 
     @Test
@@ -68,8 +69,8 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
         sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
         sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
-        sendKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
-        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", password);
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", password);
 
         waitForElementClickable(driver, "xpath=//button[@id='register-button']");
         clickToElement(driver, "xpath=//button[@id='register-button']");
@@ -79,7 +80,72 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         waitForElementClickable(driver, "xpath=//a[@class='ico-logout']");
         clickToElement(driver, "xpath=//a[@class='ico-logout']");
 
-        writeFile(emailAddress, passWord);
+        writeFile(emailAddress, password);
+    }
+
+    @Test
+    public void TC_04_Register_Exist_Email() {
+        waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
+        clickToElement(driver, "xpath=//a[@class='ico-register']");
+
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", password);
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", password);
+
+        waitForElementClickable(driver, "xpath=//button[@id='register-button']");
+        clickToElement(driver, "xpath=//button[@id='register-button']");
+
+        Assert.assertEquals(getElementText(driver, "xpath=//div[contains(@class,'message-error')]//li"),
+                "The specified email already exists");
+    }
+
+    @Test
+    public void TC_05_Register_Password_Less_Than_6_Characters() {
+        waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
+        clickToElement(driver, "xpath=//a[@class='ico-register']");
+
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", "12345");
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "12345");
+
+        waitForElementClickable(driver, "xpath=//button[@id='register-button']");
+        clickToElement(driver, "xpath=//button[@id='register-button']");
+
+        Assert.assertEquals(getElementText(driver, "xpath=//span[@data-valmsg-for='Password']"),
+                "<p>Password must meet the following rules:" +
+                        " </p><ul><li>must have at least 6 characters and not greater than 64 characters</li></ul>");
+    }
+
+    @Test
+    public void TC_06_Register_Confirm_Password_Not_Match_With_Password() {
+        waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
+        clickToElement(driver, "xpath=//a[@class='ico-register']");
+
+        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
+        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
+        sendKeysToElement(driver, "xpath=//input[@id='Email']", "test@yopmail.com");
+        sendKeysToElement(driver, "xpath=//input[@id='Password']", "123456@@");
+        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "123456@");
+
+        waitForElementClickable(driver, "xpath=//button[@id='register-button']");
+        clickToElement(driver, "xpath=//button[@id='register-button']");
+
+        Assert.assertEquals(getElementText(driver, "xpath=//span[@id='ConfirmPassword-error']"),
+                "The password and confirmation password do not match.");
+    }
+
+    @AfterTest
+    public void afterClass() {
+        driver.quit();
+    }
+
+    public int generateFakeNumber() {
+        Random random = new Random();
+        return random.nextInt(500);
     }
 
     public void writeFile(String emailAddress, String passWord) throws IOException {
@@ -99,67 +165,5 @@ public class Level_02_Apply_BasePage_III extends BasePage {
         waitForElementClickable(driver, "xpath=//a[contains(@class,'ico-account')]");
         clickToElement(driver, "xpath=//a[contains(@class,'ico-account')]");
         return getElementAttributeValue(driver, "xpath=//input[contains(@id,'Email')]", "value");
-    }
-
-    @Test
-    public void TC_04_Register_Exist_Email() {
-        waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
-        clickToElement(driver, "xpath=//a[@class='ico-register']");
-
-        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
-        sendKeysToElement(driver, "xpath=//input[@id='Password']", passWord);
-        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", passWord);
-
-        waitForElementClickable(driver, "xpath=//button[@id='register-button']");
-        clickToElement(driver, "xpath=//button[@id='register-button']");
-
-        Assert.assertEquals(getElementText(driver, "xpath=//div[contains(@class,'message-error')]//li"), "The specified email already exists");
-    }
-
-    @Test
-    public void TC_05_Register_Password_Less_Than_6_Characters() {
-        waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
-        clickToElement(driver, "xpath=//a[@class='ico-register']");
-
-        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        sendKeysToElement(driver, "xpath=//input[@id='Email']", emailAddress);
-        sendKeysToElement(driver, "xpath=//input[@id='Password']", "12345");
-        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "12345");
-
-        waitForElementClickable(driver, "xpath=//button[@id='register-button']");
-        clickToElement(driver, "xpath=//button[@id='register-button']");
-
-        Assert.assertEquals(getElementText(driver, "xpath=//span[@data-valmsg-for='Password']"),
-                "<p>Password must meet the following rules: </p><ul><li>must have at least 6 characters and not greater than 64 characters</li></ul>");
-    }
-
-    @Test
-    public void TC_06_Register_Confirm_Password_Not_Match_With_Password() {
-        waitForElementClickable(driver, "xpath=//a[@class='ico-register']");
-        clickToElement(driver, "xpath=//a[@class='ico-register']");
-
-        sendKeysToElement(driver, "xpath=//input[@id='FirstName']", "testFirstName");
-        sendKeysToElement(driver, "xpath=//input[@id='LastName']", "testLastName");
-        sendKeysToElement(driver, "xpath=//input[@id='Email']", "test@yopmail.com");
-        sendKeysToElement(driver, "xpath=//input[@id='Password']", "123456@@");
-        sendKeysToElement(driver, "xpath=//input[@id='ConfirmPassword']", "123456@");
-
-        waitForElementClickable(driver, "xpath=//button[@id='register-button']");
-        clickToElement(driver, "xpath=//button[@id='register-button']");
-
-        Assert.assertEquals(getElementText(driver, "xpath=//span[@id='ConfirmPassword-error']"), "The password and confirmation password do not match.");
-    }
-
-    @AfterTest
-    public void afterClass() {
-        driver.quit();
-    }
-
-    public int generateFakeNumber() {
-        Random random = new Random();
-        return random.nextInt(500);
     }
 }

@@ -19,10 +19,10 @@ public class Level_02_Apply_BasePage_II {
     public void beforeClass() {
         driver = new FirefoxDriver();
 
-        //Hide initial of element
         basePage = BasePage.getBasePageObject();
 
-        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
+        emailAddress = "test" + generateFakeNumber() + "@mail.com";
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.get("https://demo.nopcommerce.com/");
     }
@@ -54,7 +54,8 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");
         basePage.sleepInSeconds(2);
-        Assert.assertEquals(basePage.getElementText(driver, "xpath=//span[@data-valmsg-for='Email']"), "Please enter a valid email address.");
+        Assert.assertEquals(basePage.getElementText(driver, "xpath=//span[@data-valmsg-for='Email']"),
+                "Please enter a valid email address.");
     }
 
     @Test
@@ -71,7 +72,8 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");
 
-        Assert.assertEquals(basePage.getElementText(driver, "class=result"), "Your registration completed");
+        Assert.assertEquals(basePage.getElementText(driver, "class=result"),
+                "Your registration completed");
 
         basePage.waitForElementClickable(driver, "class=ico-logout");
         basePage.clickToElement(driver, "class=ico-logout");
@@ -91,7 +93,9 @@ public class Level_02_Apply_BasePage_II {
         basePage.waitForElementClickable(driver, "id=register-button");
         basePage.clickToElement(driver, "id=register-button");
 
-        Assert.assertEquals(basePage.getElementText(driver, "xpath=//div[contains(@class,'message-error')]//li"), "The specified email already exists");
+        Assert.assertEquals(basePage.getElementText(driver,
+                        "xpath=//div[contains(@class,'message-error')]//li"),
+                "The specified email already exists");
     }
 
     @Test
@@ -109,7 +113,8 @@ public class Level_02_Apply_BasePage_II {
         basePage.clickToElement(driver, "id=register-button");
 
         Assert.assertEquals(basePage.getElementText(driver, "xpath=//span[@data-valmsg-for='Password']"),
-                "<p>Password must meet the following rules: </p><ul><li>must have at least 6 characters and not greater than 64 characters</li></ul>");
+                "<p>Password must meet the following rules: " +
+                        "</p><ul><li>must have at least 6 characters and not greater than 64 characters</li></ul>");
     }
 
     @Test

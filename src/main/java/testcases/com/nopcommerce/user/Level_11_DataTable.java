@@ -19,7 +19,7 @@ public class Level_11_DataTable extends BaseTest {
         homePage = PageGenerator.getHomePage(driver);
     }
 
-    //    @Test
+    @Test
     public void Table_01_Paging() {
         homePage.openPageByNumber("15");
         Assert.assertTrue(homePage.isPageNumberActive("15"));
@@ -29,7 +29,7 @@ public class Level_11_DataTable extends BaseTest {
         Assert.assertTrue(homePage.isPageNumberActive("1"));
     }
 
-    //    @Test
+    @Test
     public void Table_02_Search_By_Header() {
         homePage.enterTextboxByHeaderName("Females", "384187");
         Assert.assertTrue(homePage.isRowDataValueDisplayed("384187", "Afghanistan", "407124", "791312"));
@@ -44,7 +44,7 @@ public class Level_11_DataTable extends BaseTest {
         homePage.refreshCurrentPage(driver);
     }
 
-    //    @Test
+    @Test
     public void Table_03_Edit_Delete() {
         homePage.enterTextboxByHeaderName("Country", "Armenia");
         homePage.editRowByCountryValue("Armenia");

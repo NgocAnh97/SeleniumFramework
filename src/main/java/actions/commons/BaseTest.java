@@ -54,8 +54,9 @@ public class BaseTest {
             throw new RuntimeException("Browser name is invalid.");
         }
 
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-//        driver.get(GlobalConstants.PORTAL_PAGE_URL);
+        driver.get(GlobalConstants.PORTAL_PAGE_URL);
         return driver;
     }
 
@@ -96,6 +97,19 @@ public class BaseTest {
         return driver;
     }
 
+//    protected WebDriver getBrowserUrl2(String browserName, String url){
+//        BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
+//        switch (browserList){
+//            case FIREFOX:
+//                driver = WebDriverManager.firefoxdriver().create();
+//                break;
+//            default:
+//                throw new RuntimeException("Please enter the correct Browser name!");
+//        }
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+//        return driver;
+//    }
+
     protected WebDriver getBrowserDriver(String browserName, String environmentName) {
         log.info("Run on " + browserName);
         if (browserName.equals("firefox")) {
@@ -132,19 +146,6 @@ public class BaseTest {
         driver.get(getEnvironmentUrl(environmentName));
         return driver;
     }
-
-//    protected WebDriver getBrowserDriver2(String browserName){
-//        BrowserName browser = BrowserName.valueOf(browserName.toUpperCase());
-//        switch (browser){
-//            case FIREFOX:
-//                driver = WebDriverManager.firefoxdriver().create();
-//                break;
-//            default:
-//                throw new RuntimeException("Please enter the correct Browser name!");
-//        }
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-//        return driver;
-//    }
 
     public WebDriver getWedDriver() {
         return this.driver;

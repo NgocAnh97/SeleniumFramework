@@ -526,7 +526,6 @@ public class BasePage {
         clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
     }
 
-    // Sub Menu
     public void openSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName) {
         waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
         clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
@@ -535,7 +534,6 @@ public class BasePage {
         clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
     }
 
-    // Child Menu
     public void openChildSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName, String childSubMenuPageName) {
         waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
         clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
@@ -547,19 +545,16 @@ public class BasePage {
         clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, childSubMenuPageName);
     }
 
-    // Button
     public void clickToButtonByType(WebDriver driver, String buttonTypeName) {
         waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
         clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
     }
 
-    // Enter Textbox
     public void enterToTextboxByName(WebDriver driver, String value, String textBoxName) {
         waitForElementVisible(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, textBoxName);
         sendKeysToElement(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, value, textBoxName);
     }
 
-    // Enter Textbox
     public String getTextboxValueByID(WebDriver driver, String value, String textBoxName) {
         waitForElementVisible(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, textBoxName);
         return getElementAttributeValue(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, "value", textBoxName);

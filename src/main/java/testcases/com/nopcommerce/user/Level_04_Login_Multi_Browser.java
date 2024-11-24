@@ -17,8 +17,7 @@ import java.util.Random;
 
 public class Level_04_Login_Multi_Browser extends BaseTest {
     private WebDriver driver;
-    String emailAddress, registerEmail, passWord;
-    private final String projectPath = System.getProperty("user.dir");
+    String emailAddress, registerEmail, password;
     private UserHomePageObjects homePage;
     private UserLoginPageObjects loginPage;
 
@@ -30,19 +29,6 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
         loginPage = new UserLoginPageObjects(driver);
         readFile();
         emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
-    }
-
-    public void readFile() throws IOException {
-        String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
-        FileReader fileReader = new FileReader(TestFile);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-        String Content = "";
-        while ((Content = bufferedReader.readLine()) != null) {
-            String[] index = Content.split(";");
-            registerEmail = index[0];
-            passWord = index[1];
-        }
     }
 
     @Test
@@ -72,14 +58,14 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
         Assert.assertEquals(loginPage.getFieldValidationErrorMessage(), "Wrong email");
     }
 
-    //    @Test
+    @Test
     public void Login_03_Login_Unregister_Email() {
         System.out.println("Login_03 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
 
         System.out.println("Login_03 - Step 02: Input to required fields");
         loginPage.inputToEmailTextbox("unregisterEmail@yopmail.com");
-        loginPage.inputToPasswordTextbox(passWord);
+        loginPage.inputToPasswordTextbox(password);
 
         System.out.println("Login_03 - Step 03: Click to Login button");
         loginPage.openLoginPage();
@@ -89,7 +75,7 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
                 "No customer account found");
     }
 
-    //    @Test
+    @Test
     public void Login_04_Login_Registered_Email_Empty_Password() {
         System.out.println("Login_04 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
@@ -105,7 +91,7 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
                 "The credentials provided are incorrect");
     }
 
-    //    @Test
+    @Test
     public void Login_05_Login_Registered_Email_Wrong_Password() {
         System.out.println("Login_05 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
@@ -122,14 +108,14 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
                 "The credentials provided are incorrect");
     }
 
-    //    @Test
+    @Test
     public void Login_06_Login_Registered_Email_Password() {
         System.out.println("Login_06 - Step 01: Click to Login link");
         loginPage = homePage.openLoginPage();
 
         System.out.println("Login_06 - Step 02: Input to required fields");
         loginPage.inputToEmailTextbox(registerEmail);
-        loginPage.inputToPasswordTextbox(passWord);
+        loginPage.inputToPasswordTextbox(password);
 
         System.out.println("Login_06 - Step 03: Click to Login button");
         loginPage.openLoginPage();
@@ -148,5 +134,18 @@ public class Level_04_Login_Multi_Browser extends BaseTest {
     public int generateFakeNumber() {
         Random random = new Random();
         return random.nextInt(500);
+    }
+
+    public void readFile() throws IOException {
+        String TestFile = "/Users/mastery/Documents/selenium/selenium/src/main/resources/dataTestNopCommerce.txt";
+        FileReader fileReader = new FileReader(TestFile);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String Content = "";
+        while ((Content = bufferedReader.readLine()) != null) {
+            String[] index = Content.split(";");
+            registerEmail = index[0];
+            password = index[1];
+        }
     }
 }
