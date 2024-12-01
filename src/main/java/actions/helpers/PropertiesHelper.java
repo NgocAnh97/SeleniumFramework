@@ -17,7 +17,6 @@ public class PropertiesHelper {
 
     public static Properties loadAllFiles() {
         LinkedList<String> files = new LinkedList<>();
-        // Add tất cả file Properties vào đây theo mẫu
         files.add("src/test/resources/configs/configs.properties");
         files.add("src/test/resources/configs/data.properties");
 
@@ -90,7 +89,6 @@ public class PropertiesHelper {
                 file.close();
                 out = new FileOutputStream(SystemsHelper.getCurrentDir() + relPropertiesFilePathDefault);
             }
-            //Ghi vào cùng file Properties với file đang lấy ra
             out = new FileOutputStream(linkFile);
             System.out.println(linkFile);
             properties.setProperty(key, keyValue);

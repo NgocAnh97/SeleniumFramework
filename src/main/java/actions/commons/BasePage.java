@@ -4,6 +4,7 @@ import actions.pageObjects.nopcommerce.user.UserAddressPageObjects;
 import actions.pageObjects.nopcommerce.user.UserMyProductReviewObjects;
 import actions.pageObjects.nopcommerce.user.UserRewardPointObjects;
 import interfaces.pageUIs.nopcommerce.BasePageUI;
+import interfaces.pageUIs.orangehrm.pim.EmployeeListPageUI;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -213,6 +214,8 @@ public class BasePage {
 
     public void selectItemInCustomDropdown(WebDriver driver, String parentXpath, String childXpath, String expectItemText) {
         WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        waitForElementClickable(driver, parentXpath);
+        scrollToElement(driver, parentXpath);
         getWebElement(driver, parentXpath).click();
         sleepInSeconds(1);
 
@@ -260,12 +263,16 @@ public class BasePage {
         return Color.fromString(rgbaValue).asHex();
     }
 
-    public int getElementSize(WebDriver driver, String xpathLocator) {
+    public int getListElementSize(WebDriver driver, String xpathLocator) {
         return getListWebElement(driver, xpathLocator).size();
     }
 
-    public int getElementSize(WebDriver driver, String xpathLocator, String... params) {
+    public int getListElementSize(WebDriver driver, String xpathLocator, String... params) {
         return getListWebElement(driver, getDynamicLocator(xpathLocator, params)).size();
+    }
+
+    public Dimension getElementSize(WebDriver driver, String xpathLocator, String... params) {
+        return getWebElement(driver, xpathLocator).getSize();
     }
 
     public void checkToDefaultCheckboxRadio(WebDriver driver, String xpathLocator) {
@@ -384,7 +391,7 @@ public class BasePage {
 
     public void scrollToElement(WebDriver driver, String locator) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", getWebElement(driver, locator));
+        jsExecutor.executeScript("arguments[0].scrollIntoView(false);", getWebElement(driver, locator));
     }
 
     public void removeAttributeInDOM(WebDriver driver, String locator, String attributeRemove) {
@@ -448,28 +455,38 @@ public class BasePage {
     }
 
     public void waitForElementInvisible(WebDriver driver, String xpathLocator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(xpathLocator)));
+        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(xpathLocator)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String xpathLocator, String... params) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(xpathLocator, params)));
+        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(xpathLocator, params)));
     }
 
-    public void waitForAllElementInvisible(WebDriver driver, String xpathLocator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.invisibilityOfAllElements(getListWebElement(driver, xpathLocator)));
+    public boolean waitForAllElementInvisible(WebDriver driver, String xpathLocator) {
+        return new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.invisibilityOfAllElements(getListWebElement(driver, xpathLocator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String xpathLocator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.elementToBeClickable(getWebElement(driver, xpathLocator)));
+        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.elementToBeClickable(getWebElement(driver, xpathLocator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String xpathLocator, String... params) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.elementToBeClickable(getWebElement(driver, getDynamicLocator(xpathLocator, params))));
+        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.elementToBeClickable(getWebElement(driver, getDynamicLocator(xpathLocator, params))));
+    }
+
+    public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
+        String filePath = GlobalConstants.UPLOAD_PATH;
+        String fullFileName = "";
+        for (String file : fileNames) {
+            fullFileName += filePath + file + "\n";
+        }
+        fullFileName = fullFileName.trim();
+        getWebElement(driver, BasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
     }
 
     private String getDynamicLocator(String xpathLocator, String... params) {
@@ -522,42 +539,47 @@ public class BasePage {
 
     // HRM - Menu
     public void openMenuPage(WebDriver driver, String menuPageName) {
-        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
-        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+        waitForElementClickable(driver, interfaces.pageUIs.orangehrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+        clickToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
     }
 
     public void openSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName) {
-        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
-        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+        waitForElementClickable(driver, interfaces.pageUIs.orangehrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
+        clickToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.MENU_BY_PAGE_NAME, menuPageName);
 
-        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
-        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+        waitForElementClickable(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+        clickToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
     }
 
     public void openChildSubMenuPage(WebDriver driver, String menuPageName, String subMenuPageName, String childSubMenuPageName) {
-        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
-        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
+        waitForElementClickable(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
+        clickToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, menuPageName);
 
-        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
-        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+        waitForElementClickable(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
+        clickToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
 
-        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, childSubMenuPageName);
-        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, childSubMenuPageName);
+        waitForElementClickable(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, childSubMenuPageName);
+        clickToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.CHILD_MENU_BY_NAME, childSubMenuPageName);
     }
 
     public void clickToButtonByType(WebDriver driver, String buttonTypeName) {
-        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
-        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
+        waitForElementClickable(driver, interfaces.pageUIs.orangehrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
+        clickToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.BUTTON_BY_TYPE, buttonTypeName);
     }
 
     public void enterToTextboxByName(WebDriver driver, String value, String textBoxName) {
-        waitForElementVisible(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, textBoxName);
-        sendKeysToElement(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, value, textBoxName);
+        waitForElementVisible(driver, interfaces.pageUIs.orangehrm.BasePageUI.TEXTBOX_BY_NAME, textBoxName);
+        sendKeysToElement(driver, interfaces.pageUIs.orangehrm.BasePageUI.TEXTBOX_BY_NAME, value, textBoxName);
     }
 
-    public String getTextboxValueByID(WebDriver driver, String value, String textBoxName) {
-        waitForElementVisible(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, textBoxName);
-        return getElementAttributeValue(driver, interfaces.pageUIs.hrm.BasePageUI.TEXTBOX_BY_NAME, "value", textBoxName);
+    /* Only use for Orange HRM website */
+    public boolean waitAllLoadingIconInvisible(WebDriver driver) {
+        return waitForAllElementInvisible(driver, interfaces.pageUIs.orangehrm.BasePageUI.LOADING_ICON);
+    }
+
+    public boolean isSuccessMessageDisplayed(WebDriver driver) {
+        waitForElementVisible(driver, EmployeeListPageUI.UPDATE_EMPLOYEE_SUCCESS_MESSAGE);
+        return isElementDisplayed(driver, EmployeeListPageUI.UPDATE_EMPLOYEE_SUCCESS_MESSAGE);
     }
 
     protected BasePage() {

@@ -1,20 +1,22 @@
 package testcases.com.hrm.employee.PIM;
 
 import actions.commons.BaseTest;
-import actions.pageObjects.hrm.*;
+import actions.pageObjects.hrm.DashboardPO;
+import actions.pageObjects.hrm.LoginPO;
+import actions.pageObjects.hrm.PageGenerator;
 import actions.pageObjects.hrm.pim.AddEmployeePO;
 import actions.pageObjects.hrm.pim.EmployeePO;
 import actions.pageObjects.hrm.pim.PersonalDetailPO;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static java.lang.Thread.sleep;
-
 public class PIM_01_Employee extends BaseTest {
-    String employeeID, statusValue;
+    String employeeID, statusValue, firstName, lastName;
+    String avatarImageName = "background1.jpeg";
 
     @Parameters({"browser", "url"})
     @BeforeClass
@@ -24,6 +26,8 @@ public class PIM_01_Employee extends BaseTest {
 
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
+        firstName = "Yoona";
+        lastName = "Im";
 
         log.info("Pre-condition - Step 02: Login with Admin role");
         loginPage.enterToTextboxByName(driver, "Admin", "username");
@@ -36,64 +40,76 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_01_Add_New_Employee() throws InterruptedException {
         log.info("Add_New_01 - Step 01: Open 'Employee list' page");
-        dashboardPage.openSubMenuPage(driver, "PIM", "Employee List");
-        employeeListPage = PageGenerator.getEmployeeListPage(driver);
+        employeeListPage = dashboardPage.clickToPIMPage();
 
         log.info("Add_New_01 - Step 02: Click to 'Add' button");
-        employeeListPage.clickToButtonByType(driver, "button");
-        addEmployeePage = PageGenerator.getAddEmployeePage(driver);
+        addEmployeePage = employeeListPage.clickToAddEmployeeButton();
 
         log.info("Add_New_01 - Step 03: Enter valid info to 'First name' textbox");
-        addEmployeePage.enterToTextboxByName(driver, "firstName", "firstName");
+        addEmployeePage.enterToFirstNameTextbox(firstName);
 
         log.info("Add_New_01 - Step 04: Enter valid info to 'Last name' textbox");
-        addEmployeePage.enterToTextboxByName(driver, "lastName", "lastName");
+        addEmployeePage.enterToLastNameTextbox(lastName);
 
         log.info("Add_New_01 - Step 05: Get value of 'Employee ID'");
-//        employeeID = addEmployeePage.getTextboxValueByID();
-
-        log.info("Add_New_01 - Step 06: Click to 'Create Login Details' checkbox");
-        addEmployeePage.clickToCreateLoginDetailCheckbox("");
-
-        log.info("Add_New_01 - Step 07: Enter valid info to 'User Name' textbox");
-        addEmployeePage.enterToUserNameTextbox("");
-
-        log.info("Add_New_01 - Step 08: Enter valid info to 'Password' textbox");
-        addEmployeePage.enterToPasswordTextbox("");
-
-        log.info("Add_New_01 - Step 09: Enter valid info to 'Confirm Password' textbox");
-        addEmployeePage.enterToConfirmPasswordTextbox("");
-
-        log.info("Add_New_01 - Step 10: Select '" + statusValue + "' value in 'Status' dropdown");
-        addEmployeePage.selectValueInStatusDropdown(statusValue);
+        employeeID = addEmployeePage.getEmployeeID();
+        System.out.println("employeeID: " + employeeID);
 
         log.info("Add_New_01 - Step 11: Click to 'Save' button");
-        sleep(2000);
-        employeeListPage.clickToButtonByType(driver, "submit");
-        personalDetailPage = PageGenerator.getPersonalDetailPage(driver);
+        personalDetailPage = addEmployeePage.clickToSaveButton();
 
-        log.info("Add_New_01 - Step 12: Open 'Employee List' page");
-        employeeListPage = personalDetailPage.openEmployeeListPage();
-
-        log.info("Add_New_01 - Step 13: Enter valid info to 'Employee Name' textbox");
-        employeeListPage.enterToEmployeeNameTextbox("");
-
-        log.info("Add_New_01 - Step 14: Click to 'Search' button");
-        employeeListPage.clickToButtonByType(driver, "submit");
-
-        log.info("Add_New_01 - Step 15: Verify Employee Information displayed at 'Result Table'");
-        verifyTrue(employeeListPage.isEmployeeInfoDisplayedAtTable("", "", ""));
+        verifyTrue(personalDetailPage.verifyAddSuccessMessage());
     }
 
-//    @Test
-//    public void Employee_02_Upload_Avatar() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_03_Personal_Details() {
-//
-//    }
+    @Test
+    public void Employee_02_Upload_Avatar() {
+        personalDetailPage.clickToEmployeeAvatarImage();
+
+        Dimension beforeUpload = personalDetailPage.getAvatarSize();
+        personalDetailPage.uploadMultipleFiles(driver, avatarImageName);
+
+        personalDetailPage.clickToSaveButtonAtProfileContainer();
+
+        Assert.assertTrue(personalDetailPage.isSuccessMessageDisplayed(driver));
+
+        personalDetailPage.waitAllLoadingIconInvisible(driver);
+
+        Assert.assertTrue(personalDetailPage.isProfileAvatarUploadSuccess(beforeUpload));
+    }
+
+    @Test
+    public void Employee_03_Personal_Details() {
+        personalDetailPage = personalDetailPage.openPersonalDetailPage(driver);
+        personalDetailPage.waitAllLoadingIconInvisible(driver);
+        personalDetailPage.enterToFirstNameTextbox("Im updated");
+        personalDetailPage.enterToLastNameTextbox("Yoona updated");
+
+        Assert.assertEquals(personalDetailPage.getEmployeeID(), employeeID);
+
+        personalDetailPage.enterToDriverLicenseTextbox("12");
+        personalDetailPage.enterToLicenseExpiryDateTextbox("2024-01-12");
+        personalDetailPage.selectNationalityDropdown("American");
+        personalDetailPage.selectMaritalStatusDropdown("Single");
+        personalDetailPage.enterToDateOfBirthTextbox("1990-30-05");
+        personalDetailPage.selectGenderRadioButton("Female");
+
+        personalDetailPage.clickToSaveButtonAtPersonalDetailContainer();
+
+        personalDetailPage.waitAllLoadingIconInvisible(driver);
+
+        personalDetailPage.isSuccessMessageDisplayed(driver);
+
+        //Verify
+        Assert.assertEquals(personalDetailPage.getFirstNameTextboxValue(), "");
+        Assert.assertEquals(personalDetailPage.getLastNameTextboxValue(), "");
+        Assert.assertEquals(personalDetailPage.getEmployeeID(), employeeID);
+        Assert.assertEquals(personalDetailPage.getDriverLicenseTextboxValue(), "");
+        Assert.assertEquals(personalDetailPage.getLicenseExpiryTextboxValue(), "");
+        Assert.assertEquals(personalDetailPage.getNationalityDropdownValue(), "");
+        Assert.assertEquals(personalDetailPage.getMaritalStatusDropdownValue(), "");
+        Assert.assertEquals(personalDetailPage.getDateOfBirthTextboxValue(), "");
+        Assert.assertTrue(personalDetailPage.getGenderRadioButtonSelected());
+    }
 //
 //    @Test
 //    public void Employee_04_Contact_Details() {
@@ -110,8 +126,8 @@ public class PIM_01_Employee extends BaseTest {
 //
 //     }
 
-    @Parameters({"browser"})
-    @AfterClass()
+    //    @Parameters({"browser"})
+//    @AfterClass()
     public void afterClass(String browserName) {
         log.info("Post-condition: Close browser '" + browserName + "'");
         driver.quit();

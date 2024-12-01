@@ -52,7 +52,7 @@ public class PIM_01_Employee_PatternObject extends BaseTest {
         addEmployeePage.enterToTextboxByName(driver, "lastName", "lastName");
 
         log.info("Add_New_01 - Step 05: Get value of 'Employee ID'");
-//        employeeID = addEmployeePage.getTextboxValueByID();
+        employeeID = addEmployeePage.getEmployeeID();
 
         log.info("Add_New_01 - Step 06: Click to 'Create Login Details' checkbox");
         addEmployeePage.clickToCreateLoginDetailCheckbox("");
@@ -78,7 +78,7 @@ public class PIM_01_Employee_PatternObject extends BaseTest {
         employeeListPage = personalDetailPage.openEmployeeListPage();
 
         log.info("Add_New_01 - Step 13: Enter valid info to 'Employee Name' textbox");
-        employeeListPage.enterToEmployeeNameTextbox("");
+//        employeeListPage.enterToEmployeeNameTextbox("");
 
         log.info("Add_New_01 - Step 14: Click to 'Search' button");
         employeeListPage.clickToButtonByType(driver, "submit");
@@ -86,31 +86,6 @@ public class PIM_01_Employee_PatternObject extends BaseTest {
         log.info("Add_New_01 - Step 15: Verify Employee Information displayed at 'Result Table'");
         verifyTrue(employeeListPage.isEmployeeInfoDisplayedAtTable("", "", ""));
     }
-
-//    @Test
-//    public void Employee_02_Upload_Avatar() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_03_Personal_Details() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_04_Contact_Details() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_05_Emergency_Details() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_06_Assigned_Dependents() {
-//
-//     }
 
     @Parameters({"browser"})
     @AfterClass()

@@ -56,7 +56,7 @@ public class HomePO extends BasePage {
     }
 
     public void enterToTextboxByIndex(String rowIndex, String columnName, String value) {
-        int columnIndexNumber = getElementSize(driver, HomePageUI.DYNAMIC_PRECEDING_SIBLING_NUMBER, columnName) + 1;
+        int columnIndexNumber = getListElementSize(driver, HomePageUI.DYNAMIC_PRECEDING_SIBLING_NUMBER, columnName) + 1;
 
         String columnIndex = String.valueOf(columnIndexNumber);
         waitForElementVisible(driver, HomePageUI.DYNAMIC_TEXTBOX_BY_ROW_AND_COLUMN_INDEX, rowIndex, columnIndex);
@@ -64,7 +64,7 @@ public class HomePO extends BasePage {
     }
 
     public void selectToDropdownByIndex(String rowIndex, String columnName, String valueToSelect) {
-        int columnIndexNumber = getElementSize(driver, HomePageUI.DYNAMIC_PRECEDING_SIBLING_NUMBER, columnName) + 1;
+        int columnIndexNumber = getListElementSize(driver, HomePageUI.DYNAMIC_PRECEDING_SIBLING_NUMBER, columnName) + 1;
 
         String columnIndex = String.valueOf(columnIndexNumber);
         waitForElementClickable(driver, HomePageUI.DYNAMIC_DROPDOWN_BY_ROW_AND_COLUMN_INDEX, rowIndex, columnIndex);
@@ -72,7 +72,7 @@ public class HomePO extends BasePage {
     }
 
     public void checkToCheckboxByIndex(String rowIndex, String columnName, boolean expectStatus) throws Exception {
-        int columnIndexNumber = getElementSize(driver, HomePageUI.DYNAMIC_PRECEDING_SIBLING_NUMBER, columnName) + 1;
+        int columnIndexNumber = getListElementSize(driver, HomePageUI.DYNAMIC_PRECEDING_SIBLING_NUMBER, columnName) + 1;
 
         String columnIndex = String.valueOf(columnIndexNumber);
 

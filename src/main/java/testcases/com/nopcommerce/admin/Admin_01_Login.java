@@ -22,7 +22,7 @@ public class Admin_01_Login extends BasePage {
     public void beforeClass() throws IOException {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--user-data-dir=/Users/mastery/Library/Application Support/Google/Chrome/");
-        chromeOptions.addArguments("--profile-directory=Profile 10");
+        chromeOptions.addArguments("--profile-directory=Profile 11");
         driver = new ChromeDriver(chromeOptions);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
