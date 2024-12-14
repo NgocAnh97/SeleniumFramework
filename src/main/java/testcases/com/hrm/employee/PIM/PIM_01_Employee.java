@@ -10,13 +10,15 @@ import actions.pageObjects.hrm.pim.PersonalDetailPO;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PIM_01_Employee extends BaseTest {
-    String employeeID, statusValue, firstName, lastName;
-    String avatarImageName = "background1.jpeg";
+    String employeeID, statusValue, firstName, lastName, editFirstName, editLastName;
+    String driverLicenseNumber, licenseExpiryDate, nationality, maritalStatus, dateOfBirth, gender;
+    String avatarImageName = "yoona.jpg";
 
     @Parameters({"browser", "url"})
     @BeforeClass
@@ -26,8 +28,17 @@ public class PIM_01_Employee extends BaseTest {
 
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
-        firstName = "Yoona";
-        lastName = "Im";
+        firstName = "Irene";
+        lastName = "Bae";
+        editFirstName = "Yoona";
+        editLastName = "Im";
+
+        driverLicenseNumber = "012345678";
+        licenseExpiryDate = "2024-01-12";
+        nationality = "American";
+        maritalStatus = "Married";
+        dateOfBirth = "1990-30-05";
+        gender = "Female";
 
         log.info("Pre-condition - Step 02: Login with Admin role");
         loginPage.enterToTextboxByName(driver, "Admin", "username");
@@ -80,54 +91,37 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_03_Personal_Details() {
         personalDetailPage = personalDetailPage.openPersonalDetailPage(driver);
-        personalDetailPage.waitAllLoadingIconInvisible(driver);
-        personalDetailPage.enterToFirstNameTextbox("Im updated");
-        personalDetailPage.enterToLastNameTextbox("Yoona updated");
+
+        personalDetailPage.enterToFirstNameTextbox(editFirstName);
+        personalDetailPage.enterToLastNameTextbox(editLastName);
 
         Assert.assertEquals(personalDetailPage.getEmployeeID(), employeeID);
 
-        personalDetailPage.enterToDriverLicenseTextbox("12");
-        personalDetailPage.enterToLicenseExpiryDateTextbox("2024-01-12");
-        personalDetailPage.selectNationalityDropdown("American");
-        personalDetailPage.selectMaritalStatusDropdown("Single");
-        personalDetailPage.enterToDateOfBirthTextbox("1990-30-05");
-        personalDetailPage.selectGenderRadioButton("Female");
+        personalDetailPage.enterToDriverLicenseTextbox(driverLicenseNumber);
+        personalDetailPage.enterToLicenseExpiryDateTextbox(licenseExpiryDate);
+        personalDetailPage.selectNationalityDropdown(nationality);
+        personalDetailPage.selectMaritalStatusDropdown(maritalStatus);
+        personalDetailPage.enterToDateOfBirthTextbox(dateOfBirth);
+        personalDetailPage.selectGenderRadioButton(gender);
 
         personalDetailPage.clickToSaveButtonAtPersonalDetailContainer();
 
+        personalDetailPage.isSuccessMessageDisplayed(driver);
         personalDetailPage.waitAllLoadingIconInvisible(driver);
 
-        personalDetailPage.isSuccessMessageDisplayed(driver);
-
-        //Verify
-        Assert.assertEquals(personalDetailPage.getFirstNameTextboxValue(), "");
-        Assert.assertEquals(personalDetailPage.getLastNameTextboxValue(), "");
+        Assert.assertEquals(personalDetailPage.getFirstNameTextboxValue(), editFirstName);
+        Assert.assertEquals(personalDetailPage.getLastNameTextboxValue(), editLastName);
         Assert.assertEquals(personalDetailPage.getEmployeeID(), employeeID);
-        Assert.assertEquals(personalDetailPage.getDriverLicenseTextboxValue(), "");
-        Assert.assertEquals(personalDetailPage.getLicenseExpiryTextboxValue(), "");
-        Assert.assertEquals(personalDetailPage.getNationalityDropdownValue(), "");
-        Assert.assertEquals(personalDetailPage.getMaritalStatusDropdownValue(), "");
-        Assert.assertEquals(personalDetailPage.getDateOfBirthTextboxValue(), "");
-        Assert.assertTrue(personalDetailPage.getGenderRadioButtonSelected());
+        Assert.assertEquals(personalDetailPage.getDriverLicenseTextboxValue(), driverLicenseNumber);
+        Assert.assertEquals(personalDetailPage.getLicenseExpiryTextboxValue(), licenseExpiryDate);
+        Assert.assertEquals(personalDetailPage.getNationalityDropdownValue(), nationality);
+        Assert.assertEquals(personalDetailPage.getMaritalStatusDropdownValue(), maritalStatus);
+        Assert.assertEquals(personalDetailPage.getDateOfBirthTextboxValue(), dateOfBirth);
+        Assert.assertTrue(personalDetailPage.getGenderRadioButtonSelectedByValue(gender));
     }
-//
-//    @Test
-//    public void Employee_04_Contact_Details() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_05_Emergency_Details() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_06_Assigned_Dependents() {
-//
-//     }
 
-    //    @Parameters({"browser"})
-//    @AfterClass()
+    @Parameters({"browser"})
+    @AfterClass
     public void afterClass(String browserName) {
         log.info("Post-condition: Close browser '" + browserName + "'");
         driver.quit();

@@ -1,11 +1,12 @@
 package actions.pageObjects.hrm.pim;
 
 import actions.commons.BasePage;
+import actions.pageObjects.hrm.PageGenerator;
 import interfaces.pageUIs.orangehrm.pim.PersonaListTabsPageUI;
 import org.openqa.selenium.WebDriver;
 
 public class PersonalListTabs extends BasePage {
-    private WebDriver driver;
+    protected WebDriver driver;
 
     public PersonalListTabs(WebDriver driver) {
         this.driver = driver;
@@ -14,10 +15,11 @@ public class PersonalListTabs extends BasePage {
     public PersonalDetailPO openPersonalDetailPage(WebDriver driver) {
         waitForElementClickable(driver, PersonaListTabsPageUI.PERSONAL_DETAIL_LINK);
         clickToElement(driver, PersonaListTabsPageUI.PERSONAL_DETAIL_LINK);
-        return new PersonalDetailPO(driver);
+        waitAllLoadingIconInvisible(driver);
+        return PageGenerator.getPersonalDetailPage(driver);
     }
 
     public ContactDetailPO openContactDetailPage(WebDriver driver) {
-        return new ContactDetailPO(driver);
+        return PageGenerator.getContactDetailPage(driver);
     }
 }

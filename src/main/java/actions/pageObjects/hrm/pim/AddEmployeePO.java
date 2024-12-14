@@ -17,21 +17,6 @@ public class AddEmployeePO extends BasePage {
         return getElementText(driver, AddEmployeePageUI.EMPLOYEE_ID);
     }
 
-    public void clickToCreateLoginDetailCheckbox(String s) {
-    }
-
-    public void enterToUserNameTextbox(String s) {
-    }
-
-    public void enterToPasswordTextbox(String s) {
-    }
-
-    public void enterToConfirmPasswordTextbox(String s) {
-    }
-
-    public void selectValueInStatusDropdown(String statusValue) {
-    }
-
     public void enterToFirstNameTextbox(String firstName) {
         waitForElementVisible(driver, AddEmployeePageUI.FIRST_NAME_TEXTBOX);
         sendKeysToElement(driver, AddEmployeePageUI.FIRST_NAME_TEXTBOX, firstName);

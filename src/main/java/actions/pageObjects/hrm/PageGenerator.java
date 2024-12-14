@@ -1,6 +1,7 @@
 package actions.pageObjects.hrm;
 
 import actions.pageObjects.hrm.pim.AddEmployeePO;
+import actions.pageObjects.hrm.pim.ContactDetailPO;
 import actions.pageObjects.hrm.pim.EmployeePO;
 import actions.pageObjects.hrm.pim.PersonalDetailPO;
 import org.openqa.selenium.WebDriver;
@@ -24,5 +25,9 @@ public class PageGenerator {
 
     public static AddEmployeePO getAddEmployeePage(WebDriver driver) {
         return new AddEmployeePO(driver);
+    }
+
+    public static ContactDetailPO getContactDetailPage(WebDriver driver) {
+        return new ContactDetailPO(driver);
     }
 }

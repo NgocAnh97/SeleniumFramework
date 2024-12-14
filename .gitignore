@@ -5,6 +5,7 @@ logs/
 resources/
 screenshotImg/
 test-output/
+uploadFiles/
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

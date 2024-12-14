@@ -54,21 +54,6 @@ public class PIM_01_Employee_PatternObject extends BaseTest {
         log.info("Add_New_01 - Step 05: Get value of 'Employee ID'");
         employeeID = addEmployeePage.getEmployeeID();
 
-        log.info("Add_New_01 - Step 06: Click to 'Create Login Details' checkbox");
-        addEmployeePage.clickToCreateLoginDetailCheckbox("");
-
-        log.info("Add_New_01 - Step 07: Enter valid info to 'User Name' textbox");
-        addEmployeePage.enterToUserNameTextbox("");
-
-        log.info("Add_New_01 - Step 08: Enter valid info to 'Password' textbox");
-        addEmployeePage.enterToPasswordTextbox("");
-
-        log.info("Add_New_01 - Step 09: Enter valid info to 'Confirm Password' textbox");
-        addEmployeePage.enterToConfirmPasswordTextbox("");
-
-        log.info("Add_New_01 - Step 10: Select '" + statusValue + "' value in 'Status' dropdown");
-        addEmployeePage.selectValueInStatusDropdown(statusValue);
-
         log.info("Add_New_01 - Step 11: Click to 'Save' button");
         sleep(2000);
         employeeListPage.clickToButtonByType(driver, "submit");
@@ -76,15 +61,6 @@ public class PIM_01_Employee_PatternObject extends BaseTest {
 
         log.info("Add_New_01 - Step 12: Open 'Employee List' page");
         employeeListPage = personalDetailPage.openEmployeeListPage();
-
-        log.info("Add_New_01 - Step 13: Enter valid info to 'Employee Name' textbox");
-//        employeeListPage.enterToEmployeeNameTextbox("");
-
-        log.info("Add_New_01 - Step 14: Click to 'Search' button");
-        employeeListPage.clickToButtonByType(driver, "submit");
-
-        log.info("Add_New_01 - Step 15: Verify Employee Information displayed at 'Result Table'");
-        verifyTrue(employeeListPage.isEmployeeInfoDisplayedAtTable("", "", ""));
     }
 
     @Parameters({"browser"})

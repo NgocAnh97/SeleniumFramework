@@ -8,7 +8,7 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 
 public class ReportNGListener implements ITestListener {
-    private String projectPath = System.getProperty("user.dir") + "/reportNGScreenshot/";
+    private String projectPath = System.getProperty("user.dir") + "test-output/reportNGScreenshot/";
     WebDriver driver;
 
     @Override
