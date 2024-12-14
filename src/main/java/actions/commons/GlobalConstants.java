@@ -21,6 +21,7 @@ public class GlobalConstants {
     public static final String PORTAL_DEV_URL = "https://google.com";
     public static final String LOGOUT_LINK = "xpath=//a[text()='Logout']";
 
+    public static final String OS_NAME = "MAC";
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     private static final String SEPARATOR = File.separator;
     public static final String UPLOAD_PATH = PROJECT_PATH + SEPARATOR + "uploadFiles" + SEPARATOR;

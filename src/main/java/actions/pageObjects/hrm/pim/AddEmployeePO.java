@@ -27,7 +27,7 @@ public class AddEmployeePO extends BasePage {
         sendKeysToElement(driver, AddEmployeePageUI.LAST_NAME_TEXTBOX, lastName);
     }
 
-    public PersonalDetailPO clickToSaveButton() {
+    public PersonalDetailPO clickToSaveButtonAtAddEmployeeContainer() {
         waitForElementClickable(driver, AddEmployeePageUI.SAVE_BUTTON_AT_ADD_EMPLOYEE_CONTAINER);
         clickToElement(driver, AddEmployeePageUI.SAVE_BUTTON_AT_ADD_EMPLOYEE_CONTAINER);
 

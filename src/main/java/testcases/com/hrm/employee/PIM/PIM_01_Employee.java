@@ -28,8 +28,8 @@ public class PIM_01_Employee extends BaseTest {
 
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
-        firstName = "Irene";
-        lastName = "Bae";
+        firstName = "Yoonah";
+        lastName = "SNSD";
         editFirstName = "Yoona";
         editLastName = "Im";
 
@@ -67,7 +67,7 @@ public class PIM_01_Employee extends BaseTest {
         System.out.println("employeeID: " + employeeID);
 
         log.info("Add_New_01 - Step 11: Click to 'Save' button");
-        personalDetailPage = addEmployeePage.clickToSaveButton();
+        personalDetailPage = addEmployeePage.clickToSaveButtonAtAddEmployeeContainer();
 
         verifyTrue(personalDetailPage.verifyAddSuccessMessage());
     }
@@ -79,8 +79,10 @@ public class PIM_01_Employee extends BaseTest {
         Dimension beforeUpload = personalDetailPage.getAvatarSize();
         personalDetailPage.uploadMultipleFiles(driver, avatarImageName);
 
+        log.info("Add_New_02 save");
         personalDetailPage.clickToSaveButtonAtProfileContainer();
 
+        log.info("Add_New_02 Toast");
         Assert.assertTrue(personalDetailPage.isSuccessMessageDisplayed(driver));
 
         personalDetailPage.waitAllLoadingIconInvisible(driver);
@@ -119,6 +121,21 @@ public class PIM_01_Employee extends BaseTest {
         Assert.assertEquals(personalDetailPage.getDateOfBirthTextboxValue(), dateOfBirth);
         Assert.assertTrue(personalDetailPage.getGenderRadioButtonSelectedByValue(gender));
     }
+//
+//    @Test
+//    public void Employee_04_Contact_Details() {
+//
+//    }
+//
+//    @Test
+//    public void Employee_05_Emergency_Details() {
+//
+//    }
+//
+//    @Test
+//    public void Employee_06_Assigned_Dependents() {
+//
+//     }
 
     @Parameters({"browser"})
     @AfterClass

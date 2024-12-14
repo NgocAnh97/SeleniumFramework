@@ -21,9 +21,6 @@ public class DashboardPO extends BasePage {
         waitForElementClickable(driver, DashboardPageUI.PIM_PAGE);
         clickToElement(driver, DashboardPageUI.PIM_PAGE);
 
-//        waitForElementClickable(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
-//        clickToElement(driver, interfaces.pageUIs.hrm.BasePageUI.CHILD_MENU_BY_NAME, subMenuPageName);
-
         waitAllLoadingIconInvisible(driver);
         return PageGenerator.getEmployeeListPage(driver);
     }

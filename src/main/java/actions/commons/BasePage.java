@@ -173,8 +173,15 @@ public class BasePage {
     }
 
     public void sendKeysToElement(WebDriver driver, String locator, String textToSend) {
+        Keys key = null;
+        if (GlobalConstants.OS_NAME == "Windows") {
+            key = Keys.CONTROL;
+        } else {
+            key = Keys.COMMAND;
+        }
+
         WebElement element = getWebElement(driver, locator);
-        element.sendKeys(Keys.chord(Keys.COMMAND, "a", Keys.BACK_SPACE));
+        element.sendKeys(Keys.chord(key, "a", Keys.BACK_SPACE));
 //        element.clear();
         element.sendKeys(textToSend);
     }
@@ -501,6 +508,7 @@ public class BasePage {
         }
         fullFileName = fullFileName.trim();
         getWebElement(driver, BasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
+        sleepInSeconds(1);
     }
 
     private String getDynamicLocator(String locator, String... params) {

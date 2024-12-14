@@ -24,6 +24,7 @@ public class PersonalDetailPO extends PersonalListTabs {
     }
 
     public void clickToEmployeeAvatarImage() {
+        waitAllLoadingIconInvisible(driver);
         waitForElementClickable(driver, EmployeeListPageUI.EMPLOYEE_IMAGE);
         clickToElement(driver, EmployeeListPageUI.EMPLOYEE_IMAGE);
     }
@@ -36,7 +37,7 @@ public class PersonalDetailPO extends PersonalListTabs {
     public boolean isProfileAvatarUploadSuccess(Dimension beforeUpload) {
         sleepInSeconds(2);
         Dimension afterUpload = getAvatarSize();
-        return beforeUpload.equals(afterUpload);
+        return (!beforeUpload.equals(afterUpload));
     }
 
     public Dimension getAvatarSize() {
