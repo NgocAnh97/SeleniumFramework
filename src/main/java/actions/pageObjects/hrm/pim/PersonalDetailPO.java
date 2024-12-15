@@ -35,8 +35,9 @@ public class PersonalDetailPO extends PersonalListTabs {
     }
 
     public boolean isProfileAvatarUploadSuccess(Dimension beforeUpload) {
+        sleepInSeconds(2);
         Dimension afterUpload = getAvatarSize();
-        return beforeUpload.equals(afterUpload);
+        return !(beforeUpload.equals(afterUpload));
     }
 
     public Dimension getAvatarSize() {
@@ -115,8 +116,8 @@ public class PersonalDetailPO extends PersonalListTabs {
     }
 
     public String getNationalityDropdownValue() {
-        waitForElementVisible(driver, PersonalDetailPageUI.NATIONALITY_INPUT_DROPDOWN_ITEM_SELECTED);
-        return getElementText(driver, PersonalDetailPageUI.NATIONALITY_INPUT_DROPDOWN_ITEM_SELECTED);
+        waitForElementVisible(driver, PersonalDetailPageUI.NATIONALITY_DROPDOWN_ITEM_SELECTED);
+        return getElementText(driver, PersonalDetailPageUI.NATIONALITY_DROPDOWN_ITEM_SELECTED);
     }
 
     public String getMaritalStatusDropdownValue() {

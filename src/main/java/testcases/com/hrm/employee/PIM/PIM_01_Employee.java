@@ -4,9 +4,7 @@ import actions.commons.BaseTest;
 import actions.pageObjects.hrm.DashboardPO;
 import actions.pageObjects.hrm.LoginPO;
 import actions.pageObjects.hrm.PageGenerator;
-import actions.pageObjects.hrm.pim.AddEmployeePO;
-import actions.pageObjects.hrm.pim.EmployeePO;
-import actions.pageObjects.hrm.pim.PersonalDetailPO;
+import actions.pageObjects.hrm.pim.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -17,7 +15,8 @@ import org.testng.annotations.Test;
 
 public class PIM_01_Employee extends BaseTest {
     String employeeID, statusValue, firstName, lastName, editFirstName, editLastName;
-    String driverLicenseNumber, licenseExpiryDate, nationality, maritalStatus, dateOfBirth, gender;
+    String driverLicenseNumber, licenseExpiryDate, nationality, maritalStatus, dateOfBirth,
+            gender, street1, street2, country, name, relationship, homeTelephone, pleaseSpecify;
     String avatarImageName = "yoona.jpg";
 
     @Parameters({"browser", "url"})
@@ -36,9 +35,17 @@ public class PIM_01_Employee extends BaseTest {
         driverLicenseNumber = "012345678";
         licenseExpiryDate = "2024-01-12";
         nationality = "American";
-        maritalStatus = "Married";
+        maritalStatus = "Single";
         dateOfBirth = "1990-30-05";
         gender = "Female";
+        street1 = "Jeju";
+        street2 = "Soul";
+        country = "Bhutan";
+
+        name = "Yoona Im";
+        relationship = "Other";
+        homeTelephone = "0905000000";
+        pleaseSpecify = "Idol";
 
         log.info("Pre-condition - Step 02: Login with Admin role");
         loginPage.enterToTextboxByName(driver, "Admin", "username");
@@ -126,21 +133,61 @@ public class PIM_01_Employee extends BaseTest {
         Assert.assertEquals(personalDetailPage.getDateOfBirthTextboxValue(), dateOfBirth);
         Assert.assertTrue(personalDetailPage.getGenderRadioButtonSelectedByValue(gender));
     }
-//
-//    @Test
-//    public void Employee_04_Contact_Details() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_05_Emergency_Details() {
-//
-//    }
-//
-//    @Test
-//    public void Employee_06_Assigned_Dependents() {
-//
-//     }
+
+    @Test
+    public void Employee_04_Contact_Details() {
+        log.info("Contact_Details - Step 01: Update contact employee");
+        contactDetailPage = personalDetailPage.openContactDetailPage(driver);
+        contactDetailPage.enterToStreet1Textbox(street1);
+        contactDetailPage.enterToStreet2Textbox(street2);
+        contactDetailPage.selectCountryDropdown(country);
+
+        contactDetailPage.clickToSaveButtonAtContactDetailContainer();
+        contactDetailPage.isSuccessMessageDisplayed(driver);
+        contactDetailPage.waitAllLoadingIconInvisible(driver);
+
+        log.info("Contact_Details - Step 02: Verify contact employee information updated success");
+        Assert.assertEquals(contactDetailPage.getStreet1TextboxValue(), street1);
+        Assert.assertEquals(contactDetailPage.getStreet2TextboxValue(), street2);
+        Assert.assertEquals(contactDetailPage.getCountryDropdownValue(), country);
+    }
+
+    @Test
+    public void Employee_05_Emergency_Contacts() {
+        log.info("Emergency_Contacts - Step 01: Update Emergency Contacts");
+        emergencyContactPage = personalDetailPage.openEmergencyContactPage(driver);
+        emergencyContactPage.clickToAddButton();
+        emergencyContactPage.enterToNameTextbox(name);
+        emergencyContactPage.enterToRelationshipTextbox(relationship);
+        emergencyContactPage.enterToHomeTelephoneTextbox(homeTelephone);
+
+        emergencyContactPage.clickToSaveButtonAtEmergencyContactContainer();
+        emergencyContactPage.isAddInfoSuccessMessageDisplayed(driver); //
+        emergencyContactPage.waitAllLoadingIconInvisible(driver);
+
+        log.info("Emergency_Contacts - Step 02: Verify Emergency Contacts information updated success");
+        Assert.assertEquals(emergencyContactPage.getNameInRecordValue(), name);
+        Assert.assertEquals(emergencyContactPage.getRelationshipInRecordValue(), relationship);
+        Assert.assertEquals(emergencyContactPage.getHomeTelephoneInRecordValue(), homeTelephone);
+    }
+
+    @Test
+    public void Employee_06_Dependents() {
+        log.info("Dependents - Step 01: Update Dependents");
+        dependentPage = emergencyContactPage.openDependentPage(driver);
+        dependentPage.clickToAddButton();
+        dependentPage.enterToNameTextbox(name);
+        dependentPage.enterToRelationshipDropdown(relationship);
+        dependentPage.enterToPleaseSpecifyTextbox(pleaseSpecify);
+
+        dependentPage.clickToSaveButtonAtDependentContainer();
+        dependentPage.isAddInfoSuccessMessageDisplayed(driver);
+        dependentPage.waitAllLoadingIconInvisible(driver);
+
+        log.info("Dependents - Step 02: Verify Dependents information updated success");
+        Assert.assertEquals(dependentPage.getNameInRecordValue(), name);
+        Assert.assertEquals(dependentPage.getRelationshipInRecordValue(), pleaseSpecify);
+    }
 
     @Parameters({"browser"})
     @AfterClass
@@ -155,4 +202,7 @@ public class PIM_01_Employee extends BaseTest {
     private DashboardPO dashboardPage;
     private EmployeePO employeeListPage;
     private PersonalDetailPO personalDetailPage;
+    private ContactDetailPO contactDetailPage;
+    private EmergencyContactPO emergencyContactPage;
+    private DependentPO dependentPage;
 }

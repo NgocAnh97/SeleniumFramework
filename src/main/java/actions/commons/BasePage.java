@@ -604,6 +604,11 @@ public class BasePage {
         return isElementDisplayed(driver, EmployeeListPageUI.UPDATE_EMPLOYEE_SUCCESS_MESSAGE);
     }
 
+    public boolean isAddInfoSuccessMessageDisplayed(WebDriver driver) {
+        waitForElementVisible(driver, EmployeeListPageUI.ADD_INFO_SUCCESS_MESSAGE);
+        return isElementDisplayed(driver, EmployeeListPageUI.ADD_INFO_SUCCESS_MESSAGE);
+    }
+
     protected BasePage() {
     }
 

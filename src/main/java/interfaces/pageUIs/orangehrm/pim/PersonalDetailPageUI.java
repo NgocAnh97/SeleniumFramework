@@ -7,7 +7,7 @@ public class PersonalDetailPageUI {
     public static final String DRIVER_LICENSE_NUMBER_TEXTBOX = "xpath=//label[text()=\"Driver's License Number\"]/parent::div/following-sibling::div/input";
     public static final String LICENSE_EXPIRY_DATE_TEXTBOX = "xpath=//label[text()='License Expiry Date']/parent::div/following-sibling::div//input";
     public static final String NATIONALITY_DROPDOWN_PARENT = "xpath=//label[text()='Nationality']/parent::div/following-sibling::div//div[contains(@class,'oxd-select-text--active')]";
-    public static final String NATIONALITY_INPUT_DROPDOWN_ITEM_SELECTED = "xpath=//label[text()='Nationality']/parent::div/following-sibling::div//div[@class='oxd-select-text-input']";
+    public static final String NATIONALITY_DROPDOWN_ITEM_SELECTED = "xpath=//label[text()='Nationality']/parent::div/following-sibling::div//div[@class='oxd-select-text-input']";
     public static final String NATIONALITY_DROPDOWN_CHILD = "xpath=//div[@role='listbox']//div[contains(@class,'oxd-select-option')]";
     public static final String MARITAL_STATUS_DROPDOWN_PARENT = "xpath=//label[text()='Marital Status']/parent::div/following-sibling::div//div[contains(@class,'oxd-select-text--active')]";
     public static final String MARITAL_STATUS_DROPDOWN_ITEM_SELECTED = "xpath=//label[text()='Marital Status']/parent::div/following-sibling::div//div[@class='oxd-select-text-input']";

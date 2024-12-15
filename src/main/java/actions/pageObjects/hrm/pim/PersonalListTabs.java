@@ -20,6 +20,23 @@ public class PersonalListTabs extends BasePage {
     }
 
     public ContactDetailPO openContactDetailPage(WebDriver driver) {
+        waitForElementClickable(driver, PersonaListTabsPageUI.CONTACT_DETAIL_LINK);
+        clickToElement(driver, PersonaListTabsPageUI.CONTACT_DETAIL_LINK);
+        waitAllLoadingIconInvisible(driver);
         return PageGenerator.getContactDetailPage(driver);
+    }
+
+    public EmergencyContactPO openEmergencyContactPage(WebDriver driver) {
+        waitForElementClickable(driver, PersonaListTabsPageUI.EMERGENCY_CONTACT_LINK);
+        clickToElement(driver, PersonaListTabsPageUI.EMERGENCY_CONTACT_LINK);
+        waitAllLoadingIconInvisible(driver);
+        return PageGenerator.getEmergencyContactPage(driver);
+    }
+
+    public DependentPO openDependentPage(WebDriver driver) {
+        waitForElementClickable(driver, PersonaListTabsPageUI.DEPENDENT_LINK);
+        clickToElement(driver, PersonaListTabsPageUI.DEPENDENT_LINK);
+        waitAllLoadingIconInvisible(driver);
+        return PageGenerator.getDependentPage(driver);
     }
 }
