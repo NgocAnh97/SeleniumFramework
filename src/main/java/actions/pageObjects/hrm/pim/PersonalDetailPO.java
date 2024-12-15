@@ -35,9 +35,8 @@ public class PersonalDetailPO extends PersonalListTabs {
     }
 
     public boolean isProfileAvatarUploadSuccess(Dimension beforeUpload) {
-        sleepInSeconds(2);
         Dimension afterUpload = getAvatarSize();
-        return (!beforeUpload.equals(afterUpload));
+        return beforeUpload.equals(afterUpload);
     }
 
     public Dimension getAvatarSize() {

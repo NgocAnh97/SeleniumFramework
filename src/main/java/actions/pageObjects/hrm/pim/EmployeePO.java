@@ -10,9 +10,9 @@ public class EmployeePO extends PersonalListTabs {
         this.driver = driver;
     }
 
-    public AddEmployeePO clickToAddEmployeeButton() {
-        waitForElementClickable(driver, DashboardPageUI.ADD_EMPLOYEE_BUTTON);
-        clickToElement(driver, DashboardPageUI.ADD_EMPLOYEE_BUTTON);
+    public AddEmployeePO openAddEmployeePage() {
+        waitForElementClickable(driver, DashboardPageUI.ADD_EMPLOYEE_PAGE);
+        clickToElement(driver, DashboardPageUI.ADD_EMPLOYEE_PAGE);
         waitAllLoadingIconInvisible(driver);
         return PageGenerator.getAddEmployeePage(driver);
     }
