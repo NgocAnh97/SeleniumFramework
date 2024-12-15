@@ -18,12 +18,10 @@ import java.time.Duration;
 
 public class BaseTest {
     private WebDriver driver;
-    private String projectPath = System.getProperty("user.dir");
 
     protected WebDriver getBrowser(String browserName) {
         log.info("Run on " + browserName);
         if (browserName.equals("firefox")) {
-//            System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
             WebDriverManager.firefoxdriver().clearDriverCache().setup();
             driver = new FirefoxDriver();
         } else if (browserName.equals("h_firefox")) {
@@ -55,12 +53,12 @@ public class BaseTest {
         }
 
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        driver.get(GlobalConstants.PORTAL_PAGE_URL);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
+        driver.get(GlobalConstants.PAGE_URL);
         return driver;
     }
 
-    protected WebDriver getBrowserUrl(String browserName, String url) {
+    protected WebDriver getBrowserUrl(String browserName, String appUrl) {
         if (browserName.equals("firefox")) {
             WebDriverManager.firefoxdriver().clearDriverCache().setup();
             driver = new FirefoxDriver();
@@ -92,58 +90,53 @@ public class BaseTest {
         }
 
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        driver.get(url);
+        driver.get(appUrl);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
         return driver;
     }
 
-//    protected WebDriver getBrowserUrl2(String browserName, String url){
-//        BrowserList browserList = BrowserList.valueOf(browserName.toUpperCase());
-//        switch (browserList){
-//            case FIREFOX:
-//                driver = WebDriverManager.firefoxdriver().create();
-//                break;
-//            default:
-//                throw new RuntimeException("Please enter the correct Browser name!");
-//        }
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-//        return driver;
-//    }
-
     protected WebDriver getBrowserDriver(String browserName, String environmentName) {
         log.info("Run on " + browserName);
-        if (browserName.equals("firefox")) {
-            WebDriverManager.firefoxdriver().clearDriverCache().setup();
-            driver = new FirefoxDriver();
-        } else if (browserName.equals("h_firefox")) {
-            WebDriverManager.firefoxdriver().clearDriverCache().setup();
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.addArguments("--headless");
-            firefoxOptions.addArguments("window-size=1920x1080");
-            driver = new FirefoxDriver(firefoxOptions);
-        } else if (browserName.equals("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-        } else if (browserName.equals("h_chrome")) {
-            WebDriverManager.chromedriver().clearDriverCache().setup();
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
-            chromeOptions.addArguments("window-size=1920x1080");
-            driver = new ChromeDriver(chromeOptions);
-        } else if (browserName.equals("edge")) {
-            WebDriverManager.edgedriver().setup();
-            driver = new EdgeDriver();
-        } else if (browserName.equals("h_edge")) {
-            WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
-            EdgeOptions edgeOptions = new EdgeOptions();
+        switch (browserName.toUpperCase()) {
+            case "FIREFOX":
+                WebDriverManager.firefoxdriver().clearDriverCache().setup();
+                driver = new FirefoxDriver();
+                break;
+            case "H_FIREFOX":
+                WebDriverManager.firefoxdriver().clearDriverCache().setup();
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.addArguments("--headless");
+                firefoxOptions.addArguments("window-size=1920x1080");
+                driver = new FirefoxDriver(firefoxOptions);
+                break;
+            case "CHROME":
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
+            case "H_CHROME":
+                WebDriverManager.chromedriver().clearDriverCache().setup();
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--headless");
+                chromeOptions.addArguments("window-size=1920x1080");
+                driver = new ChromeDriver(chromeOptions);
+                break;
+            case "EDGE":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+            case "H_EDGE":
+                WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
+                EdgeOptions edgeOptions = new EdgeOptions();
 //            edgeOptions.setPageLoadStrategy("--headless");
-            driver = new EdgeDriver(edgeOptions);
-        } else {
-            throw new RuntimeException("Browser name is invalid.");
+                driver = new EdgeDriver(edgeOptions);
+                break;
+            default:
+                throw new RuntimeException("Browser name is invalid.");
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.manage().window().maximize();
         driver.get(getEnvironmentUrl(environmentName));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
         return driver;
     }
 
@@ -153,15 +146,15 @@ public class BaseTest {
 
     private String getEnvironmentUrl(String environmentName) {
         String url = null;
-        switch (environmentName) {
-            case "staging":
-                url = GlobalConstants.PORTAL_PAGE_URL;
+        switch (environmentName.toUpperCase()) {
+            case "STAGING":
+                url = GlobalConstants.PAGE_URL;
                 break;
-            case "dev":
-                url = GlobalConstants.PORTAL_DEV_URL;
+            case "DEV":
+                url = GlobalConstants.DEV_URL;
                 break;
             default:
-                break;
+                throw new RuntimeException("Please input the correct environment name");
         }
         return url;
     }

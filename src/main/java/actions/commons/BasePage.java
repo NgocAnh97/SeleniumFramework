@@ -54,7 +54,7 @@ public class BasePage {
     }
 
     public Alert waitForAlertPresence(WebDriver driver) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
         return explicitWait.until(ExpectedConditions.alertIsPresent());
     }
 
@@ -182,14 +182,12 @@ public class BasePage {
 
         WebElement element = getWebElement(driver, locator);
         element.sendKeys(Keys.chord(key, "a", Keys.BACK_SPACE));
-//        element.clear();
         element.sendKeys(textToSend);
     }
 
     public void sendKeysToElement(WebDriver driver, String locator, String textValue, String... params) {
         WebElement element = getWebElement(driver, getDynamicLocator(locator, params));
         element.sendKeys(Keys.chord(Keys.COMMAND, "a", Keys.BACK_SPACE));
-//        element.clear();
         element.sendKeys(textValue);
     }
 
@@ -222,13 +220,13 @@ public class BasePage {
     }
 
     public void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childLocator, String expectItemText) {
-//        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+//        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
 //        waitForElementClickable(driver, parentLocator);
 //        scrollToElement(driver, parentLocator);
         getWebElement(driver, parentLocator).click();
         sleepInSeconds(1);
 
-        List<WebElement> allItems = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childLocator)));
+        List<WebElement> allItems = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childLocator)));
         for (WebElement item : allItems) {
             if (item.getText().trim().equals(expectItemText)) {
                 item.click();
@@ -414,7 +412,7 @@ public class BasePage {
     }
 
     public boolean areJQueryAndJSLoadedSuccessByJS(WebDriver driver) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
 
         ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
             @Override
@@ -451,52 +449,52 @@ public class BasePage {
     }
 
     public void waitForElementVisible(WebDriver driver, String locator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
         explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForAllElementVisible(WebDriver driver, String locator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
         explicitWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByLocator(locator)));
     }
 
     public void waitForElementVisible(WebDriver driver, String locator, String... params) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
         explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator, params)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
         explicitWait.until(ExpectedConditions.elementToBeSelected(getByLocator(locator)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator, String... params) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
         explicitWait.until(ExpectedConditions.elementToBeSelected(getByLocator(locator, params)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
                 .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator, String... params) {
-        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
                 .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator, params)));
     }
 
     public boolean waitForAllElementInvisible(WebDriver driver, String locator) {
-        return new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+        return new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
                 .until(ExpectedConditions.invisibilityOfAllElements(getListWebElement(driver, locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
                 .until(ExpectedConditions.elementToBeClickable(getWebElement(driver, locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator, String... params) {
-        new WebDriverWait(driver, Duration.of(longTimeout, ChronoUnit.SECONDS))
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
                 .until(ExpectedConditions.elementToBeClickable(getWebElement(driver, getDynamicLocator(locator, params))));
     }
 
@@ -611,6 +609,4 @@ public class BasePage {
 
     protected BasePage() {
     }
-
-    private long longTimeout = 30;
 }

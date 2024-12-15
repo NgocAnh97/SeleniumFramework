@@ -18,7 +18,7 @@ public class PersonalDetailPO extends PersonalListTabs {
         return PageGenerator.getEmployeeListPage(driver);
     }
 
-    public boolean verifyAddSuccessMessage() {
+    public boolean isAddSuccessMessageDisplayed() {
         waitForElementVisible(driver, EmployeeListPageUI.ADD_EMPLOYEE_SUCCESS_MESSAGE);
         return isElementDisplayed(driver, EmployeeListPageUI.ADD_EMPLOYEE_SUCCESS_MESSAGE);
     }

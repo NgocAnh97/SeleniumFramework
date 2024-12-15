@@ -16,15 +16,20 @@ public class GlobalConstants {
 
     public static final String ADMIN_PAGE_URL = "https://admin-demo.nopcommerce.com/";
     public static final String DASHBOARD_LINK = "Xpath=//img[@class='brand-image-xl logo-xl']";
-    public static final String PORTAL_PAGE_URL = "https://demo.nopcommerce.com/";
-    //    public static final String PORTAL_PAGE_URL = "https://demo.guru99.com/";
-    public static final String PORTAL_DEV_URL = "https://google.com";
+    public static final String PAGE_URL = "https://opensource-demo.orangehrmlive.com/";
+//    public static final String PAGE_URL = "https://demo.nopcommerce.com/";
+//        public static final String PAGE_URL = "https://demo.guru99.com/";
+    public static final String DEV_URL = "https://google.com";
     public static final String LOGOUT_LINK = "xpath=//a[text()='Logout']";
 
-    public static final String OS_NAME = "MAC";
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     private static final String SEPARATOR = File.separator;
     public static final String UPLOAD_PATH = PROJECT_PATH + SEPARATOR + "uploadFiles" + SEPARATOR;
+
+    public static final long LONG_TIMEOUT = 30;
+    public static final String OS_NAME = "MAC";
+    public static final String ADMIN_ORANGE_HRM_USERNAME = "Admin";
+    public static final String ADMIN_ORANGE_HRM_PASSWORD = "admin123";
 
     public static class AdminLoginPageUI {
         public static final String EMAIL_TEXTBOX = "xpath=//input[contains(@id,'Email')]";

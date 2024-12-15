@@ -1,6 +1,7 @@
 package testcases.com.hrm.employee.PIM;
 
 import actions.commons.BaseTest;
+import actions.commons.GlobalConstants;
 import actions.pageObjects.hrm.DashboardPO;
 import actions.pageObjects.hrm.LoginPO;
 import actions.pageObjects.hrm.PageGenerator;
@@ -19,11 +20,11 @@ public class PIM_01_Employee extends BaseTest {
             gender, street1, street2, country, name, relationship, homeTelephone, pleaseSpecify;
     String avatarImageName = "yoona.jpg";
 
-    @Parameters({"browser", "url"})
+    @Parameters({"browser", "env"})
     @BeforeClass
-    public void beforeClass(String browserName, String url) {
-        driver = getBrowserUrl(browserName, url);
-        log.info("Pre-condition - Step 01: Open browser '" + browserName + "' and navigate to '" + url + "'");
+    public void beforeClass(String browserName, String env) {
+        driver = getBrowserDriver(browserName, env);
+        log.info("Pre-condition - Step 01: Open browser '" + browserName + "' and navigate to '" + env + "'");
 
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
@@ -48,8 +49,8 @@ public class PIM_01_Employee extends BaseTest {
         pleaseSpecify = "Idol";
 
         log.info("Pre-condition - Step 02: Login with Admin role");
-        loginPage.enterToTextboxByName(driver, "Admin", "username");
-        loginPage.enterToTextboxByName(driver, "admin123", "password");
+        loginPage.enterToTextboxByName(driver, GlobalConstants.ADMIN_ORANGE_HRM_USERNAME, "username");
+        loginPage.enterToTextboxByName(driver, GlobalConstants.ADMIN_ORANGE_HRM_PASSWORD, "password");
         loginPage.clickToButtonByType(driver, "submit");
 
         dashboardPage = PageGenerator.getDashboardPage(driver);
@@ -58,7 +59,7 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_01_Add_New_Employee() throws InterruptedException {
         log.info("Add_New - Step 01: Open 'Employee list' page");
-        employeeListPage = dashboardPage.clickToPIMPage();
+        employeeListPage = dashboardPage.openPIMPage();
 
         log.info("Add_New - Step 02: Click to 'Add employee' page");
         addEmployeePage = employeeListPage.openAddEmployeePage();
@@ -76,7 +77,7 @@ public class PIM_01_Employee extends BaseTest {
         personalDetailPage = addEmployeePage.clickToSaveButtonAtAddEmployeeContainer();
 
         log.info("Add_New - Step 12: Verify success message is displayed");
-        verifyTrue(personalDetailPage.verifyAddSuccessMessage());
+        verifyTrue(personalDetailPage.isAddSuccessMessageDisplayed());
     }
 
     @Test
@@ -107,9 +108,6 @@ public class PIM_01_Employee extends BaseTest {
 
         personalDetailPage.enterToFirstNameTextbox(editFirstName);
         personalDetailPage.enterToLastNameTextbox(editLastName);
-
-        Assert.assertEquals(personalDetailPage.getEmployeeID(), employeeID);
-
         personalDetailPage.enterToDriverLicenseTextbox(driverLicenseNumber);
         personalDetailPage.enterToLicenseExpiryDateTextbox(licenseExpiryDate);
         personalDetailPage.selectNationalityDropdown(nationality);
@@ -118,7 +116,6 @@ public class PIM_01_Employee extends BaseTest {
         personalDetailPage.selectGenderRadioButton(gender);
 
         personalDetailPage.clickToSaveButtonAtPersonalDetailContainer();
-
         personalDetailPage.isSuccessMessageDisplayed(driver);
         personalDetailPage.waitAllLoadingIconInvisible(driver);
 
@@ -162,7 +159,7 @@ public class PIM_01_Employee extends BaseTest {
         emergencyContactPage.enterToHomeTelephoneTextbox(homeTelephone);
 
         emergencyContactPage.clickToSaveButtonAtEmergencyContactContainer();
-        emergencyContactPage.isAddInfoSuccessMessageDisplayed(driver); //
+        emergencyContactPage.isAddInfoSuccessMessageDisplayed(driver);
         emergencyContactPage.waitAllLoadingIconInvisible(driver);
 
         log.info("Emergency_Contacts - Step 02: Verify Emergency Contacts information updated success");

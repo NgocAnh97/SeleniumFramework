@@ -12,7 +12,7 @@ public class DashboardPO extends BasePage {
         this.driver = driver;
     }
 
-    public EmployeePO clickToPIMPage() {
+    public EmployeePO openPIMPage() {
         waitForElementClickable(driver, DashboardPageUI.PIM_PAGE);
         clickToElement(driver, DashboardPageUI.PIM_PAGE);
 
