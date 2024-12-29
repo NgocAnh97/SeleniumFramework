@@ -16,6 +16,7 @@ public class GlobalConstants {
 
     public static final String ADMIN_PAGE_URL = "https://admin-demo.nopcommerce.com/";
     public static final String DASHBOARD_LINK = "Xpath=//img[@class='brand-image-xl logo-xl']";
+    public static final String STAGING_PAGE_URL = "https://opensource-demo.orangehrmlive.com/";
     public static final String PAGE_URL = "https://opensource-demo.orangehrmlive.com/";
 //    public static final String PAGE_URL = "https://demo.nopcommerce.com/";
 //        public static final String PAGE_URL = "https://demo.guru99.com/";

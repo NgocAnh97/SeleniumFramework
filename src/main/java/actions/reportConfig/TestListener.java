@@ -24,44 +24,43 @@ public class TestListener implements ITestListener {
     @Override
     public void onStart(ITestContext result) {
 //        PropertiesHelper.loadAllFiles();
-        System.out.println("---------- " + result.getName() + " STARTED test ----------");
+        System.out.println(String.format("---------- %s STARTED test ----------", result.getName()));
     }
 
     @Override
     public void onFinish(ITestContext result) {
-        LogUtils.info("End testing " + result.getName());
+        LogUtils.info(String.format("End testing %s", result.getName()));
 
         ExtentReportManager.getExtentReports().flush();
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        LogUtils.info("Running test case " + result.getName());
+        LogUtils.info(String.format("Running test case %s", result.getName()));
 
         ExtentTestManager.saveToReport(getTestName(result), getTestDescription(result));
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        LogUtils.info("Test case " + result.getName() + " is passed.");
-
+        LogUtils.info(String.format("Test case %s is passed.", result.getName()));
         ExtentTestManager.logMessage(Status.PASS, result.getName() + " is passed.");
     }
 
 //    @Override
 //    public void onTestFailure(ITestResult result) {
-//        LogUtils.error("Test case " + result.getName() + " is failed.");
+//        LogUtils.error(String.format("Test case %s is failed.", result.getName()));
 //        captureScreenshot_Base64(driver, result.getName());
 //        LogUtils.error(result.getThrowable().toString());
 //
 //        ExtentTestManager.addScreenShot(result.getName());
 //        ExtentTestManager.logMessage(Status.FAIL, result.getThrowable().toString());
-//        ExtentTestManager.logMessage(Status.FAIL, result.getName() + " is failed.");
+//        ExtentTestManager.logMessage(Status.FAIL, String.format("%s is failed.", result.getName()));
 //    }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        Reporter.log(("Test case " + result.getName() + " is skipped."));
+        Reporter.log(String.format("Test case %s is skipped.", result.getName()));
         LogUtils.error(result.getThrowable().toString());
 
         ExtentTestManager.logMessage(Status.SKIP, result.getThrowable().toString());
@@ -69,7 +68,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        LogUtils.error("TestFailedButWithinSuccessPercentage: " + result.getName());
+        LogUtils.error(String.format("TestFailedButWithinSuccessPercentage: %s", result.getName()));
         LogUtils.error(result.getThrowable().toString());
     }
 

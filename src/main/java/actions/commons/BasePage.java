@@ -173,21 +173,24 @@ public class BasePage {
     }
 
     public void sendKeysToElement(WebDriver driver, String locator, String textToSend) {
+        WebElement element = getWebElement(driver, locator);
+        element.sendKeys(Keys.chord(ctrlKey(), "a", Keys.BACK_SPACE));
+        element.sendKeys(textToSend);
+    }
+
+    private Keys ctrlKey() {
         Keys key = null;
         if (GlobalConstants.OS_NAME == "Windows") {
             key = Keys.CONTROL;
         } else {
             key = Keys.COMMAND;
         }
-
-        WebElement element = getWebElement(driver, locator);
-        element.sendKeys(Keys.chord(key, "a", Keys.BACK_SPACE));
-        element.sendKeys(textToSend);
+        return key;
     }
 
     public void sendKeysToElement(WebDriver driver, String locator, String textValue, String... params) {
         WebElement element = getWebElement(driver, getDynamicLocator(locator, params));
-        element.sendKeys(Keys.chord(Keys.COMMAND, "a", Keys.BACK_SPACE));
+        element.sendKeys(Keys.chord(ctrlKey(), "a", Keys.BACK_SPACE));
         element.sendKeys(textValue);
     }
 
@@ -226,7 +229,8 @@ public class BasePage {
         getWebElement(driver, parentLocator).click();
         sleepInSeconds(1);
 
-        List<WebElement> allItems = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childLocator)));
+        List<WebElement> allItems = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childLocator)));
         for (WebElement item : allItems) {
             if (item.getText().trim().equals(expectItemText)) {
                 item.click();
@@ -311,7 +315,7 @@ public class BasePage {
                 element.click();
             }
         } else {
-            throw new Exception("Invalid boolean status: " + status);
+            throw new Exception(String.format("Invalid boolean status: %s", status));
         }
     }
 
@@ -326,7 +330,7 @@ public class BasePage {
                 element.click();
             }
         } else {
-            throw new Exception("Invalid boolean status: " + status);
+            throw new Exception(String.format("Invalid boolean status: %s", status));
         }
     }
 
@@ -390,7 +394,8 @@ public class BasePage {
     public void highlightElementByJS(WebDriver driver, String locator) {
         WebElement element = getWebElement(driver, locator);
         String originalStyle = element.getAttribute("style");
-        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2])", element, "style", "border: 2px solid red; border-style: dashed;");
+        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2])",
+                element, "style", "border: 2px solid red; border-style: dashed;");
         sleepInSeconds(1);
         ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2])", element, "style", originalStyle);
     }
@@ -424,14 +429,12 @@ public class BasePage {
                 }
             }
         };
-
         ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
                 return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
             }
         };
-
         return explicitWait.until(jQueryLoad) && explicitWait.until(jsLoad);
     }
 
@@ -516,7 +519,7 @@ public class BasePage {
     public List<WebElement> getListElement(WebDriver driver, String locator) {
         List<WebElement> elements = driver.findElements(getByLocator(locator));
         if (elements.isEmpty()) {
-            throw new NoSuchElementException("No element found by locator: " + locator);
+            throw new NoSuchElementException(String.format("No element found by locator: %s", locator));
         }
         return elements;
     }
@@ -524,7 +527,7 @@ public class BasePage {
     public List<WebElement> getListElement(WebDriver driver, String locator, String... params) {
         List<WebElement> elements = driver.findElements(getByLocator(locator));
         if (elements.isEmpty()) {
-            throw new NoSuchElementException("No element found by locator: " + locator);
+            throw new NoSuchElementException(String.format("No element found by locator: %s", locator));
         }
         return elements;
     }

@@ -13,21 +13,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static java.lang.Thread.sleep;
-
 public class PIM_01_Employee_PatternObject extends BaseTest {
     String employeeID, statusValue;
 
     @Parameters({"browser", "url"})
     @BeforeClass
-    public void beforeClass(String browserName, String url) {
-        driver = getBrowserUrl(browserName, url);
-        log.info("Pre-condition - Step 01: Open browser '" + browserName + "' and navigate to '" + url + "'");
+    public void beforeClass(String browserName, String env) {
+        driver = getBrowserDriver(browserName, env);
 
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
 
-        log.info("Pre-condition - Step 02: Login with Admin role");
         loginPage.enterToTextboxByName(driver, "Admin", "username");
         loginPage.enterToTextboxByName(driver, "admin123", "password");
         loginPage.clickToButtonByType(driver, "submit");
@@ -55,7 +51,6 @@ public class PIM_01_Employee_PatternObject extends BaseTest {
         employeeID = addEmployeePage.getEmployeeID();
 
         log.info("Add_New_01 - Step 11: Click to 'Save' button");
-        sleep(2000);
         employeeListPage.clickToButtonByType(driver, "submit");
         personalDetailPage = PageGenerator.getPersonalDetailPage(driver);
 
@@ -66,7 +61,7 @@ public class PIM_01_Employee_PatternObject extends BaseTest {
     @Parameters({"browser"})
     @AfterClass()
     public void afterClass(String browserName) {
-        log.info("Post-condition: Close browser '" + browserName + "'");
+        log.info("Post-condition: Close browser '{}'", browserName);
         driver.quit();
     }
 

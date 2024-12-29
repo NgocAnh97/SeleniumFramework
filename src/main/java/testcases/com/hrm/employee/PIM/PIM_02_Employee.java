@@ -14,18 +14,16 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PIM_02_Employee extends BaseTest {
-    String employeeID, statusValue;
+    String statusValue;
 
     @Parameters({"browser", "url"})
     @BeforeClass
-    public void beforeClass(String browserName, String url) {
-        driver = getBrowserUrl(browserName, url);
-        log.info("Pre-condition - Step 01: Open browser '" + browserName + "' and navigate to '" + url + "'");
+    public void beforeClass(String browserName, String env) {
+        driver = getBrowserDriver(browserName, env);
 
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
 
-        log.info("Pre-condition - Step 02: Login with Admin role");
         loginPage.enterToTextboxByName(driver, "Admin", "username");
         loginPage.enterToTextboxByName(driver, "admin123", "password");
         loginPage.clickToButtonByType(driver, "submit");
@@ -63,7 +61,7 @@ public class PIM_02_Employee extends BaseTest {
     @Parameters({"browser"})
     @AfterClass()
     public void afterClass(String browserName) {
-        log.info("Post-condition: Close browser '" + browserName + "'");
+        log.info("Post-condition: Close browser '{}'", browserName);
         driver.quit();
     }
 

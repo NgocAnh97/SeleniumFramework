@@ -24,7 +24,6 @@ public class PIM_01_Employee extends BaseTest {
     @BeforeClass
     public void beforeClass(String browserName, String env) {
         driver = getBrowserDriver(browserName, env);
-        log.info("Pre-condition - Step 01: Open browser '" + browserName + "' and navigate to '" + env + "'");
 
         loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
@@ -48,7 +47,6 @@ public class PIM_01_Employee extends BaseTest {
         homeTelephone = "0905000000";
         pleaseSpecify = "Idol";
 
-        log.info("Pre-condition - Step 02: Login with Admin role");
         loginPage.enterToTextboxByName(driver, GlobalConstants.ADMIN_ORANGE_HRM_USERNAME, "username");
         loginPage.enterToTextboxByName(driver, GlobalConstants.ADMIN_ORANGE_HRM_PASSWORD, "password");
         loginPage.clickToButtonByType(driver, "submit");
@@ -57,26 +55,26 @@ public class PIM_01_Employee extends BaseTest {
     }
 
     @Test
-    public void Employee_01_Add_New_Employee() throws InterruptedException {
+    public void Employee_01_Add_New_Employee() {
         log.info("Add_New - Step 01: Open 'Employee list' page");
         employeeListPage = dashboardPage.openPIMPage();
 
         log.info("Add_New - Step 02: Click to 'Add employee' page");
         addEmployeePage = employeeListPage.openAddEmployeePage();
 
-        log.info("Add_New - Step 03: Enter valid info to 'First name' textbox");
+        log.info("Add_New - Step 03: Enter valid info {} to 'First name' textbox", firstName);
         addEmployeePage.enterToFirstNameTextbox(firstName);
 
-        log.info("Add_New - Step 04: Enter valid info to 'Last name' textbox");
+        log.info("Add_New - Step 04: Enter valid info {} to 'Last name' textbox", lastName);
         addEmployeePage.enterToLastNameTextbox(lastName);
 
         log.info("Add_New - Step 05: Get value of 'Employee ID'");
         employeeID = addEmployeePage.getEmployeeID();
 
-        log.info("Add_New - Step 11: Click to 'Save' button");
+        log.info("Add_New - Step 06: Click to 'Save' button");
         personalDetailPage = addEmployeePage.clickToSaveButtonAtAddEmployeeContainer();
 
-        log.info("Add_New - Step 12: Verify success message is displayed");
+        log.info("Add_New - Step 07: Verify success message is displayed");
         verifyTrue(personalDetailPage.isAddSuccessMessageDisplayed());
     }
 
@@ -85,7 +83,7 @@ public class PIM_01_Employee extends BaseTest {
         log.info("Upload_Avatar - Step 01: Click to Employee avatar image");
         personalDetailPage.clickToEmployeeAvatarImage();
 
-        log.info("Upload_Avatar - Step 02: Upload avatar image");
+        log.info("Upload_Avatar - Step 02: Upload avatar image {}", avatarImageName);
         Dimension beforeUpload = personalDetailPage.getAvatarSize();
         personalDetailPage.uploadMultipleFiles(driver, avatarImageName);
 
@@ -189,7 +187,7 @@ public class PIM_01_Employee extends BaseTest {
     @Parameters({"browser"})
     @AfterClass
     public void afterClass(String browserName) {
-        log.info("Post-condition: Close browser '" + browserName + "'");
+        log.info("Post-condition: Close browser '{}'", browserName);
         driver.quit();
     }
 
