@@ -28,7 +28,6 @@ public class GlobalConstants {
     public static final String UPLOAD_PATH = PROJECT_PATH + SEPARATOR + "uploadFiles" + SEPARATOR;
 
     public static final long LONG_TIMEOUT = 30;
-    public static final String OS_NAME = "MAC";
     public static final String ADMIN_ORANGE_HRM_USERNAME = "Admin";
     public static final String ADMIN_ORANGE_HRM_PASSWORD = "admin123";
 

@@ -54,8 +54,7 @@ public class BasePage {
     }
 
     public Alert waitForAlertPresence(WebDriver driver) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
-        return explicitWait.until(ExpectedConditions.alertIsPresent());
+        return new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.alertIsPresent());
     }
 
     public void acceptAlert(WebDriver driver) {
@@ -180,7 +179,7 @@ public class BasePage {
 
     private Keys ctrlKey() {
         Keys key = null;
-        if (GlobalConstants.OS_NAME == "Windows") {
+        if (System.getProperty("os.name").equalsIgnoreCase("WINDOWS")) {
             key = Keys.CONTROL;
         } else {
             key = Keys.COMMAND;
@@ -223,7 +222,6 @@ public class BasePage {
     }
 
     public void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String childLocator, String expectItemText) {
-//        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
 //        waitForElementClickable(driver, parentLocator);
 //        scrollToElement(driver, parentLocator);
         getWebElement(driver, parentLocator).click();
@@ -372,20 +370,20 @@ public class BasePage {
         action.moveToElement(getWebElement(driver, locator)).perform();
     }
 
-    /*
-     * public void rightClick(WebDriver driver, String locator) { Actions
-     * action = new Actions(driver); action.contextClick(getWebElement(driver,
-     * locator)).perform(); }
-     *
-     * public void dragAndDrop(WebDriver driver, String locator, String
-     * targetXpathLocator) { Actions action = new Actions(driver);
-     * action.dragAndDrop(getWebElement(driver, locator), getWebElement(driver,
-     * targetXpathLocator)).perform(); }
-     *
-     * public void senKeyboardToElement(WebDriver driver, String locator,
-     * String keyValueAction){ Actions action = new Actions(driver);
-     * action.sendKeys(getWebElement(driver, locator), keyValueAction); }
-     */
+    public void rightClick(WebDriver driver, String locator) {
+        Actions action = new Actions(driver);
+        action.contextClick(getWebElement(driver, locator)).perform();
+    }
+
+    public void dragAndDrop(WebDriver driver, String locator, String targetXpathLocator) {
+        Actions action = new Actions(driver);
+        action.dragAndDrop(getWebElement(driver, locator), getWebElement(driver, targetXpathLocator)).perform();
+    }
+
+    public void senKeyboardToElement(WebDriver driver, String locator, String keyValueAction) {
+        Actions action = new Actions(driver);
+        action.sendKeys(getWebElement(driver, locator), keyValueAction);
+    }
 
     public void scrollToBottomPageByJS(WebDriver driver) {
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,document.body.scrollHeight)");
@@ -443,37 +441,33 @@ public class BasePage {
     }
 
     public boolean isImageLoadedByJS(WebDriver driver, String locator) {
-        boolean status = (boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", getWebElement(driver, locator));
-        if (status) {
-            return true;
-        } else {
-            return false;
-        }
+        return (boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete " +
+                "&& typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", getWebElement(driver, locator));
     }
 
     public void waitForElementVisible(WebDriver driver, String locator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForAllElementVisible(WebDriver driver, String locator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByLocator(locator)));
     }
 
     public void waitForElementVisible(WebDriver driver, String locator, String... params) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator, params)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator, params)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.elementToBeSelected(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.elementToBeSelected(getByLocator(locator)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator, String... params) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS));
-        explicitWait.until(ExpectedConditions.elementToBeSelected(getByLocator(locator, params)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
+                .until(ExpectedConditions.elementToBeSelected(getByLocator(locator, params)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator) {
@@ -486,8 +480,8 @@ public class BasePage {
                 .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator, params)));
     }
 
-    public boolean waitForAllElementInvisible(WebDriver driver, String locator) {
-        return new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
+    public void waitForAllElementInvisible(WebDriver driver, String locator) {
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
                 .until(ExpectedConditions.invisibilityOfAllElements(getListWebElement(driver, locator)));
     }
 
@@ -503,12 +497,12 @@ public class BasePage {
 
     public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
         String filePath = GlobalConstants.UPLOAD_PATH;
-        String fullFileName = "";
+        StringBuilder fullFileName = new StringBuilder();
         for (String file : fileNames) {
-            fullFileName += filePath + file + "\n";
+            fullFileName.append(filePath).append(file).append("\n");
         }
-        fullFileName = fullFileName.trim();
-        getWebElement(driver, BasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName);
+        fullFileName = new StringBuilder(fullFileName.toString().trim());
+        getWebElement(driver, BasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName.toString());
         sleepInSeconds(1);
     }
 
@@ -596,8 +590,8 @@ public class BasePage {
     }
 
     /* Only use for Orange HRM website */
-    public boolean waitAllLoadingIconInvisible(WebDriver driver) {
-        return waitForAllElementInvisible(driver, interfaces.pageUIs.orangehrm.BasePageUI.LOADING_ICON);
+    public void waitAllLoadingIconInvisible(WebDriver driver) {
+        waitForAllElementInvisible(driver, interfaces.pageUIs.orangehrm.BasePageUI.LOADING_ICON);
     }
 
     public boolean isSuccessMessageDisplayed(WebDriver driver) {

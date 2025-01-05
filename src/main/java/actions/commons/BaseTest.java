@@ -20,30 +20,32 @@ public class BaseTest {
     private WebDriver driver;
 
     protected WebDriver getBrowser(String browserName) {
-        log.info("Run on {}", browserName);
-        if (browserName.equals("firefox")) {
-            driver = new FirefoxDriver();
-        } else if (browserName.equals("h_firefox")) {
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.addArguments("--headless");
-            firefoxOptions.addArguments("window-size=1920x1080");
-            driver = new FirefoxDriver(firefoxOptions);
-        } else if (browserName.equals("chrome")) {
-            driver = new ChromeDriver();
-        } else if (browserName.equals("h_chrome")) {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless");
-            options.addArguments("window-size=1920x1080");
-            driver = new ChromeDriver(options);
-        } else if (browserName.equals("edge")) {
-            WebDriverManager.edgedriver();
-            driver = new EdgeDriver();
-        } else if (browserName.equals("h_edge")) {
-            WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
-            EdgeOptions edgeOptions = new EdgeOptions();
-            driver = new EdgeDriver(edgeOptions);
-        } else {
-            throw new RuntimeException("Browser name is invalid.");
+        log.info("Open browser {}", browserName);
+        switch (browserName.toLowerCase()) {
+            case "firefox" -> driver = new FirefoxDriver();
+            case "h_firefox" -> {
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.addArguments("--headless");
+                firefoxOptions.addArguments("window-size=1920x1080");
+                driver = new FirefoxDriver(firefoxOptions);
+            }
+            case "chrome" -> driver = new ChromeDriver();
+            case "h_chrome" -> {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--headless");
+                options.addArguments("window-size=1920x1080");
+                driver = new ChromeDriver(options);
+            }
+            case "edge" -> {
+                WebDriverManager.edgedriver();
+                driver = new EdgeDriver();
+            }
+            case "h_edge" -> {
+                WebDriverManager.edgedriver().operatingSystem(OperatingSystem.MAC).setup();
+                EdgeOptions edgeOptions = new EdgeOptions();
+                driver = new EdgeDriver(edgeOptions);
+            }
+            default -> throw new RuntimeException("Browser name is invalid.");
         }
 
         driver.manage().window().maximize();
@@ -53,27 +55,28 @@ public class BaseTest {
     }
 
     protected WebDriver getBrowserUrl(String browserName, String appUrl) {
-        if (browserName.equals("firefox")) {
-            driver = new FirefoxDriver();
-        } else if (browserName.equals("h_firefox")) {
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.addArguments("--headless");
-            firefoxOptions.addArguments("window-size=1920x1080");
-            driver = new FirefoxDriver(firefoxOptions);
-        } else if (browserName.equals("chrome")) {
-            driver = new ChromeDriver();
-        } else if (browserName.equals("h_chrome")) {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless");
-            options.addArguments("window-size=1920x1080");
-            driver = new ChromeDriver(options);
-        } else if (browserName.equals("edge")) {
-            driver = new EdgeDriver();
-        } else if (browserName.equals("h_edge")) {
-            EdgeOptions edgeOptions = new EdgeOptions();
-            driver = new EdgeDriver(edgeOptions);
-        } else {
-            throw new RuntimeException("Browser name is invalid.");
+        log.info("Pre-condition: Open browser '{}' and navigate to url '{}'", browserName, appUrl);
+        switch (browserName.toUpperCase()) {
+            case "FIREFOX" -> driver = new FirefoxDriver();
+            case "H_FIREFOX" -> {
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.addArguments("--headless");
+                firefoxOptions.addArguments("window-size=1920x1080");
+                driver = new FirefoxDriver(firefoxOptions);
+            }
+            case "CHROME" -> driver = new ChromeDriver();
+            case "H_CHROME" -> {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--headless");
+                options.addArguments("window-size=1920x1080");
+                driver = new ChromeDriver(options);
+            }
+            case "EDGE" -> driver = new EdgeDriver();
+            case "H_EDGE" -> {
+                EdgeOptions edgeOptions = new EdgeOptions();
+                driver = new EdgeDriver(edgeOptions);
+            }
+            default -> throw new RuntimeException("Browser name is invalid.");
         }
 
         driver.manage().window().maximize();
@@ -83,35 +86,28 @@ public class BaseTest {
     }
 
     protected WebDriver getBrowserDriver(String browserName, String environmentName) {
-        log.info("Pre-condition: Open browser '{}' and navigate to '{}'", browserName, environmentName);
+        log.info("Pre-condition: Open browser '{}' and environment '{}'", browserName, environmentName);
         switch (browserName.toUpperCase()) {
-            case "FIREFOX":
-                driver = new FirefoxDriver();
-                break;
-            case "H_FIREFOX":
+            case "FIREFOX" -> driver = new FirefoxDriver();
+            case "H_FIREFOX" -> {
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("--headless");
                 firefoxOptions.addArguments("window-size=1920x1080");
                 driver = new FirefoxDriver(firefoxOptions);
-                break;
-            case "CHROME":
-                driver = new ChromeDriver();
-                break;
-            case "H_CHROME":
+            }
+            case "CHROME" -> driver = new ChromeDriver();
+            case "H_CHROME" -> {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--headless");
                 chromeOptions.addArguments("window-size=1920x1080");
                 driver = new ChromeDriver(chromeOptions);
-                break;
-            case "EDGE":
-                driver = new EdgeDriver();
-                break;
-            case "H_EDGE":
+            }
+            case "EDGE" -> driver = new EdgeDriver();
+            case "H_EDGE" -> {
                 EdgeOptions edgeOptions = new EdgeOptions();
                 driver = new EdgeDriver(edgeOptions);
-                break;
-            default:
-                throw new RuntimeException("Browser name is invalid.");
+            }
+            default -> throw new RuntimeException("Browser name is invalid.");
         }
 
         driver.manage().window().maximize();
@@ -125,21 +121,12 @@ public class BaseTest {
     }
 
     private String getEnvironmentUrl(String environmentName) {
-        String url = null;
-        switch (environmentName.toUpperCase()) {
-            case "PRODUCTION":
-                url = GlobalConstants.PAGE_URL;
-                break;
-            case "STAGING":
-                url = GlobalConstants.STAGING_PAGE_URL;
-                break;
-            case "DEV":
-                url = GlobalConstants.DEV_URL;
-                break;
-            default:
-                throw new RuntimeException("Please input the correct environment name");
-        }
-        return url;
+        return switch (environmentName.toUpperCase()) {
+            case "PRODUCTION" -> GlobalConstants.PAGE_URL;
+            case "STAGING" -> GlobalConstants.STAGING_PAGE_URL;
+            case "DEV" -> GlobalConstants.DEV_URL;
+            default -> throw new RuntimeException("Please input the correct environment name");
+        };
     }
 
     protected final Logger log;

@@ -14,6 +14,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 public class PIM_01_Employee extends BaseTest {
     String employeeID, statusValue, firstName, lastName, editFirstName, editLastName;
     String driverLicenseNumber, licenseExpiryDate, nationality, maritalStatus, dateOfBirth,
@@ -25,7 +27,7 @@ public class PIM_01_Employee extends BaseTest {
     public void beforeClass(String browserName, String env) {
         driver = getBrowserDriver(browserName, env);
 
-        loginPage = PageGenerator.getLoginPage(driver);
+        LoginPO loginPage = PageGenerator.getLoginPage(driver);
         statusValue = "Enabled";
         firstName = "Yoonah";
         lastName = "SNSD";
@@ -57,10 +59,10 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_01_Add_New_Employee() {
         log.info("Add_New - Step 01: Open 'Employee list' page");
-        employeeListPage = dashboardPage.openPIMPage();
+        EmployeePO employeeListPage = dashboardPage.openPIMPage();
 
         log.info("Add_New - Step 02: Click to 'Add employee' page");
-        addEmployeePage = employeeListPage.openAddEmployeePage();
+        AddEmployeePO addEmployeePage = employeeListPage.openAddEmployeePage();
 
         log.info("Add_New - Step 03: Enter valid info {} to 'First name' textbox", firstName);
         addEmployeePage.enterToFirstNameTextbox(firstName);
@@ -132,7 +134,7 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_04_Contact_Details() {
         log.info("Contact_Details - Step 01: Update contact employee");
-        contactDetailPage = personalDetailPage.openContactDetailPage(driver);
+        ContactDetailPO contactDetailPage = personalDetailPage.openContactDetailPage(driver);
         contactDetailPage.enterToStreet1Textbox(street1);
         contactDetailPage.enterToStreet2Textbox(street2);
         contactDetailPage.selectCountryDropdown(country);
@@ -157,7 +159,7 @@ public class PIM_01_Employee extends BaseTest {
         emergencyContactPage.enterToHomeTelephoneTextbox(homeTelephone);
 
         emergencyContactPage.clickToSaveButtonAtEmergencyContactContainer();
-        emergencyContactPage.isAddInfoSuccessMessageDisplayed(driver);
+        Assert.assertTrue(emergencyContactPage.isAddInfoSuccessMessageDisplayed(driver));
         emergencyContactPage.waitAllLoadingIconInvisible(driver);
 
         log.info("Emergency_Contacts - Step 02: Verify Emergency Contacts information updated success");
@@ -169,14 +171,14 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_06_Dependents() {
         log.info("Dependents - Step 01: Update Dependents");
-        dependentPage = emergencyContactPage.openDependentPage(driver);
+        DependentPO dependentPage = emergencyContactPage.openDependentPage(driver);
         dependentPage.clickToAddButton();
         dependentPage.enterToNameTextbox(name);
         dependentPage.enterToRelationshipDropdown(relationship);
         dependentPage.enterToPleaseSpecifyTextbox(pleaseSpecify);
 
         dependentPage.clickToSaveButtonAtDependentContainer();
-        dependentPage.isAddInfoSuccessMessageDisplayed(driver);
+        Assert.assertTrue(dependentPage.isAddInfoSuccessMessageDisplayed(driver));
         dependentPage.waitAllLoadingIconInvisible(driver);
 
         log.info("Dependents - Step 02: Verify Dependents information updated success");
@@ -185,19 +187,60 @@ public class PIM_01_Employee extends BaseTest {
     }
 
     @Parameters({"browser"})
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void afterClass(String browserName) {
         log.info("Post-condition: Close browser '{}'", browserName);
-        driver.quit();
+        closeBrowserDriver(driver);
+    }
+
+
+    protected void closeBrowserDriver(WebDriver driver) {
+        String cmd = null;
+        try {
+            String osName = System.getProperty("os.name").toLowerCase();
+            log.info("OS name = {}", osName);
+
+            String driverInstanceName = driver.toString().toLowerCase();
+            log.info("Driver instance name = {}", driverInstanceName);
+
+            String browserDriverName = null;
+
+            if (driverInstanceName.contains("chrome")) {
+                browserDriverName = "chromedriver";
+            } else if (driverInstanceName.contains("internetexplorer")) {
+                browserDriverName = "IEDriverServer";
+            } else if (driverInstanceName.contains("firefox")) {
+                browserDriverName = "geckodriver";
+            } else if (driverInstanceName.contains("edge")) {
+                browserDriverName = "msedgedriver";
+            } else if (driverInstanceName.contains("opera")) {
+                browserDriverName = "operadriver";
+            } else {
+                browserDriverName = "safaridriver";
+            }
+
+            if (osName.contains("window")) {
+                cmd = "taskkill /F /FI \"IMAGENAME eq " + browserDriverName + "*\"";
+            } else {
+                cmd = "pkill " + browserDriverName;
+            }
+
+            driver.manage().deleteAllCookies();
+            driver.quit();
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        } finally {
+            try {
+                Process process = Runtime.getRuntime().exec(cmd);
+                process.waitFor();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private WebDriver driver;
-    private LoginPO loginPage;
-    private AddEmployeePO addEmployeePage;
     private DashboardPO dashboardPage;
-    private EmployeePO employeeListPage;
     private PersonalDetailPO personalDetailPage;
-    private ContactDetailPO contactDetailPage;
     private EmergencyContactPO emergencyContactPage;
-    private DependentPO dependentPage;
 }
