@@ -9,25 +9,37 @@ import actions.pageObjects.hrm.pim.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class PIM_01_Employee extends BaseTest {
     String employeeID, statusValue, firstName, lastName, editFirstName, editLastName;
     String driverLicenseNumber, licenseExpiryDate, nationality, maritalStatus, dateOfBirth,
             gender, street1, street2, country, name, relationship, homeTelephone, pleaseSpecify;
     String avatarImageName = "yoona.jpg";
+    private WebDriver driver;
+    private EmployeePO employeeListPage;
+    private AddEmployeePO addEmployeePage;
+    private ChangeProfilePicturePO changeProfilePicturePage;
+    private DashboardPO dashboardPage;
+    private PersonalDetailPO personalDetailPage;
+    private ContactDetailPO contactDetailPage;
+    private EmergencyContactPO emergencyContactPage;
+    private DependentPO dependentPage;
 
-    @Parameters({"browser", "env"})
-    @BeforeClass
-    public void beforeClass(String browserName, String env) {
-        driver = getBrowserDriver(browserName, env);
+    @Parameters({"browser", "environment"})
+    @BeforeMethod
+    public void beforeClass(String browserName, String environment) {
+        driver = getBrowserDriver(browserName, environment);
 
         LoginPO loginPage = PageGenerator.getLoginPage(driver);
+        Random random = new Random();
+        employeeID = String.valueOf(random.nextInt(1000));
         statusValue = "Enabled";
         firstName = "Yoonah";
         lastName = "SNSD";
@@ -54,15 +66,15 @@ public class PIM_01_Employee extends BaseTest {
         loginPage.clickToButtonByType(driver, "submit");
 
         dashboardPage = PageGenerator.getDashboardPage(driver);
+        employeeListPage = dashboardPage.openPIMPage();
+
+        personalDetailPage = employeeListPage.clickEditButton();
     }
 
     @Test
     public void Employee_01_Add_New_Employee() {
-        log.info("Add_New - Step 01: Open 'Employee list' page");
-        EmployeePO employeeListPage = dashboardPage.openPIMPage();
-
         log.info("Add_New - Step 02: Click to 'Add employee' page");
-        AddEmployeePO addEmployeePage = employeeListPage.openAddEmployeePage();
+        addEmployeePage = personalDetailPage.openAddEmployeePage();
 
         log.info("Add_New - Step 03: Enter valid info {} to 'First name' textbox", firstName);
         addEmployeePage.enterToFirstNameTextbox(firstName);
@@ -71,7 +83,7 @@ public class PIM_01_Employee extends BaseTest {
         addEmployeePage.enterToLastNameTextbox(lastName);
 
         log.info("Add_New - Step 05: Get value of 'Employee ID'");
-        employeeID = addEmployeePage.getEmployeeID();
+        addEmployeePage.enterToEmployeeId(employeeID);
 
         log.info("Add_New - Step 06: Click to 'Save' button");
         personalDetailPage = addEmployeePage.clickToSaveButtonAtAddEmployeeContainer();
@@ -83,31 +95,32 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_02_Upload_Avatar() {
         log.info("Upload_Avatar - Step 01: Click to Employee avatar image");
-        personalDetailPage.clickToEmployeeAvatarImage();
+        changeProfilePicturePage = personalDetailPage.clickToEmployeeAvatarImage();
 
         log.info("Upload_Avatar - Step 02: Upload avatar image {}", avatarImageName);
-        Dimension beforeUpload = personalDetailPage.getAvatarSize();
-        personalDetailPage.uploadMultipleFiles(driver, avatarImageName);
+        Dimension beforeUpload = changeProfilePicturePage.getAvatarSize();
+        changeProfilePicturePage.uploadMultipleFiles(driver, avatarImageName);
 
         log.info("Upload_Avatar - Step 03: Click to 'Save' button at Profile container");
-        personalDetailPage.clickToSaveButtonAtProfileContainer();
+        changeProfilePicturePage.clickToSaveButtonAtProfileContainer();
 
         log.info("Upload_Avatar - Step 04: Verify upload message is displayed");
-        Assert.assertTrue(personalDetailPage.isSuccessMessageDisplayed(driver));
+        Assert.assertTrue(changeProfilePicturePage.isSuccessMessageDisplayed(driver));
 
         log.info("Upload_Avatar - Step 05: Verify avatar upload, change success");
-        personalDetailPage.waitAllLoadingIconInvisible(driver);
+        changeProfilePicturePage.waitAllLoadingIconInvisible(driver);
 
-        Assert.assertTrue(personalDetailPage.isProfileAvatarUploadSuccess(beforeUpload));
+        Assert.assertTrue(changeProfilePicturePage.isProfileAvatarUploadSuccess(beforeUpload));
     }
 
     @Test
     public void Employee_03_Personal_Details() {
         log.info("Personal_Details - Step 01: Upload employee information");
-        personalDetailPage = personalDetailPage.openPersonalDetailPage(driver);
+        personalDetailPage = personalDetailPage.openPersonalDetailPage();
 
         personalDetailPage.enterToFirstNameTextbox(editFirstName);
         personalDetailPage.enterToLastNameTextbox(editLastName);
+        personalDetailPage.enterToEmployeeId(employeeID);
         personalDetailPage.enterToDriverLicenseTextbox(driverLicenseNumber);
         personalDetailPage.enterToLicenseExpiryDateTextbox(licenseExpiryDate);
         personalDetailPage.selectNationalityDropdown(nationality);
@@ -134,7 +147,7 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_04_Contact_Details() {
         log.info("Contact_Details - Step 01: Update contact employee");
-        ContactDetailPO contactDetailPage = personalDetailPage.openContactDetailPage(driver);
+        contactDetailPage = personalDetailPage.openContactDetailPage();
         contactDetailPage.enterToStreet1Textbox(street1);
         contactDetailPage.enterToStreet2Textbox(street2);
         contactDetailPage.selectCountryDropdown(country);
@@ -152,7 +165,7 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_05_Emergency_Contacts() {
         log.info("Emergency_Contacts - Step 01: Update Emergency Contacts");
-        emergencyContactPage = personalDetailPage.openEmergencyContactPage(driver);
+        emergencyContactPage = personalDetailPage.openEmergencyContactPage();
         emergencyContactPage.clickToAddButton();
         emergencyContactPage.enterToNameTextbox(name);
         emergencyContactPage.enterToRelationshipTextbox(relationship);
@@ -171,7 +184,7 @@ public class PIM_01_Employee extends BaseTest {
     @Test
     public void Employee_06_Dependents() {
         log.info("Dependents - Step 01: Update Dependents");
-        DependentPO dependentPage = emergencyContactPage.openDependentPage(driver);
+        dependentPage = personalDetailPage.openDependentPage();
         dependentPage.clickToAddButton();
         dependentPage.enterToNameTextbox(name);
         dependentPage.enterToRelationshipDropdown(relationship);
@@ -186,13 +199,12 @@ public class PIM_01_Employee extends BaseTest {
         Assert.assertEquals(dependentPage.getRelationshipInRecordValue(), pleaseSpecify);
     }
 
-    @Parameters({"browser"})
-    @AfterClass(alwaysRun = true)
+    @Parameters("browser")
+    @AfterMethod(alwaysRun = true)
     public void afterClass(String browserName) {
         log.info("Post-condition: Close browser '{}'", browserName);
         closeBrowserDriver(driver);
     }
-
 
     protected void closeBrowserDriver(WebDriver driver) {
         String cmd = null;
@@ -238,9 +250,4 @@ public class PIM_01_Employee extends BaseTest {
             }
         }
     }
-
-    private WebDriver driver;
-    private DashboardPO dashboardPage;
-    private PersonalDetailPO personalDetailPage;
-    private EmergencyContactPO emergencyContactPage;
 }

@@ -6,7 +6,7 @@ import interfaces.pageUIs.orangehrm.DashboardPageUI;
 import org.openqa.selenium.WebDriver;
 
 public class DashboardPO extends BasePage {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public DashboardPO(WebDriver driver) {
         this.driver = driver;

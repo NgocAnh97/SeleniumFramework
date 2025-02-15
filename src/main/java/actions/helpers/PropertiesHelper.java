@@ -10,23 +10,22 @@ import java.util.Properties;
 
 public class PropertiesHelper {
     private static Properties properties;
-    private static String linkFile;
+    private static String fileLink;
     private static FileInputStream file;
-    private static FileOutputStream out;
-    private static String relPropertiesFilePathDefault = "src/test/resources/configs/configs.properties";
+    private static final String propertyFilePath = "src/main/resources/configs.properties";
 
     public static Properties loadAllFiles() {
         LinkedList<String> files = new LinkedList<>();
-        files.add("src/test/resources/configs/configs.properties");
-        files.add("src/test/resources/configs/data.properties");
+        files.add("src/main/resources/configs/configs.properties");
+        files.add("src/main/resources/configs/data.properties");
 
         try {
             properties = new Properties();
 
             for (String f : files) {
                 Properties tempProp = new Properties();
-                linkFile = SystemsHelper.getCurrentDir() + f;
-                file = new FileInputStream(linkFile);
+                fileLink = SystemsHelper.getCurrentDir() + f;
+                file = new FileInputStream(fileLink);
                 tempProp.load(file);
                 properties.putAll(tempProp);
             }
@@ -41,8 +40,8 @@ public class PropertiesHelper {
     public static void setFile(String relPropertiesFilePath) {
         properties = new Properties();
         try {
-            linkFile = SystemsHelper.getCurrentDir() + relPropertiesFilePath;
-            file = new FileInputStream(linkFile);
+            fileLink = SystemsHelper.getCurrentDir() + relPropertiesFilePath;
+            file = new FileInputStream(fileLink);
             properties.load(file);
             file.close();
         } catch (Exception e) {
@@ -53,8 +52,8 @@ public class PropertiesHelper {
     public static void setDefaultFile() {
         properties = new Properties();
         try {
-            linkFile = SystemsHelper.getCurrentDir() + relPropertiesFilePathDefault;
-            file = new FileInputStream(linkFile);
+            fileLink = SystemsHelper.getCurrentDir() + propertyFilePath;
+            file = new FileInputStream(fileLink);
             properties.load(file);
             file.close();
         } catch (Exception e) {
@@ -67,12 +66,11 @@ public class PropertiesHelper {
         try {
             if (file == null) {
                 properties = new Properties();
-                linkFile = SystemsHelper.getCurrentDir() + relPropertiesFilePathDefault;
-                file = new FileInputStream(linkFile);
+                fileLink = SystemsHelper.getCurrentDir() + propertyFilePath;
+                file = new FileInputStream(fileLink);
                 properties.load(file);
                 file.close();
             }
-            // Lấy giá trị từ file đã Set
             keyValue = properties.getProperty(key);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -81,16 +79,16 @@ public class PropertiesHelper {
     }
 
     public static void setValue(String key, String keyValue) {
+        fileLink = SystemsHelper.getCurrentDir() + propertyFilePath;
         try {
+            FileOutputStream out;
             if (file == null) {
                 properties = new Properties();
-                file = new FileInputStream(SystemsHelper.getCurrentDir() + relPropertiesFilePathDefault);
+                file = new FileInputStream(fileLink);
                 properties.load(file);
                 file.close();
-                out = new FileOutputStream(SystemsHelper.getCurrentDir() + relPropertiesFilePathDefault);
             }
-            out = new FileOutputStream(linkFile);
-            System.out.println(linkFile);
+            out = new FileOutputStream(fileLink);
             properties.setProperty(key, keyValue);
             properties.store(out, null);
             out.close();

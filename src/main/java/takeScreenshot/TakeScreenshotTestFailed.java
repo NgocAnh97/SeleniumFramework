@@ -3,7 +3,6 @@ package takeScreenshot;
 import actions.commons.BasePage;
 import actions.pageObjects.nopcommerce.user.UserHomePageObjects;
 import actions.pageObjects.nopcommerce.user.UserLoginPageObjects;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
@@ -17,7 +16,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Random;
 
-//@Listeners(TestListener.class)
 public class TakeScreenshotTestFailed extends BasePage {
     private WebDriver driver;
     String emailAddress, registerEmail, passWord;
@@ -26,12 +24,11 @@ public class TakeScreenshotTestFailed extends BasePage {
 
     @BeforeClass
     public void beforeClass() throws IOException {
-        WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
         driver.get("https://demo.nopcommerce.com/");
         homePage = new UserHomePageObjects(driver);
         loginPage = new UserLoginPageObjects(driver);
-        emailAddress = "test" + generateFakeNumber() + "@yopmail.com";
+        emailAddress = "test" + generateFakeNumber() + "@mail.com";
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
 
@@ -88,8 +85,9 @@ public class TakeScreenshotTestFailed extends BasePage {
         loginPage.openLoginPage();
 
         System.out.println("Login_03 - Step 04: Verify error message displayed");
-        Assert.assertEquals(loginPage.getLoginErrorMessage(), "Login was unsuccessful. Please correct the errors and try again.\n" +
-                "No customer account found");
+        Assert.assertEquals(loginPage.getLoginErrorMessage(),
+                "Login was unsuccessful. Please correct the errors and try again.\n" +
+                        "No customer account found");
     }
 
     @AfterTest
@@ -100,9 +98,5 @@ public class TakeScreenshotTestFailed extends BasePage {
     public int generateFakeNumber() {
         Random random = new Random();
         return random.nextInt(500);
-    }
-
-    public WebDriver getWedDriver() {
-        return this.driver;
     }
 }

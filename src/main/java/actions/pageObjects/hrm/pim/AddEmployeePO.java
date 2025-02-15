@@ -6,7 +6,7 @@ import interfaces.pageUIs.orangehrm.pim.AddEmployeePageUI;
 import org.openqa.selenium.WebDriver;
 
 public class AddEmployeePO extends BasePage {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public AddEmployeePO(WebDriver driver) {
         this.driver = driver;
@@ -14,7 +14,7 @@ public class AddEmployeePO extends BasePage {
 
     public String getEmployeeID() {
         waitForElementVisible(driver, AddEmployeePageUI.EMPLOYEE_ID);
-        return getElementText(driver, AddEmployeePageUI.EMPLOYEE_ID);
+        return getValue(driver, AddEmployeePageUI.EMPLOYEE_ID);
     }
 
     public void enterToFirstNameTextbox(String firstName) {
@@ -32,5 +32,10 @@ public class AddEmployeePO extends BasePage {
         clickToElement(driver, AddEmployeePageUI.SAVE_BUTTON_AT_ADD_EMPLOYEE_CONTAINER);
 
         return PageGenerator.getPersonalDetailPage(driver);
+    }
+
+    public void enterToEmployeeId(String employeeID) {
+        waitForElementVisible(driver, AddEmployeePageUI.EMPLOYEE_ID);
+        sendKeysToElement(driver, AddEmployeePageUI.EMPLOYEE_ID, employeeID);
     }
 }

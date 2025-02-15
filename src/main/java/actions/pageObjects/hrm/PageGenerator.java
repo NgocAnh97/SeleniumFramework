@@ -24,6 +24,10 @@ public class PageGenerator {
         return new AddEmployeePO(driver);
     }
 
+    public static ChangeProfilePicturePO getChangeProfilePicturePage(WebDriver driver){
+        return new ChangeProfilePicturePO(driver);
+    }
+
     public static ContactDetailPO getContactDetailPage(WebDriver driver) {
         return new ContactDetailPO(driver);
     }

@@ -26,21 +26,18 @@ public class ExtentTestManager {
     }
 
     public static void addScreenShot(String message) {
-//        driver = ((TakeScreenshotTestFailed) getTest).getWedDriver();
+//        WebDriver driver = ((TakeScreenshotTestFailed) getTest).getWedDriver();
 //        TakesScreenshot scrShot = (TakesScreenshot) driver;
-        String base64Image = "data:image/png;base64,"
-                + ((TakesScreenshot) DriverManager.getDrivers()).getScreenshotAs(OutputType.BASE64);
+        String base64Image = "data:image/png;base64," + ((TakesScreenshot) DriverManager.getDrivers()).getScreenshotAs(OutputType.BASE64);
 
         getTest().log(Status.INFO, message,
                 MediaEntityBuilder.createScreenCaptureFromBase64String(base64Image).build());
     }
 
     public static void addScreenShot(Status status, String message) {
-        String base64Image = "data:image/png;base64,"
-                + ((TakesScreenshot) DriverManager.getDrivers()).getScreenshotAs(OutputType.BASE64);
+        String base64Image = "data:image/png;base64," + ((TakesScreenshot) DriverManager.getDrivers()).getScreenshotAs(OutputType.BASE64);
 
-        getTest().log(status, message,
-                MediaEntityBuilder.createScreenCaptureFromBase64String(base64Image).build());
+        getTest().log(status, message, MediaEntityBuilder.createScreenCaptureFromBase64String(base64Image).build());
     }
 
     public static void logMessage(String message) {

@@ -3,7 +3,6 @@ package actions.pageObjects.hrm.pim;
 import actions.pageObjects.hrm.PageGenerator;
 import interfaces.pageUIs.orangehrm.pim.EmployeeListPageUI;
 import interfaces.pageUIs.orangehrm.pim.PersonalDetailPageUI;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
 public class PersonalDetailPO extends PersonalListTabs {
@@ -23,25 +22,11 @@ public class PersonalDetailPO extends PersonalListTabs {
         return isElementDisplayed(driver, EmployeeListPageUI.ADD_EMPLOYEE_SUCCESS_MESSAGE);
     }
 
-    public void clickToEmployeeAvatarImage() {
+    public ChangeProfilePicturePO clickToEmployeeAvatarImage() {
         waitAllLoadingIconInvisible(driver);
         waitForElementClickable(driver, EmployeeListPageUI.EMPLOYEE_IMAGE);
         clickToElement(driver, EmployeeListPageUI.EMPLOYEE_IMAGE);
-    }
-
-    public void clickToSaveButtonAtProfileContainer() {
-        waitForElementClickable(driver, EmployeeListPageUI.SAVE_BUTTON_AT_PROFILE_CONTAINER);
-        clickToElement(driver, EmployeeListPageUI.SAVE_BUTTON_AT_PROFILE_CONTAINER);
-    }
-
-    public boolean isProfileAvatarUploadSuccess(Dimension beforeUpload) {
-        sleepInSeconds(2);
-        Dimension afterUpload = getAvatarSize();
-        return !(beforeUpload.equals(afterUpload));
-    }
-
-    public Dimension getAvatarSize() {
-        return getElementSize(driver, EmployeeListPageUI.EMPLOYEE_IMAGE);
+        return PageGenerator.getChangeProfilePicturePage(driver);
     }
 
     public void enterToFirstNameTextbox(String firstName) {
@@ -52,6 +37,11 @@ public class PersonalDetailPO extends PersonalListTabs {
     public void enterToLastNameTextbox(String lastName) {
         waitForElementVisible(driver, PersonalDetailPageUI.LAST_NAME_TEXTBOX);
         sendKeysToElement(driver, PersonalDetailPageUI.LAST_NAME_TEXTBOX, lastName);
+    }
+
+    public void enterToEmployeeId(String employeeID) {
+        waitForElementVisible(driver, PersonalDetailPageUI.EMPLOYEE_ID);
+        sendKeysToElement(driver, PersonalDetailPageUI.EMPLOYEE_ID, employeeID);
     }
 
     public void enterToDriverLicenseTextbox(String driverLicenseNumber) {
@@ -102,7 +92,7 @@ public class PersonalDetailPO extends PersonalListTabs {
 
     public String getEmployeeID() {
         waitForElementVisible(driver, PersonalDetailPageUI.EMPLOYEE_ID);
-        return getElementText(driver, PersonalDetailPageUI.EMPLOYEE_ID);
+        return getValue(driver, PersonalDetailPageUI.EMPLOYEE_ID);
     }
 
     public String getDriverLicenseTextboxValue() {

@@ -4,7 +4,7 @@ import interfaces.pageUIs.orangehrm.pim.ContactDetailPageUI;
 import org.openqa.selenium.WebDriver;
 
 public class ContactDetailPO extends PersonalListTabs {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public ContactDetailPO(WebDriver driver) {
         super(driver);

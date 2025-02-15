@@ -129,24 +129,15 @@ public class BaseTest {
         };
     }
 
-    protected final Logger log;
-
-    protected BaseTest() {
-        log = LogManager.getLogger(getClass());
-    }
-
-    protected boolean verifyTrue(boolean condition) {
-        boolean status = true;
+    protected void verifyTrue(boolean condition) {
         try {
             Assert.assertTrue(condition);
             log.info("---------------------- PASSED -----------------------");
         } catch (Throwable e) {
-            status = false;
             log.info("---------------------- FAILED -----------------------");
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
         }
-        return status;
     }
 
     protected boolean verifyFalse(boolean condition) {
@@ -163,17 +154,20 @@ public class BaseTest {
         return status;
     }
 
-    protected boolean verifyEquals(Object actual, Object expected) {
-        boolean status = true;
+    protected void verifyEquals(Object actual, Object expected) {
         try {
             Assert.assertEquals(actual, expected);
             log.info("---------------------- PASSED -----------------------");
         } catch (Throwable e) {
-            status = false;
             log.info("---------------------- FAILED -----------------------");
             VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
             Reporter.getCurrentTestResult().setThrowable(e);
         }
-        return status;
+    }
+
+    protected final Logger log;
+
+    protected BaseTest() {
+        log = LogManager.getLogger(getClass());
     }
 }

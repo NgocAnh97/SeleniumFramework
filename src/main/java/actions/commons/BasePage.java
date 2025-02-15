@@ -121,8 +121,8 @@ public class BasePage {
         return driver.findElements(getByLocator(locator));
     }
 
-    public By getByLocator(String prefixLocator) {
-        By by = null;
+    private By getByLocator(String prefixLocator) {
+        By by;
         if (prefixLocator.toLowerCase().startsWith("id=")) {
             by = By.id(prefixLocator.substring(3));
         } else if (prefixLocator.toLowerCase().startsWith("css=")) {
@@ -142,7 +142,7 @@ public class BasePage {
     }
 
     public By getByLocator(String prefixLocator, String... params) {
-        By by = null;
+        By by;
         if (prefixLocator.toLowerCase().startsWith("id")) {
             by = By.id(getDynamicLocator(prefixLocator.substring(3), params));
         } else if (prefixLocator.toLowerCase().startsWith("css")) {
@@ -174,6 +174,11 @@ public class BasePage {
     public void sendKeysToElement(WebDriver driver, String locator, String textToSend) {
         WebElement element = getWebElement(driver, locator);
         element.sendKeys(Keys.chord(ctrlKey(), "a", Keys.BACK_SPACE));
+        element.sendKeys(textToSend);
+    }
+
+    public void sendKeysToElementWithoutClear(WebDriver driver, String locator, String textToSend) {
+        WebElement element = getWebElement(driver, locator);
         element.sendKeys(textToSend);
     }
 
@@ -227,8 +232,7 @@ public class BasePage {
         getWebElement(driver, parentLocator).click();
         sleepInSeconds(1);
 
-        List<WebElement> allItems = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childLocator)));
+        List<WebElement> allItems = new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childLocator)));
         for (WebElement item : allItems) {
             if (item.getText().trim().equals(expectItemText)) {
                 item.click();
@@ -392,8 +396,7 @@ public class BasePage {
     public void highlightElementByJS(WebDriver driver, String locator) {
         WebElement element = getWebElement(driver, locator);
         String originalStyle = element.getAttribute("style");
-        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2])",
-                element, "style", "border: 2px solid red; border-style: dashed;");
+        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2])", element, "style", "border: 2px solid red; border-style: dashed;");
         sleepInSeconds(1);
         ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2])", element, "style", originalStyle);
     }
@@ -441,69 +444,47 @@ public class BasePage {
     }
 
     public boolean isImageLoadedByJS(WebDriver driver, String locator) {
-        return (boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete " +
-                "&& typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", getWebElement(driver, locator));
+        return (boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].complete " + "&& typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0", getWebElement(driver, locator));
     }
 
     public void waitForElementVisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForAllElementVisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByLocator(locator)));
     }
 
     public void waitForElementVisible(WebDriver driver, String locator, String... params) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator, params)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator, params)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.elementToBeSelected(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.elementToBeSelected(getByLocator(locator)));
     }
 
     public void waitForElementSelected(WebDriver driver, String locator, String... params) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.elementToBeSelected(getByLocator(locator, params)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.elementToBeSelected(getByLocator(locator, params)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForElementInvisible(WebDriver driver, String locator, String... params) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator, params)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator, params)));
     }
 
     public void waitForAllElementInvisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.invisibilityOfAllElements(getListWebElement(driver, locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.invisibilityOfAllElements(getListWebElement(driver, locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.elementToBeClickable(getWebElement(driver, locator)));
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.elementToBeClickable(getWebElement(driver, locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator, String... params) {
-        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS))
-                .until(ExpectedConditions.elementToBeClickable(getWebElement(driver, getDynamicLocator(locator, params))));
-    }
-
-    public void uploadMultipleFiles(WebDriver driver, String... fileNames) {
-        String filePath = GlobalConstants.UPLOAD_PATH;
-        StringBuilder fullFileName = new StringBuilder();
-        for (String file : fileNames) {
-            fullFileName.append(filePath).append(file).append("\n");
-        }
-        fullFileName = new StringBuilder(fullFileName.toString().trim());
-        getWebElement(driver, BasePageUI.UPLOAD_FILE_TYPE).sendKeys(fullFileName.toString());
-        sleepInSeconds(1);
+        new WebDriverWait(driver, Duration.of(GlobalConstants.LONG_TIMEOUT, ChronoUnit.SECONDS)).until(ExpectedConditions.elementToBeClickable(getWebElement(driver, getDynamicLocator(locator, params))));
     }
 
     private String getDynamicLocator(String locator, String... params) {
